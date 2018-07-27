@@ -39,133 +39,133 @@ class Installer {
     this.failedDeps = new Set()
   }
 
-  timedStage (name) {
+  async timedStage (name) {
     const start = Date.now()
-    return BB.resolve(this[name].apply(this, [].slice.call(arguments, 1)))
-      .tap(() => {
-        this.timings[name] = Date.now() - start
-        this.log('info', name, `Done in ${this.timings[name] / 1000}s`)
-      })
+    const ret = await this[name].apply(this, [].slice.call(arguments, 1))
+    this.timings[name] = Date.now() - start
+    this.log('info', name, `Done in ${this.timings[name] / 1000}s`)
+    return ret
   }
 
-  run () {
-    return this.timedStage('prepare')
-      .then(() => this.timedStage('fetchTree', this.tree))
-      // .then(pkgJsons => this.timedStage('buildTree', this.tree, pkgJsons))
-      .then(() => this.timedStage('garbageCollect', this.tree))
-      .then(() => this.timedStage('runScript', 'prepublish', this.pkg, this.prefix))
-      .then(() => this.timedStage('runScript', 'prepare', this.pkg, this.prefix))
-      .then(() => this.timedStage('teardown'))
-      .then(() => {
-        this.runTime = Date.now() - this.startTime
-        this.log('info',
-          'run-scripts',
-          `total script time: ${this.timings.scripts / 1000}s`
-        )
-        this.log('info',
-          'run-time',
-          `total run time: ${this.runTime / 1000}s`
-        )
-      })
-      .catch(err => {
-        this.timedStage('teardown')
-        if (err.message.match(/aggregate error/)) {
-          throw err[0]
-        } else {
-          throw err
-        }
-      })
-      .then(() => this)
+  async run () {
+    try {
+      await this.timedStage('prepare')
+      await this.timedStage('fetchTree', this.tree)
+      await this.timedStage('buildTree', this.tree)
+      await this.timedStage('garbageCollect', this.tree)
+      await this.timedStage('runScript', 'prepublish', this.pkg, this.prefix)
+      await this.timedStage('runScript', 'prepare', this.pkg, this.prefix)
+      await this.timedStage('teardown')
+      this.runTime = Date.now() - this.startTime
+      this.log(
+        'info',
+        'run-scripts',
+        `total script time: ${this.timings.scripts / 1000}s`
+      )
+      this.log(
+        'info',
+        'run-time',
+        `total run time: ${this.runTime / 1000}s`
+      )
+    } catch (err) {
+      if (err.message.match(/aggregate error/)) {
+        throw err[0]
+      } else {
+        throw err
+      }
+    } finally {
+      await this.timedStage('teardown')
+    }
+    return this
   }
 
-  prepare () {
+  async prepare () {
     this.log('info', 'prepare', 'initializing installer')
     this.log('verbose', 'prepare', 'starting workers')
 
-    return (
+    const prefix = (
       this.opts.prefix && this.opts.global
-        ? BB.resolve(this.opts.prefix)
+        ? this.opts.prefix
         // There's some Special™ logic around the `--prefix` config when it
         // comes from a config file or env vs when it comes from the CLI
         : process.argv.some(arg => arg.match(/^\s*--prefix\s*/i))
-          ? BB.resolve(this.opts.prefix)
-          : getPrefix(process.cwd())
+          ? this.opts.prefix
+          : await getPrefix(process.cwd())
     )
-      .then(prefix => {
-        this.prefix = prefix
-        this.log('verbose', 'prepare', 'installation prefix: ' + prefix)
-        return BB.join(
-          readJson(prefix, 'package.json'),
-          readJson(prefix, 'package-lock.json', true),
-          readJson(prefix, 'npm-shrinkwrap.json', true),
-          (pkg, lock, shrink) => {
-            if (shrink) {
-              this.log('verbose', 'prepare', 'using npm-shrinkwrap.json')
-            } else if (lock) {
-              this.log('verbose', 'prepare', 'using package-lock.json')
-            }
-            pkg._shrinkwrap = shrink || lock
-            this.pkg = pkg
-          }
-        )
-      })
-      .then(() => statAsync(
+    this.prefix = prefix
+    this.log('verbose', 'prepare', 'installation prefix: ' + prefix)
+    await BB.join(
+      readJson(prefix, 'package.json'),
+      readJson(prefix, 'package-lock.json', true),
+      readJson(prefix, 'npm-shrinkwrap.json', true),
+      (pkg, lock, shrink) => {
+        if (shrink) {
+          this.log('verbose', 'prepare', 'using npm-shrinkwrap.json')
+        } else if (lock) {
+          this.log('verbose', 'prepare', 'using package-lock.json')
+        }
+        pkg._shrinkwrap = shrink || lock
+        this.pkg = pkg
+      }
+    )
+    let stat
+    try {
+      stat = await statAsync(
         path.join(this.prefix, 'node_modules')
-      ).catch(err => { if (err.code !== 'ENOENT') { throw err } }))
-      .then(stat => {
-        stat && this.log('warn',
-          'prepare', 'removing existing node_modules/ before installation'
-        )
-        return BB.join(
-          this.checkLock(),
-          stat && rimraf(path.join(this.prefix, 'node_modules'))
-        )
-      }).then(() => {
-      // This needs to happen -after- we've done checkLock()
-        this.tree = buildLogicalTree(this.pkg, this.pkg._shrinkwrap)
-        this.log('silly', 'tree', this.tree)
-        this.expectedTotal = 0
-        this.tree.forEach((dep, next) => {
-          this.expectedTotal++
-          next()
-        })
-      })
+      )
+    } catch (err) {
+      if (err.code !== 'ENOENT') { throw err }
+    }
+    if (stat) {
+      this.log(
+        'warn',
+        'prepare',
+        'removing existing node_modules/ before installation'
+      )
+    }
+    await BB.join(
+      this.checkLock(),
+      stat && rimraf(path.join(this.prefix, 'node_modules'))
+    )
+    // This needs to happen -after- we've done checkLock()
+    this.tree = buildLogicalTree(this.pkg, this.pkg._shrinkwrap)
+    this.log('silly', 'tree', this.tree)
+    this.expectedTotal = 0
+    this.tree.forEach((dep, next) => {
+      this.expectedTotal++
+      next()
+    })
   }
 
-  teardown () {
+  async teardown () {
     this.log('verbose', 'teardown', 'shutting down')
   }
 
-  checkLock () {
+  async checkLock () {
     this.log('verbose', 'checkLock', 'verifying package-lock data')
     const pkg = this.pkg
     const prefix = this.prefix
     if (!pkg._shrinkwrap || !pkg._shrinkwrap.lockfileVersion) {
-      return BB.reject(
-        new Error(`frog can only install packages with an existing package-lock.json or npm-shrinkwrap.json with lockfileVersion >= 1. Run an install with npm@5 or later to generate it, then try again.`)
+      throw new Error(`frog can only install packages with an existing package-lock.json or npm-shrinkwrap.json with lockfileVersion >= 1. Run an install with npm@5 or later to generate it, then try again.`)
+    }
+    const result = await lockVerify(prefix)
+    if (result.status) {
+      result.warnings.forEach(w => this.log('warn', 'lockfile', w))
+    } else {
+      throw new Error(
+        'frog can only install packages when your package.json and package-lock.json or ' +
+        'npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` ' +
+        'before continuing.\n\n' +
+        result.warnings.map(w => 'Warning: ' + w).join('\n') + '\n' +
+        result.errors.join('\n') + '\n'
       )
     }
-    return lockVerify(prefix).then(result => {
-      if (result.status) {
-        result.warnings.forEach(w => this.log('warn', 'lockfile', w))
-      } else {
-        throw new Error(
-          'frog can only install packages when your package.json and package-lock.json or ' +
-          'npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` ' +
-          'before continuing.\n\n' +
-          result.warnings.map(w => 'Warning: ' + w).join('\n') + '\n' +
-          result.errors.join('\n') + '\n'
-        )
-      }
-    }).catch(err => {
-      throw err
-    })
   }
 
-  fetchTree (tree) {
+  async fetchTree (tree) {
     this.log('verbose', 'fetchTree', 'making sure all required deps are in the cache')
     const cg = this.log('newItem', 'fetchTree', this.expectedTotal)
-    return tree.forEachAsync((dep, next) => {
+    await tree.forEachAsync(async (dep, next) => {
       if (!this.checkDepEnv(dep)) { return }
       const depPath = dep.path(this.prefix)
       const spec = npa.resolve(dep.name, dep.version, this.prefix)
@@ -174,40 +174,39 @@ class Installer {
       } else if (spec.type === 'directory') {
         const relative = path.relative(path.dirname(depPath), spec.fetchSpec)
         this.log('silly', 'fetchTree', `${dep.name}@${spec.fetchSpec} -> ${depPath} (symlink)`)
-        return mkdirp(path.dirname(depPath))
-          .then(() => symlinkAsync(relative, depPath, 'junction'))
-          .catch(
-            () => rimraf(depPath)
-              .then(() => symlinkAsync(relative, depPath, 'junction'))
-          ).then(() => next())
-          .then(() => {
-            this.pkgCount++
-            cg.completeWork(1)
-          })
+        await mkdirp(path.dirname(depPath))
+        try {
+          await symlinkAsync(relative, depPath, 'junction')
+        } catch (e) {
+          await rimraf(depPath)
+          await symlinkAsync(relative, depPath, 'junction')
+        }
+        await next()
+        this.pkgCount++
+        cg.completeWork(1)
       } else {
         this.log('silly', 'fetchTree', `${dep.name}@${dep.version} -> ${depPath}`)
-        return (
-          dep.bundled
-            ? statAsync(path.join(depPath, 'package.json')).catch(err => {
-              if (err.code !== 'ENOENT') { throw err }
-            })
-            : BB.resolve(false)
-        )
-          .then(wasBundled => {
-          // Don't extract if a bundled dep is actually present
-            if (wasBundled) {
-              cg.completeWork(1)
-              return next()
-            } else {
-              return ensureDep(dep.name, dep, depPath, this.opts)
-                .then(() => cg.completeWork(1))
-                .then(() => { this.pkgCount++ })
-                .then(next)
-            }
-          })
+        let wasBundled = false
+        if (dep.bundled) {
+          try {
+            wasBundled = !!await statAsync(path.join(depPath, 'package.json'))
+          } catch (err) {
+            if (err.code !== 'ENOENT') { throw err }
+          }
+        }
+        // Don't extract if a bundled dep is actually present
+        if (wasBundled) {
+          cg.completeWork(1)
+          return next()
+        } else {
+          await ensureDep(dep.name, dep, depPath, this.opts)
+          cg.completeWork(1)
+          this.pkgCount++
+          return next()
+        }
       }
     }, {concurrency: 50, Promise: BB})
-      .then(() => cg.finish())
+    cg.finish()
   }
 
   checkDepEnv (dep) {
@@ -225,92 +224,88 @@ class Installer {
     return (dep.dev && includeDev) || (!dep.dev && includeProd)
   }
 
-  buildTree (tree, pkgJsons) {
+  async buildTree (tree, pkgJsons) {
     this.log('verbose', 'buildTree', 'finalizing tree and running scripts')
-    return tree.forEachAsync((dep, next) => {
+    await tree.forEachAsync(async (dep, next) => {
       if (!this.checkDepEnv(dep)) { return }
-      const spec = npa.resolve(dep.name, dep.version)
-      const depPath = dep.path(this.prefix)
-      const pkg = pkgJsons.get(dep)
-      this.log('silly', 'buildTree', `linking ${spec}`)
-      return this.runScript('preinstall', pkg, depPath)
-        .then(next) // build children between preinstall and binLink
-      // Don't link root bins
-        .then(() => {
-          if (
-            dep.isRoot ||
+      try {
+        const spec = npa.resolve(dep.name, dep.version)
+        const depPath = dep.path(this.prefix)
+        const pkg = pkgJsons.get(dep)
+        this.log('silly', 'buildTree', `linking ${spec}`)
+        await this.runScript('preinstall', pkg, depPath)
+        await next() // build children between preinstall and binLink
+        // Don't link root bins
+        if (
+          dep.isRoot ||
           !(pkg.bin || pkg.man || (pkg.directories && pkg.directories.bin))
-          ) {
+        ) {
           // We skip the relatively expensive readPkgJson if there's no way
           // we'll actually be linking any bins or mans
-            return
-          }
-          return readPkgJson(path.join(depPath, 'package.json'))
-            .then(pkg => binLink(pkg, depPath, false, {
-              force: this.config.get('force'),
-              ignoreScripts: this.config.get('ignore-scripts'),
-              log: Object.assign({}, this.log, { info: () => {} }),
-              name: pkg.name,
-              pkgId: pkg.name + '@' + pkg.version,
-              prefix: this.prefix,
-              prefixes: [this.prefix],
-              umask: this.config.get('umask')
-            }), e => {
-              this.log('verbose', 'buildTree', `error linking ${spec}: ${e.message} ${e.stack}`)
-            })
+          return
+        }
+        const pkgJson = await readPkgJson(path.join(depPath, 'package.json'))
+        await binLink(pkgJson, depPath, false, {
+          force: this.config.get('force'),
+          ignoreScripts: this.config.get('ignore-scripts'),
+          log: Object.assign({}, this.log, { info: () => {} }),
+          name: pkg.name,
+          pkgId: pkg.name + '@' + pkg.version,
+          prefix: this.prefix,
+          prefixes: [this.prefix],
+          umask: this.config.get('umask')
         })
-        .then(() => this.runScript('install', pkg, depPath))
-        .then(() => this.runScript('postinstall', pkg, depPath))
-        .then(() => this)
-        .catch(e => {
-          if (dep.optional) {
-            this.failedDeps.add(dep)
-          } else {
-            throw e
-          }
-        })
+        await this.runScript('install', pkg, depPath)
+        await this.runScript('postinstall', pkg, depPath)
+      } catch (e) {
+        if (dep.optional) {
+          this.failedDeps.add(dep)
+        } else {
+          throw e
+        }
+      }
     }, {concurrency: 1, Promise: BB})
   }
 
-  updateInstallScript (dep, pkg) {
+  async updateInstallScript (dep, pkg) {
     const depPath = dep.path(this.prefix)
-    return statAsync(path.join(depPath, 'binding.gyp'))
-      .catch(err => { if (err.code !== 'ENOENT') { throw err } })
-      .then(stat => {
-        if (stat) {
-          if (!pkg.scripts) {
-            pkg.scripts = {}
-          }
-          pkg.scripts.install = 'node-gyp rebuild'
-        }
-      })
-      .then(pkg)
+    let stat
+    try {
+      stat = statAsync(path.join(depPath, 'binding.gyp'))
+    } catch (err) {
+      if (err.code !== 'ENOENT') { throw err }
+    }
+    if (stat) {
+      if (!pkg.scripts) {
+        pkg.scripts = {}
+      }
+      pkg.scripts.install = 'node-gyp rebuild'
+    }
+    return pkg
   }
 
   // A cute little mark-and-sweep collector!
-  garbageCollect (tree) {
+  async garbageCollect (tree) {
     if (!this.failedDeps.size) { return }
-    return sweep(
+    const purged = await sweep(
       tree,
       this.prefix,
       mark(tree, this.failedDeps)
     )
-      .then(purged => {
-        this.purgedDeps = purged
-        this.pkgCount -= purged.size
-      })
+    this.purgedDeps = purged
+    this.pkgCount -= purged.size
   }
 
-  runScript (stage, pkg, pkgPath) {
+  async runScript (stage, pkg, pkgPath) {
     const start = Date.now()
     if (!this.config.get('ignore-scripts')) {
       // TODO(mikesherov): remove pkg._id when npm-lifecycle no longer relies on it
       pkg._id = pkg.name + '@' + pkg.version
       const opts = this.config.toLifecycle()
-      return BB.resolve(lifecycle(pkg, stage, pkgPath, opts))
-        .tap(() => { this.timings.scripts += Date.now() - start })
+      const ret = await lifecycle(pkg, stage, pkgPath, opts)
+      this.timings.scripts += Date.now() - start
+      return ret
     }
-    return BB.resolve()
   }
 }
 module.exports = Installer
@@ -327,20 +322,20 @@ function mark (tree, failed) {
   return liveDeps
 }
 
-function sweep (tree, prefix, liveDeps) {
+async function sweep (tree, prefix, liveDeps) {
   const purged = new Set()
-  return tree.forEachAsync((dep, next) => {
-    return next().then(() => {
-      if (
-        !dep.isRoot && // never purge root! 🙈
-        !liveDeps.has(dep) &&
-        !purged.has(dep)
-      ) {
-        purged.add(dep)
-        return rimraf(dep.path(prefix))
-      }
-    })
-  }, {concurrency: 50, Promise: BB}).then(() => purged)
+  await tree.forEachAsync(async (dep, next) => {
+    await next()
+    if (
+      !dep.isRoot && // never purge root! 🙈
+      !liveDeps.has(dep) &&
+      !purged.has(dep)
+    ) {
+      purged.add(dep)
+      await rimraf(dep.path(prefix))
+    }
+  }, {concurrency: 50, Promise: BB})
+  return purged
 }
 
 function stripBOM (str) {
@@ -348,12 +343,13 @@ function stripBOM (str) {
 }
 
 module.exports._readJson = readJson
-function readJson (jsonPath, name, ignoreMissing) {
-  return readFileAsync(path.join(jsonPath, name), 'utf8')
-    .then(str => JSON.parse(stripBOM(str)))
-    .catch({code: 'ENOENT'}, err => {
-      if (!ignoreMissing) {
-        throw err
-      }
-    })
+async function readJson (jsonPath, name, ignoreMissing) {
+  const str = await readFileAsync(path.join(jsonPath, name), 'utf8')
+  try {
+    return JSON.parse(stripBOM(str))
+  } catch (err) {
+    if (err.code !== 'ENOENT' || ignoreMissing) {
+      throw err
+    }
+  }
 }
