@@ -1,9 +1,10 @@
 {
   "name": "frog",
+  "version": "1.0.0",
   "author": {
-    "name": "Rebecca Turner",
-    "email": "me@re-becca.org",
-    "twitter": "ReBeccaOrg"
+    "name": "Kat Marchán",
+    "email": "kzm@zkat.tech",
+    "twitter": "maybekatz"
   },
   "license": "ISC",
   "scripts": {
@@ -11,7 +12,7 @@
     "release": "standard-version -s",
     "postrelease": "npm publish && git push --follow-tags",
     "pretest": "standard",
-    "test": "tap -J -100 test/*.js",
+    "test": "tap -J --nyc-arg=--all --coverage test/*.js",
     "update-coc": "weallbehave -o . && git add CODE_OF_CONDUCT.md && git commit -m 'docs(coc): updated CODE_OF_CONDUCT.md'",
     "update-contrib": "weallcontribute -o . && git add CONTRIBUTING.md && git commit -m 'docs(contributing): updated CONTRIBUTING.md'"
   },
@@ -27,5 +28,35 @@
     "url": "https://github.com/npm/frog.git"
   },
   "bugs": "https://github.com/npm/frog/issues",
-  "homepage": "https://npmjs.com/package/frog"
+  "homepage": "https://npmjs.com/package/frog",
+  "keywords": [
+    "npm",
+    "package manager",
+    "cache",
+    "downloader",
+    "dependency manager",
+    "knitting puns"
+  ],
+  "dependencies": {
+    "bin-links": "^1.1.2",
+    "bluebird": "^3.5.1",
+    "figgy-pudding": "^3.2.0",
+    "find-npm-prefix": "^1.0.2",
+    "graceful-fs": "^4.1.11",
+    "lock-verify": "^2.0.2",
+    "npm-lifecycle": "^2.0.3",
+    "npm-logical-tree": "^1.2.1",
+    "npm-package-arg": "^6.1.0",
+    "pacote": "^8.1.6",
+    "read-package-json": "^2.0.13",
+    "rimraf": "^2.6.2"
+  },
+  "config": {
+    "nyc": {
+      "exclude": [
+        "node_modules/**",
+        "test/**"
+      ]
+    }
+  }
 }
