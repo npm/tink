@@ -30,14 +30,14 @@ isn't clear.
 ### TODO
 
 * [x] lay out project
-* [ ] extract exploded pacote tarballs into cacache + build per-project index
-* [ ] crash if installing a package that requires run-scripts
-* [ ] do some basic benchmarks
+* [x] extract exploded pacote tarballs into cacache + build per-project index
+* [x] do some basic benchmarks
+* [ ] warn if installing a package that requires run-scripts
 * [ ] warn if installing something that requires bin/man linking
 * [ ] write a node loader that can load a package through the file index
 * [ ] do some load time benchmarks
 * [ ] add support for removing package tarballs from cache
-* [ ] add fallback where "incompatible" packages get dumped into node_modules
+* [ ] add fallback where "incompatible" packages get dumped into node_modules (and tagged a such in `package-map.json`)
 * [ ] add support for node-gyp build caching to make native packages compatible
 * [ ] add support for bin/man linking
 * [ ] rewrite some __dirname/__filename expressions to make them compatible
