@@ -7,6 +7,8 @@
     "twitter": "maybekatz"
   },
   "license": "ISC",
+  "main": "index.js",
+  "bin": "bin/cli.js",
   "scripts": {
     "prerelease": "npm t",
     "release": "standard-version -s",
