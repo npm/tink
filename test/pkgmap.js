@@ -19,7 +19,7 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
       packages: {
         'eggplant': {
           files: {
-            'hello.js': 'deadbeef'
+            'hello.js': 'sha1-deadbeef'
           }
         }
       },
@@ -29,7 +29,12 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
           packages: {
             'aubergine': {
               files: {
-                'bonjour.js': 'badc0ffee'
+                'bonjour.js': 'sha1-badc0ffee'
+              }
+            },
+            '@myscope/scoped': {
+              files: {
+                'ohmy.js': 'sha1-abcdef'
               }
             }
           }
@@ -41,31 +46,41 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
   const prefix = path.join(testDir.path, '.package-map.json', 'eggplant')
   t.deepEqual(pkgmap.resolve(prefix, 'hello.js'), {
     cache: './here',
-    hash: 'deadbeef',
+    hash: 'sha1-deadbeef',
     pkg: {
       files: {
-        'hello.js': 'deadbeef'
+        'hello.js': 'sha1-deadbeef'
       }
     }
   }, 'found file spec inside a package-map')
-  t.equal(pkgmap.resolve(prefix, 'goodbye.js'), null, 'null on missing file')
+  t.equal(pkgmap.resolve(prefix, 'goodbye.js'), false, 'null on missing file')
   const nested = path.join(prefix, 'node_modules', 'aubergine')
   t.deepEqual(pkgmap.resolve(nested, 'bonjour.js'), {
     cache: './here',
-    hash: 'badc0ffee',
+    hash: 'sha1-badc0ffee',
     pkg: {
       files: {
-        'bonjour.js': 'badc0ffee'
+        'bonjour.js': 'sha1-badc0ffee'
       }
     }
   }, 'found nested file spec inside a package-map')
+  const scoped = path.join(prefix, 'node_modules', '@myscope/scoped')
+  t.deepEqual(pkgmap.resolve(scoped, 'ohmy.js'), {
+    cache: './here',
+    hash: 'sha1-abcdef',
+    pkg: {
+      files: {
+        'ohmy.js': 'sha1-abcdef'
+      }
+    }
+  }, 'found nested scoped spec inside a package-map')
   rimraf.sync(path.join(testDir.path))
   t.deepEqual(pkgmap.resolve(prefix, 'hello.js'), {
     cache: './here',
-    hash: 'deadbeef',
+    hash: 'sha1-deadbeef',
     pkg: {
       files: {
-        'hello.js': 'deadbeef'
+        'hello.js': 'sha1-deadbeef'
       }
     }
   }, 'found file even though pkgmap deleted')
@@ -135,7 +150,7 @@ test('stat: get filesystem stats for a file', async t => {
   t.ok(!stat.isDirectory(), 'stat is not a directory')
   t.ok(pkgmap.statSync(p), 'got stat from cache (sync)')
   t.equal(
-    await pkgmap.stat({cache: cacheDir, hash: 'deadbeef'}),
+    await pkgmap.stat({cache: cacheDir, hash: 'sha1-deadbeef'}),
     false,
     'returns false if stat fails'
   )
