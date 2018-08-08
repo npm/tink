@@ -4,9 +4,9 @@
 JavaScript. Don't expect to be able to use this with any of your existing
 projects.
 
-## Install
+## Usage
 
-`$ npm install frog`
+`$ npx npm/frog`
 
 ## Table of Contents
 
@@ -32,13 +32,17 @@ isn't clear.
 * [x] lay out project
 * [x] extract exploded pacote tarballs into cacache + build per-project index
 * [x] do some basic benchmarks
+* [x] write a node loader that can load a package through the file index
+* [x] do some load time benchmarks
+* [ ] write tests for fs overrides
+* [ ] use spawn-wrap to support child_process calls
+* [ ] use `cache` from config, not from pkgmap (stop writing it there)
+* [ ] make pkgmap auto-fetch packages for missing hashes on the fly
 * [ ] warn if installing a package that requires run-scripts
 * [ ] warn if installing something that requires bin/man linking
-* [ ] write a node loader that can load a package through the file index
-* [ ] do some load time benchmarks
 * [ ] add support for removing package tarballs from cache
 * [ ] add fallback where "incompatible" packages get dumped into node_modules (and tagged a such in `package-map.json`)
 * [ ] add support for node-gyp build caching to make native packages compatible
 * [ ] add support for bin/man linking
-* [ ] rewrite some __dirname/__filename expressions to make them compatible
 * [ ] benchmark wubwub?
+* [ ] optimize fs and module load operations (need to analyze)
