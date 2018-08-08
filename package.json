@@ -8,7 +8,7 @@
   },
   "license": "ISC",
   "main": "index.js",
-  "bin": "bin/cli.js",
+  "bin": "index.js",
   "scripts": {
     "prerelease": "npm t",
     "release": "standard-version -s",
