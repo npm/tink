@@ -15,7 +15,7 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
       cache: './here',
-      path_prefix: 'node_modules',
+      path_prefix: '/.package-map.json',
       packages: {
         'eggplant': {
           files: {
@@ -25,7 +25,7 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
       },
       scopes: {
         'eggplant': {
-          path_prefix: 'node_modules',
+          path_prefix: '/node_modules',
           packages: {
             'aubergine': {
               files: {
@@ -95,7 +95,7 @@ test('read: reads a file defined in a package map', async t => {
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
       cache: cacheDir,
-      path_prefix: 'node_modules',
+      path_prefix: '/.package-map.json',
       packages: {
         'eggplant': {
           files: {
@@ -130,7 +130,7 @@ test('stat: get filesystem stats for a file', async t => {
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
       cache: cacheDir,
-      path_prefix: 'node_modules',
+      path_prefix: '/.package-map.json',
       packages: {
         'eggplant': {
           files: {
