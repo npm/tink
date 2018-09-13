@@ -1,5 +1,5 @@
 {
-  "name": "frog",
+  "name": "crux",
   "version": "1.0.0",
   "author": {
     "name": "Kat Marchán",
@@ -28,10 +28,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/npm/frog.git"
+    "url": "https://github.com/npm/crux.git"
   },
-  "bugs": "https://github.com/npm/frog/issues",
-  "homepage": "https://npmjs.com/package/frog",
+  "bugs": "https://github.com/npm/crux/issues",
+  "homepage": "https://npmjs.com/package/crux",
   "keywords": [
     "npm",
     "package manager",

@@ -16,7 +16,7 @@ if (require.main === module) {
 }
 module.exports = main
 function main () {
-  npmlog.heading = 'frog'
+  npmlog.heading = 'crux'
   let pkgMap = checkPkgMap()
   if (!pkgMap) {
     cp.spawnSync(process.argv[0], [

@@ -1,12 +1,12 @@
-[![npm](https://img.shields.io/npm/v/frog.svg)](https://npm.im/frog) [![license](https://img.shields.io/npm/l/frog.svg)](https://npm.im/frog) [![Travis](https://img.shields.io/travis/npm/frog.svg)](https://travis-ci.org/npm/frog) [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/npm/frog?svg=true)](https://ci.appveyor.com/project/npm/frog) [![Coverage Status](https://coveralls.io/repos/github/npm/frog/badge.svg?branch=latest)](https://coveralls.io/github/npm/frog?branch=latest)
+[![npm](https://img.shields.io/npm/v/crux.svg)](https://npm.im/crux) [![license](https://img.shields.io/npm/l/crux.svg)](https://npm.im/crux) [![Travis](https://img.shields.io/travis/npm/crux.svg)](https://travis-ci.org/npm/crux) [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/npm/crux?svg=true)](https://ci.appveyor.com/project/npm/crux) [![Coverage Status](https://coveralls.io/repos/github/npm/crux/badge.svg?branch=latest)](https://coveralls.io/github/npm/crux?branch=latest)
 
-[`frog`](https://github.com/npm/frog) is an experimental package manager for
+[`crux`](https://github.com/npm/crux) is an experimental package manager for
 JavaScript. Don't expect to be able to use this with any of your existing
 projects.
 
 ## Usage
 
-`$ npx npm/frog`
+`$ npx npm/crux`
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ projects.
 
 ### Contributing
 
-The frog team enthusiastically welcomes contributions and project
+The crux team enthusiastically welcomes contributions and project
 participation! There's a bunch of things you can do if you want to contribute!
 The [Contributor Guide](CONTRIBUTING.md) has all the information you need for
 everything from reporting bugs to contributing entire new features. Please don't
