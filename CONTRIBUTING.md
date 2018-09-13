@@ -33,7 +33,7 @@ The [Project Team](#join-the-project-team) looks forward to your contributions. 
 
 If you have a question about this project, how to use it, or just need clarification about something:
 
-* Open an Issue at https://github.com/npm/crux/issues
+* Open an Issue at https://github.com/npm/tink/issues
 * Provide as much context as you can about what you're running into.
 * Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant. If not, please be ready to provide that information if maintainers ask for it.
 
@@ -47,7 +47,7 @@ Once it's filed:
 
 If you run into an error or bug with the project:
 
-* Open an Issue at https://github.com/npm/crux/issues
+* Open an Issue at https://github.com/npm/tink/issues
 * Include *reproduction steps* that someone else can follow to recreate the bug or error on their own.
 * Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant. If not, please be ready to provide that information if maintainers ask for it.
 
@@ -63,7 +63,7 @@ Once it's filed:
 
 If the project doesn't do something you need or want it to do:
 
-* Open an Issue at https://github.com/npm/crux/issues
+* Open an Issue at https://github.com/npm/tink/issues
 * Provide as much context as you can about what you're running into.
 * Please try and be clear about why existing features and alternatives would not work for you.
 
@@ -107,7 +107,7 @@ To contribute documentation:
 * Re-read what you wrote, and run a spellchecker on it to make sure you didn't miss anything.
 * In your commit message(s), begin the first line with `docs: `. For example: `docs: Adding a doc contrib section to CONTRIBUTING.md`.
 * Write clear, concise commit message(s) using [conventional-changelog format](https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/convention.md). Documentation commits should use `docs(<component>): <message>`.
-* Go to https://github.com/npm/crux/pulls and open a new pull request with your changes.
+* Go to https://github.com/npm/tink/pulls and open a new pull request with your changes.
 * If your PR is connected to an open issue, add a line in your PR's description that says `Fixes: #123`, where `#123` is the number of the issue you're fixing.
 
 Once you've filed the PR:
@@ -133,7 +133,7 @@ To contribute code:
 * Write tests that verify that your contribution works as expected.
 * Write clear, concise commit message(s) using [conventional-changelog format](https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/convention.md).
 * Dependency updates, additions, or removals must be in individual commits, and the message must use the format: `<prefix>(deps): PKG@VERSION`, where `<prefix>` is any of the usual `conventional-changelog` prefixes, at your discretion.
-* Go to https://github.com/npm/crux/pulls and open a new pull request with your changes.
+* Go to https://github.com/npm/tink/pulls and open a new pull request with your changes.
 * If your PR is connected to an open issue, add a line in your PR's description that says `Fixes: #123`, where `#123` is the number of the issue you're fixing.
 
 Once you've filed the PR:
@@ -154,7 +154,7 @@ Sometimes, the `support` label will be added to things that turn out to actually
 
 In order to help other folks out with their questions:
 
-* Go to the issue tracker and [filter open issues by the `support` label](https://github.com/npm/crux/issues?q=is%3Aopen+is%3Aissue+label%3Asupport).
+* Go to the issue tracker and [filter open issues by the `support` label](https://github.com/npm/tink/issues?q=is%3Aopen+is%3Aissue+label%3Asupport).
 * Read through the list until you find something that you're familiar enough with to give an answer to.
 * Respond to the issue with whatever details are needed to clarify the question, or get more details about what's going on.
 * Once the discussion wraps up and things are clarified, either close the issue, or ask the original issue filer (or a maintainer) to close it for you.
@@ -171,7 +171,7 @@ Some notes on picking up support issues:
 
 One of the most important tasks in handling issues is labeling them usefully and accurately. All other tasks involving issues ultimately rely on the issue being classified in such a way that relevant parties looking to do their own tasks can find them quickly and easily.
 
-In order to label issues, [open up the list of unlabeled issues](https://github.com/npm/crux/issues?q=is%3Aopen+is%3Aissue+no%3Alabel) and, **from newest to oldest**, read through each one and apply issue labels according to the table below. If you're unsure about what label to apply, skip the issue and try the next one: don't feel obligated to label each and every issue yourself!
+In order to label issues, [open up the list of unlabeled issues](https://github.com/npm/tink/issues?q=is%3Aopen+is%3Aissue+no%3Alabel) and, **from newest to oldest**, read through each one and apply issue labels according to the table below. If you're unsure about what label to apply, skip the issue and try the next one: don't feel obligated to label each and every issue yourself!
 
 Label | Apply When | Notes
 --- | --- | ---
@@ -206,7 +206,7 @@ To clean up issues and PRs:
   * not marked as `starter` or `help wanted` (these might stick around for a while, in general, as they're intended to be available)
   * no explicit messages in the comments asking for it to be left open
   * does not belong to a milestone
-* Leave a message when closing saying "Cleaning up stale issue. Please reopen or ping us if and when you're ready to resume this. See https://github.com/npm/crux/blob/latest/CONTRIBUTING.md#clean-up-issues-and-prs for more details."
+* Leave a message when closing saying "Cleaning up stale issue. Please reopen or ping us if and when you're ready to resume this. See https://github.com/npm/tink/blob/latest/CONTRIBUTING.md#clean-up-issues-and-prs for more details."
 
 ## Review Pull Requests
 

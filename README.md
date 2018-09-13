@@ -1,12 +1,12 @@
-[![npm](https://img.shields.io/npm/v/crux.svg)](https://npm.im/crux) [![license](https://img.shields.io/npm/l/crux.svg)](https://npm.im/crux) [![Travis](https://img.shields.io/travis/npm/crux.svg)](https://travis-ci.org/npm/crux) [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/npm/crux?svg=true)](https://ci.appveyor.com/project/npm/crux) [![Coverage Status](https://coveralls.io/repos/github/npm/crux/badge.svg?branch=latest)](https://coveralls.io/github/npm/crux?branch=latest)
+[![npm](https://img.shields.io/npm/v/tink.svg)](https://npm.im/tink) [![license](https://img.shields.io/npm/l/tink.svg)](https://npm.im/tink) [![Travis](https://img.shields.io/travis/npm/tink.svg)](https://travis-ci.org/npm/tink) [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/npm/tink?svg=true)](https://ci.appveyor.com/project/npm/tink) [![Coverage Status](https://coveralls.io/repos/github/npm/tink/badge.svg?branch=latest)](https://coveralls.io/github/npm/tink?branch=latest)
 
-[`crux`](https://github.com/npm/crux) is an experimental package manager for
+[`tink`](https://github.com/npm/tink) is an experimental package manager for
 JavaScript. Don't expect to be able to use this with any of your existing
 projects.
 
 ## Usage
 
-`$ npx npm/crux`
+`$ npx npm/tink`
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ projects.
 
 ### Contributing
 
-The crux team enthusiastically welcomes contributions and project
+The tink team enthusiastically welcomes contributions and project
 participation! There's a bunch of things you can do if you want to contribute!
 The [Contributor Guide](CONTRIBUTING.md) has all the information you need for
 everything from reporting bugs to contributing entire new features. Please don't
