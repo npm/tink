@@ -27,6 +27,12 @@ everything from reporting bugs to contributing entire new features. Please don't
 hesitate to jump in if you'd like to, or even ask us questions if something
 isn't clear.
 
+### Acknowledgements
+
+Big thanks to [Szymon Lisowiec](https://kysune.me/) for donating the `tink`
+package name on npm! This package was previously an error logger helper tool,
+but now it's a package manager runtime!
+
 ### TODO
 
 * [x] lay out project
