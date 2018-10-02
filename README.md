@@ -34,9 +34,8 @@ isn't clear.
 * [x] do some basic benchmarks
 * [x] write a node loader that can load a package through the file index
 * [x] do some load time benchmarks
-* [ ] write tests for fs overrides
-* [ ] use spawn-wrap to support child_process calls
 * [ ] use `cache` from config, not from pkgmap (stop writing it there)
+* [ ] use spawn-wrap to support child_process calls
 * [ ] make pkgmap auto-fetch packages for missing hashes on the fly
 * [ ] warn if installing a package that requires run-scripts
 * [ ] warn if installing something that requires bin/man linking
@@ -45,4 +44,5 @@ isn't clear.
 * [ ] add support for node-gyp build caching to make native packages compatible
 * [ ] add support for bin/man linking
 * [ ] benchmark wubwub?
+* [ ] write tests for fs overrides
 * [ ] optimize fs and module load operations (need to analyze)
