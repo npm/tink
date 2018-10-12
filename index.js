@@ -6,7 +6,6 @@ const cp = require('child_process')
 const fs = require('fs')
 const npmlog = require('npmlog')
 const path = require('path')
-const util = require('util')
 const yargs = require('yargs')
 
 if (require.main === module) {
