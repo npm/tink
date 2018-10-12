@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/tink.svg)](https://npm.im/tink) [![license](https://img.shields.io/npm/l/tink.svg)](https://npm.im/tink) [![Travis](https://img.shields.io/travis/npm/tink.svg)](https://travis-ci.org/npm/tink) [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/npm/tink?svg=true)](https://ci.appveyor.com/project/npm/tink) [![Coverage Status](https://coveralls.io/repos/github/npm/tink/badge.svg?branch=latest)](https://coveralls.io/github/npm/tink?branch=latest)
+[![npm](https://img.shields.io/npm/v/tink.svg)](https://npm.im/tink) [![license](https://img.shields.io/npm/l/tink.svg)](https://npm.im/tink) [![Build Status](https://api.cirrus-ci.com/github/npm/tink.svg)](https://cirrus-ci.com/github/npm/tink)
 
 [`tink`](https://github.com/npm/tink) is an experimental package manager for
 JavaScript. Don't expect to be able to use this with any of your existing
