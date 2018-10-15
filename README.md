@@ -4,9 +4,17 @@
 JavaScript. Don't expect to be able to use this with any of your existing
 projects.
 
+## **IN DEVELOPMENT**
+
+This package is still in development. Do **not** use it for production. It is
+missing major features and the interface should be considered extremely
+unstable.
+
+If you're feeling adventurous, though, read ahead...
+
 ## Usage
 
-`$ npx npm/tink`
+`$ npx tink`
 
 ## Table of Contents
 
