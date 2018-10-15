@@ -40,9 +40,9 @@ but now it's a package manager runtime!
 * [x] do some basic benchmarks
 * [x] write a node loader that can load a package through the file index
 * [x] do some load time benchmarks
-* [ ] use `cache` from config, not from pkgmap (stop writing it there)
+* [x] use `cache` from config, not from pkgmap (stop writing it there)
+* [x] make pkgmap auto-fetch packages for missing hashes on the fly
 * [ ] use spawn-wrap to support child_process calls
-* [ ] make pkgmap auto-fetch packages for missing hashes on the fly
 * [ ] warn if installing a package that requires run-scripts
 * [ ] warn if installing something that requires bin/man linking
 * [ ] add support for removing package tarballs from cache
