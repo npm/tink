@@ -12,9 +12,13 @@ const {File, Dir} = Tacks
 const pkgmap = require('../lib/pkgmap.js')
 
 test('resolve: finds an existing path into a .package-map.json', async t => {
+  process.tink = {
+    opts: {
+      cache: './here'
+    }
+  }
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
-      cache: './here',
       path_prefix: '/.package-map.json',
       packages: {
         'eggplant': {
@@ -92,6 +96,11 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
 test('read: reads a file defined in a package map', async t => {
   const cacheDir = path.join(testDir.path, '_cacache')
   const hash = await cacache.put(cacheDir, 'eggplant:hello', 'hello world')
+  process.tink = {
+    opts: {
+      cache: cacheDir
+    }
+  }
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
       cache: cacheDir,
@@ -127,6 +136,11 @@ test('read: automatically installs if a file is missing from cache')
 test('stat: get filesystem stats for a file', async t => {
   const cacheDir = path.join(testDir.path, '_cacache')
   const hash = await cacache.put(cacheDir, 'eggplant:hello', 'hello world')
+  process.tink = {
+    opts: {
+      cache: cacheDir
+    }
+  }
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
       cache: cacheDir,
