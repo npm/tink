@@ -42,6 +42,7 @@ but now it's a package manager runtime!
 * [x] do some load time benchmarks
 * [x] use `cache` from config, not from pkgmap (stop writing it there)
 * [x] make pkgmap auto-fetch packages for missing hashes on the fly
+* [x] add support for auth and .npmrc
 * [ ] use spawn-wrap to support child_process calls
 * [ ] warn if installing a package that requires run-scripts
 * [ ] warn if installing something that requires bin/man linking
