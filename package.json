@@ -7,6 +7,10 @@
     "twitter": "maybekatz"
   },
   "license": "ISC",
+  "files": [
+    "*.js",
+    "lib"
+  ],
   "main": "index.js",
   "bin": "index.js",
   "scripts": {
