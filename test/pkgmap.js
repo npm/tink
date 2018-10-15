@@ -13,9 +13,7 @@ const pkgmap = require('../lib/pkgmap.js')
 
 test('resolve: finds an existing path into a .package-map.json', async t => {
   process.tink = {
-    opts: {
-      cache: './here'
-    }
+    cache: './here'
   }
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
@@ -48,7 +46,7 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
   }))
   fixture.create(testDir.path)
   const prefix = path.join(testDir.path, '.package-map.json', 'eggplant')
-  t.deepEqual(pkgmap.resolve(prefix, 'hello.js'), {
+  t.similar(pkgmap.resolve(prefix, 'hello.js'), {
     cache: './here',
     hash: 'sha1-deadbeef',
     pkg: {
@@ -59,7 +57,7 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
   }, 'found file spec inside a package-map')
   t.equal(pkgmap.resolve(prefix, 'goodbye.js'), false, 'null on missing file')
   const nested = path.join(prefix, 'node_modules', 'aubergine')
-  t.deepEqual(pkgmap.resolve(nested, 'bonjour.js'), {
+  t.similar(pkgmap.resolve(nested, 'bonjour.js'), {
     cache: './here',
     hash: 'sha1-badc0ffee',
     pkg: {
@@ -69,7 +67,7 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
     }
   }, 'found nested file spec inside a package-map')
   const scoped = path.join(prefix, 'node_modules', '@myscope/scoped')
-  t.deepEqual(pkgmap.resolve(scoped, 'ohmy.js'), {
+  t.similar(pkgmap.resolve(scoped, 'ohmy.js'), {
     cache: './here',
     hash: 'sha1-abcdef',
     pkg: {
@@ -79,7 +77,7 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
     }
   }, 'found nested scoped spec inside a package-map')
   rimraf.sync(path.join(testDir.path))
-  t.deepEqual(pkgmap.resolve(prefix, 'hello.js'), {
+  t.similar(pkgmap.resolve(prefix, 'hello.js'), {
     cache: './here',
     hash: 'sha1-deadbeef',
     pkg: {
@@ -97,13 +95,10 @@ test('read: reads a file defined in a package map', async t => {
   const cacheDir = path.join(testDir.path, '_cacache')
   const hash = await cacache.put(cacheDir, 'eggplant:hello', 'hello world')
   process.tink = {
-    opts: {
-      cache: cacheDir
-    }
+    cache: cacheDir
   }
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
-      cache: cacheDir,
       path_prefix: '/.package-map.json',
       packages: {
         'eggplant': {
@@ -137,13 +132,10 @@ test('stat: get filesystem stats for a file', async t => {
   const cacheDir = path.join(testDir.path, '_cacache')
   const hash = await cacache.put(cacheDir, 'eggplant:hello', 'hello world')
   process.tink = {
-    opts: {
-      cache: cacheDir
-    }
+    cache: cacheDir
   }
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
-      cache: cacheDir,
       path_prefix: '/.package-map.json',
       packages: {
         'eggplant': {
