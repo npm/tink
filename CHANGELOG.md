@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.2"></a>
+## [0.0.2](https://github.com/npm/tink/compare/v0.0.1...v0.0.2) (2018-10-15)
+
+
+### Bug Fixes
+
+* **files:** add files array ([435366e](https://github.com/npm/tink/commit/435366e))
+
+
+
 <a name="0.0.1"></a>
 ## 0.0.1 (2018-10-15)
 
