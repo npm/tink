@@ -1,0 +1,60 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="0.0.1"></a>
+## 0.0.1 (2018-10-15)
+
+
+### Bug Fixes
+
+* **cache:** "tinkged-package" typo after the second great rename ([#5](https://github.com/npm/tink/issues/5)) ([ec3d4e2](https://github.com/npm/tink/commit/ec3d4e2))
+* **checkPkgMap:** Fix lock file and map file validation   check ([2655711](https://github.com/npm/tink/commit/2655711))
+* **compat:** check path.toNamespacedPath before call ([#6](https://github.com/npm/tink/issues/6)) ([3bc00f5](https://github.com/npm/tink/commit/3bc00f5))
+* **config:** prevent default from overriding values ([8497384](https://github.com/npm/tink/commit/8497384))
+* **fs:** make sure to handle other ENOENTs properly ([9923df4](https://github.com/npm/tink/commit/9923df4))
+* **fs:** only fall back on null resolved ([b9753e0](https://github.com/npm/tink/commit/b9753e0))
+* **fs:** uhhhh. try this other hack instead ([f996cce](https://github.com/npm/tink/commit/f996cce))
+* **legal:** update LICENSE ([86bff42](https://github.com/npm/tink/commit/86bff42))
+* **lint:** Remove unused util ([#7](https://github.com/npm/tink/issues/7)) ([2e49693](https://github.com/npm/tink/commit/2e49693))
+* **main:** shuffle around index/bin/installer ([195b75c](https://github.com/npm/tink/commit/195b75c))
+* **path_prefix:** fix the handling of path_prefix ([e9c9f83](https://github.com/npm/tink/commit/e9c9f83))
+* **pkgmap:** add hacky support for scoped pkgs ([0394f0e](https://github.com/npm/tink/commit/0394f0e))
+* **pkgmap:** fixed path prefix bit ([d1f3e54](https://github.com/npm/tink/commit/d1f3e54))
+* **pkgmap:** perf fixed :D :D :D ([3052dbf](https://github.com/npm/tink/commit/3052dbf))
+* **pkgmap:** refactor to make it a bit more readable ([deb0b19](https://github.com/npm/tink/commit/deb0b19))
+* **stat:** have stat properly return false ([3c7cd8b](https://github.com/npm/tink/commit/3c7cd8b))
+* **test:** get tests passing again ([b4ed34d](https://github.com/npm/tink/commit/b4ed34d))
+* **test:** update pkgmap tests ([95e0f59](https://github.com/npm/tink/commit/95e0f59))
+
+
+### Code Refactoring
+
+* use async/await ([36bc210](https://github.com/npm/tink/commit/36bc210))
+
+
+### Features
+
+* **bin:** add a bin file for CLI usage ([9fc1c59](https://github.com/npm/tink/commit/9fc1c59))
+* **cli:** got a baseline CLI working again ([09a157f](https://github.com/npm/tink/commit/09a157f))
+* **config:** add currently-used config options ([9f825fc](https://github.com/npm/tink/commit/9f825fc))
+* **config:** add new config parser that supports private packages ([2f1ad46](https://github.com/npm/tink/commit/2f1ad46))
+* **config:** add support for loading configs from npm itself ([5b8fc0a](https://github.com/npm/tink/commit/5b8fc0a))
+* **frog:** add base installer proof of concept ([91bebdb](https://github.com/npm/tink/commit/91bebdb))
+* **fs:** add first draft of fs-overrider ([9cf0dde](https://github.com/npm/tink/commit/9cf0dde))
+* **fs:** move fs into dir + mock up internal stat ([38c1114](https://github.com/npm/tink/commit/38c1114))
+* **installer:** automatically run `npm install` if packages missing ([eda0157](https://github.com/npm/tink/commit/eda0157))
+* **loader:** add TS and jsx support ([d6950a1](https://github.com/npm/tink/commit/d6950a1))
+* **module:** support module loading from pkgmap ([68f098f](https://github.com/npm/tink/commit/68f098f))
+* **node:** module for overriding all node bits ([7066961](https://github.com/npm/tink/commit/7066961))
+* **pkgmap:** add mapped file resolve/read/stat support ([c511e17](https://github.com/npm/tink/commit/c511e17))
+* **pkgmap:** add verify option to stat* ([261f6ec](https://github.com/npm/tink/commit/261f6ec))
+* **pkgmap:** cache pkgmap parse failures too ([f9ba662](https://github.com/npm/tink/commit/f9ba662))
+* **pkgmap:** cache pkgmaps even if missing ([3cfd0e6](https://github.com/npm/tink/commit/3cfd0e6))
+* **pkgmap:** support prefixed OR unprefixed path_prefix ([2e1bccc](https://github.com/npm/tink/commit/2e1bccc))
+* **restore:** automatically restore missing and broken files ([3d8ded8](https://github.com/npm/tink/commit/3d8ded8))
+
+
+### BREAKING CHANGES
+
+* no longer compatible with node@<8
