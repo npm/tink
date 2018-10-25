@@ -36,7 +36,10 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
             },
             '@myscope/scoped': {
               files: {
-                'ohmy.js': 'sha1-abcdef'
+                'ohmy.js': 'sha1-abcdef',
+                'lib': {
+                  'hithere.js': 'sha1-badbebe'
+                }
               }
             }
           }
@@ -69,13 +72,13 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
   const scoped = path.join(prefix, 'node_modules', '@myscope/scoped')
   t.similar(pkgmap.resolve(scoped, 'ohmy.js'), {
     cache: './here',
-    hash: 'sha1-abcdef',
-    pkg: {
-      files: {
-        'ohmy.js': 'sha1-abcdef'
-      }
-    }
+    hash: 'sha1-abcdef'
   }, 'found nested scoped spec inside a package-map')
+  t.similar(pkgmap.resolve(scoped, 'lib/hithere.js'), {
+    cache: './here',
+    hash: 'sha1-badbebe',
+    resolvedPath: path.resolve(scoped, 'lib', 'hithere.js')
+  }, 'found nested scoped spec in a directory in a package')
   rimraf.sync(path.join(testDir.path))
   t.similar(pkgmap.resolve(prefix, 'hello.js'), {
     cache: './here',
@@ -87,7 +90,9 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
     }
   }, 'found file even though pkgmap deleted')
   pkgmap._clearCache()
-  t.notOk(pkgmap.resolve(prefix, 'hello.js'), 'cache gone after clearing')
+  t.throws(() => {
+    pkgmap.resolve(prefix, 'hello.js')
+  }, /ENOENT/, 'cache gone after clearing')
   pkgmap._clearCache()
 })
 
