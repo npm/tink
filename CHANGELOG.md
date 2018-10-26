@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/npm/tink/compare/v0.0.2...v0.1.0) (2018-10-26)
+
+
+### Bug Fixes
+
+* **config:** prevent _cacache-chaining in config stuff ([4e89103](https://github.com/npm/tink/commit/4e89103))
+* **ensure-package:** get webpack stuff working ([c6d551c](https://github.com/npm/tink/commit/c6d551c))
+* **ensure-package:** stop monkey-patching. Leave it up to folks ([4df88b2](https://github.com/npm/tink/commit/4df88b2))
+* **ensure-package:** warn on any errors ([f561cbb](https://github.com/npm/tink/commit/f561cbb))
+* **pkgmap:** check that the value in the object is actually a string ([c134415](https://github.com/npm/tink/commit/c134415))
+* **readdir:** get it working again ([146587a](https://github.com/npm/tink/commit/146587a))
+* **test:** add resolvedPath to fix pkgmap tests ([2adbd1e](https://github.com/npm/tink/commit/2adbd1e))
+
+
+### Features
+
+* **fs:** add directory support to fs ops ([2d7bec4](https://github.com/npm/tink/commit/2d7bec4))
+* **fs:** add fs.readdir* support ([042a1f8](https://github.com/npm/tink/commit/042a1f8))
+* **pkgmap:** treat .package-map.json as a directory ([66c7f2e](https://github.com/npm/tink/commit/66c7f2e))
+* **resolve:** be evil for a bit ([198a2ff](https://github.com/npm/tink/commit/198a2ff))
+* **spawn:** add spawn-wrap for child process support ([6870716](https://github.com/npm/tink/commit/6870716))
+
+
+
 <a name="0.0.2"></a>
 ## [0.0.2](https://github.com/npm/tink/compare/v0.0.1...v0.0.2) (2018-10-15)
 
