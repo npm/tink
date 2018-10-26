@@ -40,25 +40,3 @@ isn't clear.
 Big thanks to [Szymon Lisowiec](https://kysune.me/) for donating the `tink`
 package name on npm! This package was previously an error logger helper tool,
 but now it's a package manager runtime!
-
-### TODO
-
-* [x] lay out project
-* [x] extract exploded pacote tarballs into cacache + build per-project index
-* [x] do some basic benchmarks
-* [x] write a node loader that can load a package through the file index
-* [x] do some load time benchmarks
-* [x] use `cache` from config, not from pkgmap (stop writing it there)
-* [x] make pkgmap auto-fetch packages for missing hashes on the fly
-* [x] add support for auth and .npmrc
-* [x] implement fs.readdir* (needed for webpack)
-* [x] use spawn-wrap to support child_process calls
-* [x] add directory support to fs ops
-* [ ] add fallback where "incompatible" packages get dumped into node_modules (and tagged a such in `package-map.json`)
-* [ ] add support for node-gyp build caching to make native packages compatible
-* [ ] add support for bin/man linking
-* [ ] warn if installing a package that requires run-scripts
-* [ ] warn if installing something that requires bin/man linking
-* [ ] benchmark wubwub?
-* [ ] write tests for fs overrides
-* [ ] optimize fs and module load operations (need to analyze)
