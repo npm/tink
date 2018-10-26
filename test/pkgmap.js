@@ -161,12 +161,12 @@ test('stat: get filesystem stats for a file', async t => {
   t.ok(!stat.isDirectory(), 'stat is not a directory')
   t.ok(pkgmap.statSync(p), 'got stat from cache (sync)')
   t.equal(
-    await pkgmap.stat({cache: cacheDir, hash: 'sha1-deadbeef'}),
+    await pkgmap.stat({cache: cacheDir, hash: 'sha1-deadbeef', resolvedPath: '/foo/bar'}),
     false,
     'returns false if stat fails'
   )
   t.equal(
-    pkgmap.statSync({cache: cacheDir, hash: 'sha1-deadbeef'}),
+    pkgmap.statSync({cache: cacheDir, hash: 'sha1-deadbeef', resolvedPath: '/foo/bar'}),
     false,
     'returns false if stat fails'
   )
