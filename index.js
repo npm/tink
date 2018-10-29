@@ -34,7 +34,7 @@ function checkPkgMap () {
   try {
     const base = process.cwd()
     const lock = JSON.parse(stripBOM(fs.readFileSync(path.join(base, 'package-lock.json'), 'utf8')))
-    const map = JSON.parse(stripBOM(fs.readFileSync(path.join(base, 'node_modules', '.package-map.json'), 'utf8')))
+    const map = JSON.parse(stripBOM(fs.readFileSync(path.join(base, '.package-map.json'), 'utf8')))
     require('ssri').checkData(
       JSON.stringify(lock), map.lockfile_integrity, {error: true}
     )

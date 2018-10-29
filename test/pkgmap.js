@@ -11,13 +11,58 @@ const {File, Dir} = Tacks
 
 const pkgmap = require('../lib/pkgmap.js')
 
+test('UNIT readPkgMap', t => {
+  process.tink = {
+    cache: './here'
+  }
+  const pkgMap = {
+    path_prefix: '/node_modules',
+    packages: {
+      'eggplant': {
+        files: {
+          'hello.js': 'sha1-deadbeef'
+        }
+      }
+    },
+    scopes: {
+      'eggplant': {
+        path_prefix: '/node_modules',
+        packages: {
+          'aubergine': {
+            files: {
+              'bonjour.js': 'sha1-badc0ffee'
+            }
+          },
+          '@myscope/scoped': {
+            files: {
+              'ohmy.js': 'sha1-abcdef',
+              'lib': {
+                'hithere.js': 'sha1-badbebe'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  const fixture = new Tacks(Dir({
+    '.package-map.json': File(pkgMap)
+  }))
+  fixture.create(testDir.path)
+  t.deepEqual(pkgmap.readPkgMap('node_modules/eggplant'), {
+    pkgMap,
+    subPath: '/node_modules/eggplant'
+  })
+  t.done()
+})
+
 test('resolve: finds an existing path into a .package-map.json', async t => {
   process.tink = {
     cache: './here'
   }
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
-      path_prefix: '/.package-map.json',
+      path_prefix: '/node_modules',
       packages: {
         'eggplant': {
           files: {
@@ -48,7 +93,7 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
     })
   }))
   fixture.create(testDir.path)
-  const prefix = path.join(testDir.path, '.package-map.json', 'eggplant')
+  const prefix = path.join(testDir.path, 'node_modules', 'eggplant')
   t.similar(pkgmap.resolve(prefix, 'hello.js'), {
     cache: './here',
     hash: 'sha1-deadbeef',
@@ -90,9 +135,7 @@ test('resolve: finds an existing path into a .package-map.json', async t => {
     }
   }, 'found file even though pkgmap deleted')
   pkgmap._clearCache()
-  t.throws(() => {
-    pkgmap.resolve(prefix, 'hello.js')
-  }, /ENOENT/, 'cache gone after clearing')
+  t.equal(pkgmap.resolve(prefix, 'hello.js'), null, 'cache gone')
   pkgmap._clearCache()
 })
 
@@ -104,7 +147,7 @@ test('read: reads a file defined in a package map', async t => {
   }
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
-      path_prefix: '/.package-map.json',
+      path_prefix: '/node_modules',
       packages: {
         'eggplant': {
           files: {
@@ -116,7 +159,7 @@ test('read: reads a file defined in a package map', async t => {
   }))
   fixture.create(testDir.path)
   const p = pkgmap.resolve(
-    testDir.path, '.package-map.json', 'eggplant', 'hello.js'
+    testDir.path, 'node_modules', 'eggplant', 'hello.js'
   )
   t.equal(
     (await pkgmap.read(p)).toString('utf8'),
@@ -141,7 +184,7 @@ test('stat: get filesystem stats for a file', async t => {
   }
   const fixture = new Tacks(Dir({
     '.package-map.json': File({
-      path_prefix: '/.package-map.json',
+      path_prefix: '/node_modules',
       packages: {
         'eggplant': {
           files: {
@@ -153,7 +196,7 @@ test('stat: get filesystem stats for a file', async t => {
   }))
   fixture.create(testDir.path)
   const p = pkgmap.resolve(
-    testDir.path, '.package-map.json', 'eggplant', 'hello.js'
+    testDir.path, 'node_modules', 'eggplant', 'hello.js'
   )
   const stat = await pkgmap.stat(p)
   t.ok(stat, 'got stat from cache file')
