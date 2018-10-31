@@ -49,6 +49,7 @@
     "bin-links": "^1.1.2",
     "bluebird": "^3.5.1",
     "cacache": "^11.2.0",
+    "clear-module": "^3.0.0",
     "figgy-pudding": "^3.5.1",
     "find-npm-prefix": "^1.0.2",
     "get-stream": "^3.0.0",
