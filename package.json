@@ -77,5 +77,8 @@
         "test/**"
       ]
     }
-  }
+  },
+  "bundleDependencies": [
+    "yargs"
+  ]
 }

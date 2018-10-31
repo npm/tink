@@ -53,7 +53,7 @@ itself, and may be entirely missing, or named something different, or behave
 completely different. tink is still under heavy development and you should
 expect everything to change without notice.
 
-##### <a name="tink-exec"></a> `$ tink shell [options] [arguments]`
+##### <a name="tink-shell"></a> `$ tink shell [options] [arguments]`
 
 * Aliases: `tink sh`, `tish`
 
