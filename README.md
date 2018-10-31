@@ -94,6 +94,11 @@ they're the only ones that stick around when you go back to tink mode. See
 If `--production`, `--only=<prod|dev>`, or `--also=<prod|dev>` options are
 passed in, they can be used to limit which dependency types get unwound.
 
+By default, this command will leave any files that were already in
+`node_modules/` intact, so your patches won't be clobbered. To do a full reset,
+or a specific reset on a file, remove the specific file or all of
+`node_modules/` manually before calling `tink unwind`
+
 ##### <a name="tink-wind"></a> `$ tink wind [options] [package...]`
 
 * Aliases: `tink roll`, `tink rewind`
@@ -167,6 +172,25 @@ Verifies that `package.json` and `package-lock.json` are in sync. If `--auto` is
 specified, the inconsistency will be automatically corrected, using
 `package.json` as the source of truth.
 
+##### <a name="tink-check-licenses"></a> `$ tink check-licenses [options] [spec...]`
+
+By default, verifies that the current project has a valid `"license"` field, and
+that all dependencies (and transitive dependencies) have valid licenses
+configured.
+
+If one or more `spec` arguments are provided, this behavior changes such that
+only the packages specified by the `spec`s get verified according to current
+settings.
+
+A list of detected licenses will be printed out. Use `--json` to get the
+licenses in a parseable format.
+
+Additionally, two `package.json` fields can be used to further configure the
+license-checking behavior:
+
+* `"blacklist": [licenses...]` - Any detected licenses listed here will trigger an error for `tink check-licenses`. This takes precedence over `"whitelist"`
+* `"whitelist": [licenses...]` - Any detected licenses NOT listed in here will trigger an error.
+
 ##### <a name="tink-lint"></a> `$ tink lint [options]`
 
 * Aliases: `tink typecheck`, `tink type`
@@ -196,9 +220,62 @@ the output together into one big report:
 
 1. [`tink check-lock`](#tink-check-lock) - verify that the `package-lock.json` and `package.json` are in sync, and that `.package-map.json` is up to date.
 1. [`tink audit`](#tink-audit) - runs a security audit of the project's dependencies.
+1. [`tink check-licenses`](#tink-check-licenses) - verifies that the current project has a license configured, and that all dependencies have valid licenses, and that none of those licenses are blacklisted (or, if using a whitelist, that they are all in said whitelist -- see the `tink check-licenses` docs for details).
 1. [`tink lint`](#tink-lint) - runs the configured linter, or a general, default linter that statically scans for syntax errors.
 1. [`tink build`](#tink-build) - if a build script is configured, the build will be executed to make sure it completes successfully -- otherwise, this step is skipped.
 1. [`tink test`](#tink-test) - runs the configured test suite. skipped if no tests configured, but a warning will be emitted.
 
 The final report includes potential action items related to each step. Use
 `--verbose` to see more detailed output for each report.
+
+##### <a name="tink-publish"></a> `$ tink publish [options] [tarball...]`
+
+Publishes the current package to the configured `registry`. The package will be
+turned into a tarball using `tink pack`, and the tarball will then be uploaded.
+This command will also print out a summary of tarball details, including the
+files that were included and the hashes for the tarball.
+
+If One-Time-Passwords are configured on the registry and the terminal is a TTY,
+this command will prompt for an OTP token if `--otp <token>` is not used. If
+this happens outside of a TTY, the command will fail with an EOTP error.
+
+Unlike `npm publish`, `tink publish` **requires** that `package.json` include a
+`"files":[]` array specifying which files will be included in the publish,
+otherwise the publish will fail with an error. `.npmignore` is obeyed, but does
+not remove the requirement for `"files"`.
+
+If `--dry-run` is used, all steps will be done, except the final data upload to
+the registry. Because the upload never happens, `--dry-run` can't be used to
+verify that publish credentials work.
+
+If one or more `tarball` arguments are passed, they will be treated as
+[`npm-package-arg`](https://npm.im/npm-package-arg) specifiers, fetched, and
+re-published. This is most useful with git repositories and local tarballs that
+have already been packaged up by [`tink pack`](#tink-pack)
+
+##### <a name="tink-pack"></a> `$ tink pack [options] [spec...]`
+
+Collects the current package into a tarball and writes it to
+`./<pkgname>-<pkgversion>.tgz`. Also prints out a summary of tarball details,
+including the files that were included and the hashes for the tarball.
+
+Unlike `npm pack`, `tink pack` **requires** that `package.json` include a
+`"files":[]` array specifying which files will be included in the publish,
+otherwise the publish will fail with an error. `.npmignore` is obeyed, but does
+not remove the requirement for `"files"`.
+
+If one or more `spec` arguments are passed, they will be treated as
+[`npm-package-arg`](https://npm.im/npm-package-arg) specifiers, fetched, and
+their tarballed packages written to the current directory. This is most useful
+for fetching the tarballs of registry-hosted dependencies. For example: `$ tink
+pack react@1.2.3` will write the tarball to `./react-1.2.3.tgz`.
+
+##### <a name="tink-login"></a> `$ tink login`
+
+Use this command to log in to the current npm registry. This command may open a
+browser window.
+
+##### <a name="tink-logout"></a> `$ tink logout`
+
+Use this command to remove any auth tokens for the current registry from your
+configuration.
