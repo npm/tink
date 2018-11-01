@@ -4,10 +4,10 @@ const cacache = require('cacache')
 const path = require('path')
 const rimraf = require('rimraf')
 const Tacks = require('tacks')
-const {test} = require('tap')
+const { test } = require('tap')
 const testDir = require('./util/test-dir.js')
 
-const {File, Dir} = Tacks
+const { File, Dir } = Tacks
 
 const pkgmap = require('../lib/pkgmap.js')
 
@@ -204,12 +204,12 @@ test('stat: get filesystem stats for a file', async t => {
   t.ok(!stat.isDirectory(), 'stat is not a directory')
   t.ok(pkgmap.statSync(p), 'got stat from cache (sync)')
   t.equal(
-    await pkgmap.stat({cache: cacheDir, hash: 'sha1-deadbeef', resolvedPath: '/foo/bar'}),
+    await pkgmap.stat({ cache: cacheDir, hash: 'sha1-deadbeef', resolvedPath: '/foo/bar' }),
     false,
     'returns false if stat fails'
   )
   t.equal(
-    pkgmap.statSync({cache: cacheDir, hash: 'sha1-deadbeef', resolvedPath: '/foo/bar'}),
+    pkgmap.statSync({ cache: cacheDir, hash: 'sha1-deadbeef', resolvedPath: '/foo/bar' }),
     false,
     'returns false if stat fails'
   )
