@@ -73,7 +73,23 @@ corrupted dependencies that are found during the loading process. To disable
 this feature, use the `--production` or `--offline` options.
 
 To get a physical `node_modules/` directory to interact with, see [`tink
-extract`](#tink-extract).
+unwind`](#tink-unwind).
+
+##### <a name="tink-prepare"></a> `$ tink prepare [options] [package...]`
+
+* Aliases: `tink prep`
+
+Preloads declared dependencies. You can use this to make sure that by the time
+you use [`tink shell`](#tink-shell), all declared dependencies will already be
+cached and available, so there won't be any execution delay from inline fetching
+and repairing. If anything is missing or corrupted, it will be automatically
+re-fetched.
+
+If one or more `package`s are passed in, they should be the names of packages
+already in `package.json`, and only the listed packages will be preloaded,
+instead of preloading all of them. If you want to add a new dependency, use
+[`tink add`](#tink-add) instead, which will also `prepare` the new dependencies
+for you (so `tink prepare` isn't necessary after a `tink add`).
 
 ##### <a name="tink-unwind"></a> `$ tink unwind [options] [package...]`
 
