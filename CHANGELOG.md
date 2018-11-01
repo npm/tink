@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/npm/tink/compare/v0.2.0...v0.3.0) (2018-11-01)
+
+
+### Bug Fixes
+
+* **docs:** badges were rendering horribly. ([950453c](https://github.com/npm/tink/commit/950453c))
+* **lint:** get rid of unused lines ([95f42a3](https://github.com/npm/tink/commit/95f42a3))
+* **lint:** standard --fix ([36db971](https://github.com/npm/tink/commit/36db971))
+* **nodeArg:** pass in nodeArgs ([2b870e6](https://github.com/npm/tink/commit/2b870e6))
+
+
+### Features
+
+* **cmd:** use yargs for cmd management and regular opt parsing ([ca7fc3e](https://github.com/npm/tink/commit/ca7fc3e))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/npm/tink/compare/v0.1.0...v0.2.0) (2018-10-29)
 
