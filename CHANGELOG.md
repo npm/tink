@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/npm/tink/compare/v0.3.0...v0.4.0) (2018-11-02)
+
+
+### Bug Fixes
+
+* **config:** add dir and prepublish because npm-lifecycle needs them ([e43fdee](https://github.com/npm/tink/commit/e43fdee))
+* **ensure-package:** tag native build scripts as install scripts too ([40f4e98](https://github.com/npm/tink/commit/40f4e98))
+* **fs:** sometimes, we pick up graceful-fs by accident ([3d8d57a](https://github.com/npm/tink/commit/3d8d57a))
+* **output:** handle installer errors and print them ([737769f](https://github.com/npm/tink/commit/737769f))
+
+
+### Features
+
+* **installer:** enable bin linking and script running ([dc1b403](https://github.com/npm/tink/commit/dc1b403))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/npm/tink/compare/v0.2.0...v0.3.0) (2018-11-01)
 
