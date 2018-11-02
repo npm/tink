@@ -13,5 +13,7 @@ function main () {
     .demandCommand(1, 'Subcommand is required')
     .strict()
     .help()
+    .alias('help', 'h')
+    .alias('version', 'v')
     .argv
 }
