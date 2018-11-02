@@ -59,6 +59,7 @@
     "get-stream": "^4.1.0",
     "glob": "^7.1.3",
     "graceful-fs": "^4.1.11",
+    "ini": "^1.3.5",
     "jsx-transform": "^2.4.0",
     "libnpm": "^1.0.0",
     "lock-verify": "^2.0.2",
