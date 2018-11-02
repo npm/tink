@@ -15,5 +15,6 @@ function main () {
     .help()
     .alias('help', 'h')
     .alias('version', 'v')
+    .completion()
     .argv
 }
