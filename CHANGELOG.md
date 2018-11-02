@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/npm/tink/compare/v0.5.0...v0.6.0) (2018-11-02)
+
+
+### Bug Fixes
+
+* **lint:** overrideAPI is no longer used ([0135065](https://github.com/npm/tink/commit/0135065))
+
+
+### Features
+
+* **cmd:** add ping command ([28c32b5](https://github.com/npm/tink/commit/28c32b5))
+* **fs:** add create*Stream support ([b93ff78](https://github.com/npm/tink/commit/b93ff78))
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/npm/tink/compare/v0.4.1...v0.5.0) (2018-11-02)
 
