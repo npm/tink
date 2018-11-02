@@ -12,7 +12,10 @@
     "lib"
   ],
   "main": "index.js",
-  "bin": "index.js",
+  "bin": {
+    "tink": "./bin/tink.js",
+    "tish": "./bin/tish.sh"
+  },
   "scripts": {
     "prerelease": "npm t",
     "release": "standard-version -s",
