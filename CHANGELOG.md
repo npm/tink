@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/npm/tink/compare/v0.6.0...v0.7.0) (2018-11-02)
+
+
+### Bug Fixes
+
+* **config:** no longer need this hack ([c943f6c](https://github.com/npm/tink/commit/c943f6c))
+
+
+### Features
+
+* **cli:** add aliases for version and help ([d4f4b74](https://github.com/npm/tink/commit/d4f4b74))
+* **cli:** enable completion script ([a80f318](https://github.com/npm/tink/commit/a80f318))
+* **cli:** report unknown commands ([85cfb82](https://github.com/npm/tink/commit/85cfb82))
+* **repl:** copy main repl from node for a nicer experience ([3104891](https://github.com/npm/tink/commit/3104891))
+
+
+
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/npm/tink/compare/v0.5.0...v0.6.0) (2018-11-02)
 
