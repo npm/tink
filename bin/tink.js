@@ -10,7 +10,8 @@ function main () {
   require('npmlog').heading = 'tink'
   return require('yargs')
     .commandDir('../lib/yargs-modules')
-    .demandCommand()
+    .demandCommand(1, 'Subcommand is required')
+    .strict()
     .help()
     .argv
 }
