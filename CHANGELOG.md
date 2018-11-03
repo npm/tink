@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/npm/tink/compare/v0.7.3...v0.8.0) (2018-11-03)
+
+
+### Features
+
+* **cli:** recommend commands if none match ([f8cd9f0](https://github.com/npm/tink/commit/f8cd9f0))
+* **cmd:** big refactor on cmd and opts stuff. ([0cf251f](https://github.com/npm/tink/commit/0cf251f))
+* **prepare:** add a first draft of `tink prepare`. ([7046f50](https://github.com/npm/tink/commit/7046f50))
+
+
+
 <a name="0.7.3"></a>
 ## [0.7.3](https://github.com/npm/tink/compare/v0.7.2...v0.7.3) (2018-11-03)
 
