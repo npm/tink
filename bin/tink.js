@@ -9,7 +9,7 @@ module.exports = main
 function main () {
   require('npmlog').heading = 'tink'
   return require('yargs')
-    .commandDir('../lib/yargs-modules')
+    .commandDir('../lib/commands')
     .demandCommand(1, 'Subcommand is required')
     .recommendCommands()
     .help()
