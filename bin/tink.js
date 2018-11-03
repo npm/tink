@@ -11,7 +11,7 @@ function main () {
   return require('yargs')
     .commandDir('../lib/yargs-modules')
     .demandCommand(1, 'Subcommand is required')
-    .strict()
+    .recommendCommands()
     .help()
     .alias('help', 'h')
     .alias('version', 'v')
