@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.3"></a>
+## [0.7.3](https://github.com/npm/tink/compare/v0.7.2...v0.7.3) (2018-11-03)
+
+
+### Bug Fixes
+
+* **release:** forgot to include bin dir ([84ef2eb](https://github.com/npm/tink/commit/84ef2eb))
+
+
+
 <a name="0.7.2"></a>
 ## [0.7.2](https://github.com/npm/tink/compare/v0.7.1...v0.7.2) (2018-11-02)
 
