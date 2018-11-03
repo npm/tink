@@ -9,7 +9,8 @@
   "license": "ISC",
   "files": [
     "*.js",
-    "lib"
+    "lib",
+    "bin"
   ],
   "main": "index.js",
   "bin": {
