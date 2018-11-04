@@ -2,7 +2,6 @@
 
 require('../lib/node/index.js')
 
-const MainOpts = require('figgy-pudding')(require('../lib/common-opts.js'))
 const CMDS = new Map([
   ['sh', require('../lib/commands/shell.js')],
   ['shell', require('../lib/commands/shell.js')],
@@ -18,27 +17,12 @@ if (require.main === module) {
 module.exports = main
 function main (argv) {
   const log = require('npmlog')
-  const npmConfig = require('../lib/config.js')
   log.heading = 'tink'
+  const npmConfig = require('../lib/config.js')
   if (needsYargs(argv)) {
-    console.error('using yargs...', argv)
-    let config = require('yargs')
-      .demandCommand(1, 'Subcommand is required')
-      .recommendCommands()
-      .help()
-      .alias('help', 'h')
-      .alias('version', 'v')
-      .completion()
-    for (const mod of CMDS.values()) {
-      config = config.command(mod)
-    }
-    const yargv = npmConfig(config.argv).concat({ log })
-    log.level = yargv.loglevel || 'notice'
+    return runCommandWithYargs(argv, log, npmConfig)
   } else {
-    // This is an optimization because Yargs can be expensive to load.
-    const opts = npmConfig({ log, _: argv.slice(2) })
-    log.level = opts.loglevel
-    return noYargsShortcut(argv[2], opts)
+    return noYargsShortcut(argv, log, npmConfig)
   }
 }
 
@@ -48,6 +32,25 @@ function needsYargs (argv) {
   )
 }
 
-function noYargsShortcut (cmd, opts) {
-  return CMDS.get(cmd).handler(opts)
+function runCommandWithYargs (argv, log, npmConfig) {
+  // This code path costs ~200ms on startup.
+  let config = require('yargs')
+    .demandCommand(1, 'Subcommand is required')
+    .recommendCommands()
+    .help()
+    .alias('help', 'h')
+    .alias('version', 'v')
+    .completion()
+  for (const mod of CMDS.values()) {
+    config = config.command(mod)
+  }
+  const yargv = npmConfig(config.argv).concat({ log })
+  log.level = yargv.loglevel || 'notice'
+}
+
+function noYargsShortcut (argv, log, npmConfig) {
+  // This is an optimization because Yargs can be expensive to load.
+  const opts = npmConfig({ log, _: argv.slice(2) })
+  log.level = opts.loglevel
+  return CMDS.get(argv[2]).handler(opts)
 }
