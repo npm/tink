@@ -1,9 +1,9 @@
 'use strict'
 
-const cacache = require('cacache')
+// const cacache = require('cacache')
 const npa = require('npm-package-arg')
-const path = require('path')
-const rimraf = require('rimraf')
+// const path = require('path')
+// const rimraf = require('rimraf')
 const Tacks = require('tacks')
 const { test } = require('tap')
 const testDir = require('./util/test-dir.js')
@@ -12,7 +12,7 @@ const { File, Dir } = Tacks
 
 const pkglock = require('../lib/pkglock.js')
 
-test('UNIT depKey', t => {
+test('depKey', async t => {
   const regDep = {
     version: '1.2.3',
     resolved: 'https://reg.reg/foo-1.2.3.tgz',
@@ -72,5 +72,23 @@ test('UNIT depKey', t => {
     `tinked-package:${pkglock.INDEX_VERSION}:foo:file:idk.tgz:undefined:sha1-deadbeef`,
     'local file -> fallthrough to default'
   )
-  t.done()
 })
+
+test('resolveEntity basic', async t => {
+  const lock = {
+    dependencies: {
+      foo: {
+        version: '1.2.3',
+        resolved: 'https://npm.reg/foo-1.2.3.tgz',
+        integrity: 'sha1-badc0ffee'
+      }
+    }
+  }
+  const fixture = new Tacks(Dir({
+    'package-lock.json': File(lock),
+    '_cacache': Dir()
+  }))
+  fixture.create(testDir.path)
+})
+
+test('resolveEntity auto-fetch')
