@@ -52,5 +52,10 @@ function noYargsShortcut (argv, log, npmConfig) {
   // This is an optimization because Yargs can be expensive to load.
   const opts = npmConfig({ log, _: argv.slice(2) })
   log.level = opts.loglevel
-  return CMDS.get(argv[2]).handler(opts)
+  const cmd = CMDS.get(argv[2])
+  if (!cmd) {
+    return runCommandWithYargs(argv, log, npmConfig)
+  } else {
+    return cmd.handler(opts)
+  }
 }
