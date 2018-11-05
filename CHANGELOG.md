@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.0"></a>
+# [0.9.0](https://github.com/npm/tink/compare/v0.8.0...v0.9.0) (2018-11-05)
+
+
+### Bug Fixes
+
+* **cmd:** handle invalid subcmd case ([e1434e6](https://github.com/npm/tink/commit/e1434e6))
+
+
+### Features
+
+* **pkglock:** switch to loading deps off pkglock+cache ([5007c2c](https://github.com/npm/tink/commit/5007c2c))
+
+
+### BREAKING CHANGES
+
+* **pkglock:** this removes loading off package maps
+
+
+
 <a name="0.8.0"></a>
 # [0.8.0](https://github.com/npm/tink/compare/v0.7.3...v0.8.0) (2018-11-03)
 
