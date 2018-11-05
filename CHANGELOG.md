@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.1"></a>
+## [0.9.1](https://github.com/npm/tink/compare/v0.9.0...v0.9.1) (2018-11-05)
+
+
+### Bug Fixes
+
+* **pkglock:** get require working again ([206b692](https://github.com/npm/tink/commit/206b692))
+* **pkglock:** plug some infinite loops in require path ([dc96890](https://github.com/npm/tink/commit/dc96890))
+
+
+
 <a name="0.9.0"></a>
 # [0.9.0](https://github.com/npm/tink/compare/v0.8.0...v0.9.0) (2018-11-05)
 
