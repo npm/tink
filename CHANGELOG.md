@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.2"></a>
+## [0.9.2](https://github.com/npm/tink/compare/v0.9.1...v0.9.2) (2018-11-06)
+
+
+### Bug Fixes
+
+* **perf:** improve require perf by speeding up resolver some more ([0876da7](https://github.com/npm/tink/commit/0876da7))
+* **pkglock:** improve perf a bit by using cacache memoization ([c06ad62](https://github.com/npm/tink/commit/c06ad62))
+
+
+
 <a name="0.9.1"></a>
 ## [0.9.1](https://github.com/npm/tink/compare/v0.9.0...v0.9.1) (2018-11-05)
 
