@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+require('../lib/node/index.js')
+
 const CMDS = new Map([
   ['sh', require('../lib/commands/shell.js')],
   ['shell', require('../lib/commands/shell.js')],
