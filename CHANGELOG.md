@@ -2,6 +2,135 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.2"></a>
+## [0.9.2](https://github.com/npm/tink/compare/v0.9.1...v0.9.2) (2018-11-06)
+
+
+### Bug Fixes
+
+* **perf:** improve require perf by speeding up resolver some more ([0876da7](https://github.com/npm/tink/commit/0876da7))
+* **pkglock:** improve perf a bit by using cacache memoization ([c06ad62](https://github.com/npm/tink/commit/c06ad62))
+
+
+
+<a name="0.9.1"></a>
+## [0.9.1](https://github.com/npm/tink/compare/v0.9.0...v0.9.1) (2018-11-05)
+
+
+### Bug Fixes
+
+* **pkglock:** get require working again ([206b692](https://github.com/npm/tink/commit/206b692))
+* **pkglock:** plug some infinite loops in require path ([dc96890](https://github.com/npm/tink/commit/dc96890))
+
+
+
+<a name="0.9.0"></a>
+# [0.9.0](https://github.com/npm/tink/compare/v0.8.0...v0.9.0) (2018-11-05)
+
+
+### Bug Fixes
+
+* **cmd:** handle invalid subcmd case ([e1434e6](https://github.com/npm/tink/commit/e1434e6))
+
+
+### Features
+
+* **pkglock:** switch to loading deps off pkglock+cache ([5007c2c](https://github.com/npm/tink/commit/5007c2c))
+
+
+### BREAKING CHANGES
+
+* **pkglock:** this removes loading off package maps
+
+
+
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/npm/tink/compare/v0.7.3...v0.8.0) (2018-11-03)
+
+
+### Features
+
+* **cli:** recommend commands if none match ([f8cd9f0](https://github.com/npm/tink/commit/f8cd9f0))
+* **cmd:** big refactor on cmd and opts stuff. ([0cf251f](https://github.com/npm/tink/commit/0cf251f))
+* **prepare:** add a first draft of `tink prepare`. ([7046f50](https://github.com/npm/tink/commit/7046f50))
+
+
+
+<a name="0.7.3"></a>
+## [0.7.3](https://github.com/npm/tink/compare/v0.7.2...v0.7.3) (2018-11-03)
+
+
+### Bug Fixes
+
+* **release:** forgot to include bin dir ([84ef2eb](https://github.com/npm/tink/commit/84ef2eb))
+
+
+
+<a name="0.7.2"></a>
+## [0.7.2](https://github.com/npm/tink/compare/v0.7.1...v0.7.2) (2018-11-02)
+
+
+### Bug Fixes
+
+* **sh:** oops -- wrong argument count for script execution ([854a8f1](https://github.com/npm/tink/commit/854a8f1))
+
+
+
+<a name="0.7.1"></a>
+## [0.7.1](https://github.com/npm/tink/compare/v0.7.0...v0.7.1) (2018-11-02)
+
+
+### Bug Fixes
+
+* **sh:** allow CLI args to be passable down to tink sh-based bins ([9171514](https://github.com/npm/tink/commit/9171514))
+
+
+
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/npm/tink/compare/v0.6.0...v0.7.0) (2018-11-02)
+
+
+### Bug Fixes
+
+* **config:** no longer need this hack ([c943f6c](https://github.com/npm/tink/commit/c943f6c))
+
+
+### Features
+
+* **cli:** add aliases for version and help ([d4f4b74](https://github.com/npm/tink/commit/d4f4b74))
+* **cli:** enable completion script ([a80f318](https://github.com/npm/tink/commit/a80f318))
+* **cli:** report unknown commands ([85cfb82](https://github.com/npm/tink/commit/85cfb82))
+* **repl:** copy main repl from node for a nicer experience ([3104891](https://github.com/npm/tink/commit/3104891))
+
+
+
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/npm/tink/compare/v0.5.0...v0.6.0) (2018-11-02)
+
+
+### Bug Fixes
+
+* **lint:** overrideAPI is no longer used ([0135065](https://github.com/npm/tink/commit/0135065))
+
+
+### Features
+
+* **cmd:** add ping command ([28c32b5](https://github.com/npm/tink/commit/28c32b5))
+* **fs:** add create*Stream support ([b93ff78](https://github.com/npm/tink/commit/b93ff78))
+
+
+
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/npm/tink/compare/v0.4.1...v0.5.0) (2018-11-02)
+
+
+### Features
+
+* **bin:** add separate `tish` bin ([1203e7e](https://github.com/npm/tink/commit/1203e7e))
+* **fs:** add graceful-fs support, refactor, support writable open() ([07e097a](https://github.com/npm/tink/commit/07e097a))
+
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/npm/tink/compare/v0.4.0...v0.4.1) (2018-11-02)
 

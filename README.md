@@ -91,6 +91,13 @@ instead of preloading all of them. If you want to add a new dependency, use
 [`tink add`](#tink-add) instead, which will also `prepare` the new dependencies
 for you (so `tink prepare` isn't necessary after a `tink add`).
 
+##### <a name="tink-exec"></a> `$ tink exec [options] <pkg> [--] [args...]`
+
+* Aliases: `tink x`, `tx`
+
+Like [`npx`](https://npm.im/npx), but for tink. Runs any binaries directly
+through tink.
+
 ##### <a name="tink-unwind"></a> `$ tink unwind [options] [package...]`
 
 * Aliases: `tink extract`, `tink x`, `tink unroll`
