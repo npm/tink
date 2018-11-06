@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.5"></a>
+## [0.9.5](https://github.com/npm/tink/compare/v0.9.4...v0.9.5) (2018-11-06)
+
+
+### Bug Fixes
+
+* **installer:** finish getting rid of pkgmaps ([c3f3ab7](https://github.com/npm/tink/commit/c3f3ab7))
+
+
+
 <a name="0.9.4"></a>
 ## [0.9.4](https://github.com/npm/tink/compare/v0.9.3...v0.9.4) (2018-11-06)
 
