@@ -11,18 +11,14 @@ const relativeDate = require('tiny-relative-date')
 
 const { h, render, Fragment, Component, Color } = require('ink')
 
-module.exports = {
+const View = module.exports = {
   command: 'view [<@scope>/]<pkg>[@<version>] [<field>[.<subfield>]...]',
   aliases: ['v', 'info', 'show'],
   describe: 'Show information about a package',
   builder (yargs) {
-    return yargs.help().alias('help', 'h').options({
-      json: {
-        default: false,
-        type: 'boolean'
-      }
-    })
+    return yargs.help().alias('help', 'h').options(View.options)
   },
+  options: Object.assign(require('../common-opts'), {}),
   handler: view
 }
 
