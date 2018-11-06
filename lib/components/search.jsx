@@ -6,7 +6,7 @@ const { h, Color, Component } = require('ink')
 class Search extends Component {
   render () {
     const { terms } = this.props
-
+    return <Color blue>Yo there</Color>
     return h(
       Color,
       { grey: true },

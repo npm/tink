@@ -2,7 +2,7 @@
 
 const { h, render } = require('ink')
 const libnpm = require('libnpm')
-const { Search } = require('../components/search')
+const { Search } = require('../components/search.jsx')
 
 const SearchCommand = module.exports = {
   command: 'search',
