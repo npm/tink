@@ -61,6 +61,8 @@
     "glob": "^7.1.3",
     "graceful-fs": "^4.1.11",
     "ini": "^1.3.5",
+    "ink": "^0.5.1",
+    "ink-table": "^1.0.3",
     "jsx-transform": "^2.4.0",
     "libnpm": "^1.3.0",
     "lock-verify": "^2.0.2",
