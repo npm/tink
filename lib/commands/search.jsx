@@ -1,7 +1,6 @@
 'use strict'
 
 const { h, render } = require('ink')
-const libnpm = require('libnpm')
 const { Search } = require('../components/search.jsx')
 
 const SearchCommand = module.exports = {
@@ -15,8 +14,6 @@ const SearchCommand = module.exports = {
   options: Object.assign(require('../common-opts.js'), {}),
   handler: search
 }
-
-// One arg: search, no args: interactive
 
 async function search (argv) {
   let unmount
