@@ -1,5 +1,6 @@
 'use strict'
 
+const figures = require('figures')
 const {
   h,
   Color,
@@ -67,6 +68,7 @@ class Search extends Component {
 
   search (terms) {
     return libnpm.search(terms, {
+      detailed: true,
       limit: MAX_RESULTS
     })
   }
@@ -144,13 +146,49 @@ const SearchResults = ({ isLoading, matches, onSelect, terms }) => {
   return null
 }
 
+const PackageSelectIndicator = ({ isSelected }) => {
+  if (!isSelected) {
+    return ' ';
+  }
+
+  return <Color green>{`${figures.pointer} `}</Color>
+};
+
+const formatPackageScore = num => Math.round(num * 100)
+
+const PackageItem = ({ isSelected, value }) => {
+  const {
+    package: {
+      name,
+      publisher: { username }
+    },
+    score: {
+      detail: {
+        maintenance,
+        popularity,
+        quality
+      }
+    }
+  } = value
+
+  const m = formatPackageScore(maintenance)
+  const p = formatPackageScore(popularity)
+  const q = formatPackageScore(quality)
+
+  return <Color green={isSelected}>{name} @{username} p {p} q {q} m {m}</Color>
+}
+
 const PackageSelector = ({ matches, onSelect }) => {
   const items = matches.map(match => ({
     value: match,
-    label: match.name
+    label: match
   }))
 
-  return <SelectInput items={items} onSelect={onSelect} />
+  return <SelectInput
+    indicatorComponent={PackageSelectIndicator}
+    items={items}
+    itemComponent={PackageItem}
+    onSelect={onSelect} />
 }
 
 const InstallingPackage = ({ isInstalling, pkg }) => {
@@ -158,7 +196,7 @@ const InstallingPackage = ({ isInstalling, pkg }) => {
     return null
   }
 
-  return <div><Spinner /> <Color green>Installing {pkg.name}...</Color></div>
+  return <div><Spinner /> <Color green>Installing {pkg.package.name}...</Color></div>
 }
 
 module.exports = {
