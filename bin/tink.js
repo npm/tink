@@ -36,8 +36,5 @@ function runCommandWithYargs (argv, log, npmConfig) {
   }
   require('../lib/node/index.js')
   const yargv = npmConfig(config.argv).concat({ log })
-  process.tink = {
-    cache: yargv.cache
-  }
   log.level = yargv.loglevel || 'notice'
 }
