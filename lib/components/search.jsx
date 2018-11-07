@@ -36,7 +36,7 @@ class Search extends Component {
   componentDidMount () {
     const { terms } = this.props
     if (terms) {
-      this.search()
+      this.search(terms)
     }
   }
 
@@ -66,29 +66,16 @@ class Search extends Component {
     </div>
   }
 
-  search (terms) {
-    return libnpm.search(terms, {
-      detailed: true,
-      limit: MAX_RESULTS
-    })
-  }
-
-  install (pkg) {
-    // @todo Implement real install
-    return new Promise((resolve, reject) => setTimeout(resolve, 1000))
-  }
-
-  onChangeTerms (terms) {
-    this.setState({ terms })
-  }
-
-  async onSubmit (terms) {
+  async search (terms) {
     try {
       this.setState({
         isLoading: true,
         matches: []
       })
-      const matches = await this.search(this.state.terms)
+      const matches = await libnpm.search(terms, {
+        detailed: true,
+        limit: MAX_RESULTS
+      })
       this.setState({
         isLoading: false,
         matches
@@ -102,21 +89,32 @@ class Search extends Component {
     }
   }
 
-  async onSelectPackage (option) {
-    const { value: pkg } = option
-
+  async install (pkg) {
     try {
       this.setState({
         isInstalling: true,
         selectedPackage: pkg
       })
-      await this.install(pkg)
+      // @todo Implement real install
+      await new Promise((resolve, reject) => setTimeout(resolve, 1000))
       this.setState({ isInstalling: false })
       this.props.onExit()
     } catch (err) {
       // @todo Show error message
       this.setState({ isInstalling: false })
     }
+  }
+
+  onChangeTerms (terms) {
+    this.setState({ terms })
+  }
+
+  onSubmit (terms) {
+    this.search(terms)
+  }
+
+  onSelectPackage (pkg) {
+    this.install(pkg)
   }
 }
 
@@ -188,7 +186,7 @@ const PackageSelector = ({ matches, onSelect }) => {
     indicatorComponent={PackageSelectIndicator}
     items={items}
     itemComponent={PackageItem}
-    onSelect={onSelect} />
+    onSelect={({ value }) => onSelect(value)} />
 }
 
 const InstallingPackage = ({ isInstalling, pkg }) => {
