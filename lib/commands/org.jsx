@@ -1,5 +1,11 @@
 'use strict'
 
+const figgyPudding = require('figgy-pudding')
+const libnpm = require('libnpm')
+const { h, renderToString } = require('ink')
+const Table = require('ink-table').default
+const npmConfig = require('../config.js')
+
 const Org = module.exports = {
   command: 'org',
   describe: 'org-related subcommands',
@@ -31,10 +37,6 @@ const Org = module.exports = {
 }
 
 async function orgAdd (argv) {
-  const figgyPudding = require('figgy-pudding')
-  const libnpm = require('libnpm')
-  const npmConfig = require('../config.js')
-
   const OrgConfig = figgyPudding({
     json: {},
     loglevel: {},
@@ -63,10 +65,6 @@ async function orgAdd (argv) {
 }
 
 async function orgRm (argv) {
-  const figgyPudding = require('figgy-pudding')
-  const libnpm = require('libnpm')
-  const npmConfig = require('../config.js')
-
   const OrgConfig = figgyPudding({
     json: {},
     loglevel: {},
@@ -98,12 +96,6 @@ async function orgRm (argv) {
 }
 
 async function orgLs (argv) {
-  const figgyPudding = require('figgy-pudding')
-  const { h, renderToString } = require('ink')
-  const libnpm = require('libnpm')
-  const npmConfig = require('../config.js')
-  const Table = require('ink-table').default
-
   const OrgConfig = figgyPudding({
     json: {},
     loglevel: {},
