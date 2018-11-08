@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.10.0"></a>
+# [0.10.0](https://github.com/npm/tink/compare/v0.9.6...v0.10.0) (2018-11-08)
+
+
+### Bug Fixes
+
+* **cmd:** fix duplicate subcmd problem ([c6d508d](https://github.com/npm/tink/commit/c6d508d))
+* **lint:** ignore linter on jsx for now because parsing issues ([d2ab0bf](https://github.com/npm/tink/commit/d2ab0bf))
+
+
+### Features
+
+* **org:** add `tink org` and subcommands ([038b9aa](https://github.com/npm/tink/commit/038b9aa))
+
+
+
 <a name="0.9.6"></a>
 ## [0.9.6](https://github.com/npm/tink/compare/v0.9.5...v0.9.6) (2018-11-07)
 
