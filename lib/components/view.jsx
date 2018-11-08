@@ -340,7 +340,13 @@ function getData (packument, spec, fields) {
 }
 
 function resolveField (data, field) {
-  return field.replace(/\[(.+?)\]/g, '.$1').split('.').reduce(resolveProp, data)
+  return field
+    //      '[foo]'  'foo' OR '.foo'
+    //         |           |
+    //      /-----\ /-------------\
+    .match(/\[.+?\]|.+?(?=[.[\]]|$)/g)
+    .map((prop) => prop.replace(/^[.[]|[\]]$/g, ''))
+    .reduce(resolveProp, data)
 }
 
 function resolveProp (data, prop) {
