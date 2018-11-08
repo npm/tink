@@ -317,6 +317,11 @@ function getData (packument, spec, fields) {
 
   let versions = data.map(({ version }) => version)
 
+  // add general info
+  data = data.map((pkg) => Object.assign({}, packument, pkg, {
+    versions: Object.keys(packument.versions)
+  }))
+
   // filter by field
   if (Array.isArray(fields)) {
     if (fields.length === 1) {
