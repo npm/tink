@@ -221,7 +221,7 @@ class PackageFields extends Component {
       let lines = fields.map((field) =>
         <span>
           {prefix}
-          <PackageField field={field} value={pkg && pkg[field] || pkg} />
+          <PackageField field={field} value={pkg && pkg[field] || pkg} maxItems={Infinity} />
         </span>
       )
 
