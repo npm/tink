@@ -221,7 +221,7 @@ class PackageFields extends Component {
       let lines = fields.map((field) =>
         <span>
           {prefix}
-          <PackageField field={field} value={pkg[field] || pkg} />
+          <PackageField field={field} value={pkg && pkg[field] || pkg} />
         </span>
       )
 
@@ -310,6 +310,10 @@ function getData (packument, spec, fields) {
   data = spec
     ? data.filter(({ version }) => semver.satisfies(version, spec))
     : [data.find(({ version }) => version === packument['dist-tags'].latest)]
+
+  if (data.length === 0 || data[0] == null) {
+    throw new Error(`No versions matching "${spec || 'latest'}"`)
+  }
 
   let versions = data.map(({ version }) => version)
 
