@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "mkdirp": "^0.5.1",
+    "shelljs": "^0.8.2",
     "standard": "^12.0.1",
     "standard-version": "*",
     "tacks": "^1.2.7",
