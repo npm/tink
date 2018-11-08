@@ -2,6 +2,11 @@
 
 require('../lib/node/index.js')
 
+const yargs = require('yargs')
+const log = require('npmlog')
+
+const npmConfig = require('../lib/config.js')
+
 const CMDS = new Map([
   ['shell', require('../lib/commands/shell.js')],
   ['org', require('../lib/commands/org.jsx')],
@@ -15,15 +20,12 @@ if (require.main === module) {
 
 module.exports = main
 function main (argv) {
-  const log = require('npmlog')
   log.heading = 'tink'
-  const npmConfig = require('../lib/config.js')
   return runCommandWithYargs(argv, log, npmConfig)
 }
 
 function runCommandWithYargs (argv, log, npmConfig) {
-  // This code path costs ~200ms on startup.
-  let config = require('yargs')
+  let config = yargs
     .demandCommand(1, 'Subcommand is required')
     .recommendCommands()
     .help()
@@ -33,7 +35,6 @@ function runCommandWithYargs (argv, log, npmConfig) {
   for (const mod of CMDS.values()) {
     config = config.command(mod)
   }
-  require('../lib/node/index.js')
   const yargv = npmConfig(config.argv).concat({ log })
   log.level = yargv.loglevel || 'notice'
 }
