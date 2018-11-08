@@ -307,9 +307,9 @@ module.exports.PackageView = PackageView
 function getData (packument, spec, fields) {
   let data = Object.values(packument.versions)
   // filter by spec
-  data = spec
+  data = semver.validRange(spec)
     ? data.filter(({ version }) => semver.satisfies(version, spec))
-    : [data.find(({ version }) => version === packument['dist-tags'].latest)]
+    : [data.find(({ version }) => version === packument['dist-tags'][spec || 'latest'])]
 
   if (data.length === 0 || data[0] == null) {
     throw new Error(`No versions matching "${spec || 'latest'}"`)
