@@ -1,6 +1,6 @@
 {
   "name": "tink",
-  "version": "0.10.1",
+  "version": "0.11.0",
   "author": {
     "name": "Kat Marchán",
     "email": "kzm@zkat.tech",
@@ -22,7 +22,7 @@
     "release": "standard-version -s",
     "postrelease": "npm publish && git push --follow-tags",
     "pretest": "standard ./**/*.js",
-    "test": "tap -J --nyc-arg=--all --coverage test/*.js",
+    "test": "tap -J --nyc-arg=--all --coverage test/*.js test/node/*.js",
     "update-coc": "weallbehave -o . && git add CODE_OF_CONDUCT.md && git commit -m 'docs(coc): updated CODE_OF_CONDUCT.md'",
     "update-contrib": "weallcontribute -o . && git add CONTRIBUTING.md && git commit -m 'docs(contributing): updated CONTRIBUTING.md'"
   },
@@ -53,7 +53,6 @@
     "bin-links": "^1.1.2",
     "bluebird": "^3.5.2",
     "cacache": "^11.3.1",
-    "clear-module": "^3.0.0",
     "esm": "^3.0.84",
     "figgy-pudding": "^3.5.1",
     "find-npm-prefix": "^1.0.2",

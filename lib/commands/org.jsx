@@ -9,7 +9,7 @@ const Org = module.exports = {
       .demandCommand(1, 'Org subcommand is required')
       .recommendCommands()
       .command(
-        ['add <orgname> <username> [role]', 'set'],
+        ['add <org> <user> [role]', 'set'],
         'Add someone to an org',
         Org.options,
         async argv => orgAdd(argv)
