@@ -53,7 +53,6 @@
     "bin-links": "^1.1.2",
     "bluebird": "^3.5.2",
     "cacache": "^11.3.1",
-    "clear-module": "^3.0.0",
     "esm": "^3.0.84",
     "figgy-pudding": "^3.5.1",
     "find-npm-prefix": "^1.0.2",
