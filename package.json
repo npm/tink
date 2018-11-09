@@ -69,6 +69,8 @@
     "npm-logical-tree": "^1.2.1",
     "npm-package-arg": "^6.1.0",
     "npmlog": "^4.1.2",
+    "opn": "^5.4.0",
+    "prompt": "^1.0.0",
     "read-package-json": "^2.0.13",
     "rimraf": "^2.6.2",
     "spawn-wrap": "^1.4.2",
