@@ -84,7 +84,53 @@ async function accessLsPackages (argv) {
 }
 
 async function accessLsCollaborators (argv) {
-  // TODO: stub
+  const figgyPudding = require('figgy-pudding')
+  const { renderToString } = require('ink')
+  const libnpm = require('libnpm')
+  const npmConfig = require('../config.js')
+  const Table = require('ink-table').default
+  const npa = require("npm-package-arg")
+
+  const getPackageByNPA = () => {
+    try {
+      return npa(argv.package)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const getPackageAtDir = () => {
+    // TODO: How to get current dir? hand-coding 'tink' as stub now
+    return 'tink'
+  }
+
+  const parsedPackage = argv.package ? getPackageByNPA() : getPackageAtDir()
+
+  const OrgConfig = figgyPudding({
+    json: {},
+    loglevel: {},
+    parseable: {},
+    silent: {}
+  })
+  const opts = OrgConfig(npmConfig().concat(argv).concat({
+    log: require('npmlog')
+  }))
+
+  const collaborators =
+    await libnpm.access.lsCollaborators(parsedPackage, argv.user, opts)
+  if (opts.json) {
+    console.log(JSON.stringify(collaborators, null, 2))
+  } else if (opts.parseable) {
+    console.log(['collaborator', 'access'].join('\t'))
+    Object.keys(collaborators).forEach(collab => {
+      console.log([collab, collaborators[collab]].join('\t'))
+    })
+  } else if (!opts.silent && opts.loglevel !== 'silent') {
+    const data = Object.keys(collaborators).map(collab => {
+      return { collab, role: collaborators[collab] }
+    })
+    console.log(renderToString(<Table data={data}/>))
+  }
 }
 
 async function accessEdit (argv) {

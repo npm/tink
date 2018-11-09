@@ -7,7 +7,7 @@ const CMDS = new Map([
   ['rm', require('../lib/commands/rm.js')],
   ['shell', require('../lib/commands/shell.js')],
   ['org', require('../lib/commands/org.jsx')],
-  ['access', require('../lib/commands/access.js')],
+  ['access', require('../lib/commands/access.jsx')],
   ['prepare', require('../lib/commands/prepare.js')],
   ['ping', require('../lib/commands/ping.js')],
   ['deprecate', require('../lib/commands/deprecate.js')],
