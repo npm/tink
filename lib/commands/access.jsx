@@ -85,7 +85,7 @@ async function accessLsPackages (argv) {
 
 async function accessLsCollaborators (argv) {
   const figgyPudding = require('figgy-pudding')
-  const { renderToString } = require('ink')
+  const { h, renderToString } = require('ink')
   const libnpm = require('libnpm')
   const npmConfig = require('../config.js')
   const Table = require('ink-table').default
