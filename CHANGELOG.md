@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.12.0"></a>
+# [0.12.0](https://github.com/npm/tink/compare/v0.11.0...v0.12.0) (2018-11-11)
+
+
+### Bug Fixes
+
+* **fs:** found the bugs! ([d8bd8e7](https://github.com/npm/tink/commit/d8bd8e7))
+* **fs:** more fs tweaking ([76451b8](https://github.com/npm/tink/commit/76451b8))
+
+
+### Features
+
+* **fs:** make all fs operations optimistic ([#24](https://github.com/npm/tink/issues/24)) ([d4e6ec6](https://github.com/npm/tink/commit/d4e6ec6))
+
+
+
 <a name="0.11.0"></a>
 # [0.11.0](https://github.com/npm/tink/compare/v0.10.1...v0.11.0) (2018-11-09)
 
