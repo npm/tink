@@ -35,7 +35,7 @@ const Access = module.exports = {
         async argv => accessRevoke(argv)
       )
       .command(
-        'ls-packages [<user>|<scope>|<scope:team>]',
+        'ls-packages <entity>',
         'Show all of the packages a user or a team is able to access, along ' +
           'with the access level, except for read-only public packages',
         Access.options,
@@ -60,6 +60,40 @@ const Access = module.exports = {
   options: Object.assign(require('../common-opts.js', {}))
 }
 
+const figgyPudding = require('figgy-pudding')
+const npmConfig = require('../config.js')
+const libnpm = require('libnpm')
+
+const Config = figgyPudding({
+  json: {},
+  loglevel: {},
+  parseable: {},
+  silent: {}
+})
+
+const parseOpts = argv => Config(npmConfig().concat(argv).concat({
+  log: require('npmlog')
+}))
+
+const render = (opts, content) => {
+  const { h, renderToString } = require('ink')
+  const Table = require('ink-table').default
+
+  if (opts.json) {
+    console.log(JSON.stringify(content, null, 2))
+  } else if (opts.parseable) {
+    console.log(['collaborator', 'access'].join('\t'))
+    Object.keys(content).forEach(collab => {
+      console.log([collab, content[collab]].join('\t'))
+    })
+  } else if (!opts.silent && opts.loglevel !== 'silent') {
+    const data = Object.keys(content).map(collab => {
+      return { collab, role: content[collab] }
+    })
+    console.log(renderToString(<Table data={data}/>))
+  }
+}
+
 async function accessPublic (argv) {
   // TODO: stub
 }
@@ -77,44 +111,26 @@ async function accessRevoke (argv) {
 }
 
 async function accessLsPackages (argv) {
-  // TODO: stub
+  const opts = parseOpts(argv)
+  const getPackagesByCurrentUser = () => {
+    // TODO: grab current authenticated user
+    // TODO: seems to need whoami support
+    return null
+  }
+
+  const entity = argv.entity
+    ? argv.entity
+    : getPackagesByCurrentUser()
+
+    const packages = await libnpm.access.lsPackages(entity)
+    render(opts, packages)
 }
 
 async function accessLsCollaborators (argv) {
   const npa = require("npm-package-arg")
-  const figgyPudding = require('figgy-pudding')
   const findPrefix = require('find-npm-prefix')
-  const libnpm = require('libnpm')
-  const { h, renderToString } = require('ink')
-  const Table = require('ink-table').default
-  const npmConfig = require('../config.js')
   const readJson = require('read-package-json')
-
-  const render = (opts, collaborators) => {
-    if (opts.json) {
-      console.log(JSON.stringify(collaborators, null, 2))
-    } else if (opts.parseable) {
-      console.log(['collaborator', 'access'].join('\t'))
-      Object.keys(collaborators).forEach(collab => {
-        console.log([collab, collaborators[collab]].join('\t'))
-      })
-    } else if (!opts.silent && opts.loglevel !== 'silent') {
-      const data = Object.keys(collaborators).map(collab => {
-        return { collab, role: collaborators[collab] }
-      })
-      console.log(renderToString(<Table data={data}/>))
-    }
-  }
-
-  const OrgConfig = figgyPudding({
-    json: {},
-    loglevel: {},
-    parseable: {},
-    silent: {}
-  })
-  const opts = OrgConfig(npmConfig().concat(argv).concat({
-    log: require('npmlog')
-  }))
+  const opts = parseOpts(argv)
 
   if (argv.package) {
     try {
