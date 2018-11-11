@@ -84,27 +84,30 @@ async function accessLsPackages (argv) {
 }
 
 async function accessLsCollaborators (argv) {
-  const figgyPudding = require('figgy-pudding')
-  const { h, renderToString } = require('ink')
-  const libnpm = require('libnpm')
-  const npmConfig = require('../config.js')
-  const Table = require('ink-table').default
   const npa = require("npm-package-arg")
+  const figgyPudding = require('figgy-pudding')
+  const findPrefix = require('find-npm-prefix')
+  const libnpm = require('libnpm')
+  const { h, renderToString } = require('ink')
+  const Table = require('ink-table').default
+  const npmConfig = require('../config.js')
+  const readJson = require('read-package-json')
 
-  const getPackageByNPA = () => {
-    try {
-      return npa(argv.package)
-    } catch (err) {
-      console.error(err)
+  const render = (opts, collaborators) => {
+    if (opts.json) {
+      console.log(JSON.stringify(collaborators, null, 2))
+    } else if (opts.parseable) {
+      console.log(['collaborator', 'access'].join('\t'))
+      Object.keys(collaborators).forEach(collab => {
+        console.log([collab, collaborators[collab]].join('\t'))
+      })
+    } else if (!opts.silent && opts.loglevel !== 'silent') {
+      const data = Object.keys(collaborators).map(collab => {
+        return { collab, role: collaborators[collab] }
+      })
+      console.log(renderToString(<Table data={data}/>))
     }
   }
-
-  const getPackageAtDir = () => {
-    // TODO: How to get current dir? hand-coding 'tink' as stub now
-    return 'tink'
-  }
-
-  const parsedPackage = argv.package ? getPackageByNPA() : getPackageAtDir()
 
   const OrgConfig = figgyPudding({
     json: {},
@@ -116,20 +119,32 @@ async function accessLsCollaborators (argv) {
     log: require('npmlog')
   }))
 
-  const collaborators =
-    await libnpm.access.lsCollaborators(parsedPackage, argv.user, opts)
-  if (opts.json) {
-    console.log(JSON.stringify(collaborators, null, 2))
-  } else if (opts.parseable) {
-    console.log(['collaborator', 'access'].join('\t'))
-    Object.keys(collaborators).forEach(collab => {
-      console.log([collab, collaborators[collab]].join('\t'))
-    })
-  } else if (!opts.silent && opts.loglevel !== 'silent') {
-    const data = Object.keys(collaborators).map(collab => {
-      return { collab, role: collaborators[collab] }
-    })
-    console.log(renderToString(<Table data={data}/>))
+  if (argv.package) {
+    try {
+      const packageName = npa(argv.package)
+      const collaborators =
+        await libnpm.access.lsCollaborators(packageName, argv.user, opts)
+      render(opts, collaborators)
+    } catch (err) {
+      console.error(err)
+    }
+  } else {
+    findPrefix(process.cwd())
+      .then(prefix => {
+        readJson(
+          `${prefix}/package.json`,
+          console.error,
+          false,
+          async (er, data) => {
+            if (er) {
+              console.error('There was an error reading the file')
+            }
+            const collaborators =
+              await libnpm.access.lsCollaborators(data.name, argv.user, opts)
+            render(opts, collaborators)
+          }
+        )
+      })
   }
 }
 
