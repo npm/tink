@@ -52,10 +52,7 @@ const Access = module.exports = {
       )
       .command(
         'edit [<package>]',
-        'Show all of the access privileges for a package. Will only show ' +
-          'permissions for packages to which you have at least read access. ' +
-          'If <user> is passed in, the list is filtered only to teams that ' +
-          'user happens to belong to',
+        'Set the access privileges for a package at once using $EDITOR',
         Access.options,
         async argv => accessEdit(argv)
       )
