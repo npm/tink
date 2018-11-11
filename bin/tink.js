@@ -3,6 +3,7 @@
 require('../lib/node/index.js')
 
 const CMDS = new Map([
+  ['add', require('../lib/commands/add.js')],
   ['shell', require('../lib/commands/shell.js')],
   ['org', require('../lib/commands/org.jsx')],
   ['prepare', require('../lib/commands/prepare.js')],
