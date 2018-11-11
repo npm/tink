@@ -2,4 +2,5 @@ node_modules
 .nyc_output
 .package-map.json
 /test/cache
+yarn.lock
 /lib/commands/utils/.htaccess
