@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.14.0"></a>
+# [0.14.0](https://github.com/npm/tink/compare/v0.13.0...v0.14.0) (2018-11-12)
+
+
+### Bug Fixes
+
+* **installer:** improvements to automatic lazy require workflow ([45faca8](https://github.com/npm/tink/commit/45faca8))
+* **pkglock:** fall back to regular ensure-pkg if installer fails-ish ([6c4f80d](https://github.com/npm/tink/commit/6c4f80d))
+* **pkglock:** look for TINK_NO_PKG_LOCK ([1a15eb1](https://github.com/npm/tink/commit/1a15eb1))
+* **worker:** remove debugging code ([ef6ef5b](https://github.com/npm/tink/commit/ef6ef5b))
+
+
+### Features
+
+* **add/rm:** run a `prepare` after an add and rm command ([ca7c0d5](https://github.com/npm/tink/commit/ca7c0d5))
+* **commands:** add 'deprecate' command ([#23](https://github.com/npm/tink/issues/23)) ([be8735c](https://github.com/npm/tink/commit/be8735c))
+* **rm:** add tink rm command ([5aefa20](https://github.com/npm/tink/commit/5aefa20))
+
+
+
 <a name="0.13.0"></a>
 # [0.13.0](https://github.com/npm/tink/compare/v0.12.0...v0.13.0) (2018-11-11)
 

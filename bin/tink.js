@@ -4,10 +4,12 @@ require('../lib/node/index.js')
 
 const CMDS = new Map([
   ['add', require('../lib/commands/add.js')],
+  ['rm', require('../lib/commands/rm.js')],
   ['shell', require('../lib/commands/shell.js')],
   ['org', require('../lib/commands/org.jsx')],
   ['prepare', require('../lib/commands/prepare.js')],
   ['ping', require('../lib/commands/ping.js')],
+  ['deprecate', require('../lib/commands/deprecate.js')],
   ['team', require('../lib/commands/team.js')]
 ])
 
