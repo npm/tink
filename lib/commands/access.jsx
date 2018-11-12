@@ -9,40 +9,40 @@ const Access = module.exports = {
       .demandCommand(1, 'Access subcommand is required')
       .recommendCommands()
       .command(
-        'public [<package>]',
+        'public <spec>',
         'Set a package to be publicly accessible',
         Access.options,
         async argv => accessPublic(argv)
       )
       .command(
-        'restricted [<package>]',
+        'restricted <spec>',
         'Set a package to be restricted',
         Access.options,
         async argv => accessRestricted(argv)
       )
       .command(
-        'grant <read-only|read-write> <scope:team> [<package>]',
+        'grant <permissions> <team> <spec>',
         'Add the ability of users and teams to have read-only or ' +
           'read-write access to a package',
         Access.options,
         async argv => accessGrant(argv)
       )
       .command(
-        'revoke <scope:team> [<package>]',
+        'revoke <team> <spec>',
         'Remove the ability of users and teams to have read-only or ' +
           'read-write access to a package',
         Access.options,
         async argv => accessRevoke(argv)
       )
       .command(
-        'ls-packages <entity>',
+        'ls-packages [<entity>]',
         'Show all of the packages a user or a team is able to access, along ' +
           'with the access level, except for read-only public packages',
         Access.options,
         async argv => accessLsPackages(argv)
       )
       .command(
-        'ls-collaborators [<package> [<user>]]',
+        'ls-collaborators [<spec> [<user>]]',
         'Show all of the access privileges for a package. Will only show ' +
           'permissions for packages to which you have at least read access. ' +
           'If <user> is passed in, the list is filtered only to teams that ' +
@@ -95,52 +95,45 @@ const render = (opts, content) => {
 }
 
 async function accessPublic (argv) {
-  // TODO: stub
+  await libnpm.access.public(argv.spec, parseOpts(argv))
 }
 
 async function accessRestricted (argv) {
-  // TODO: stub
+  await libnpm.access.restricted(argv.spec, parseOpts(argv))
 }
 
 async function accessGrant (argv) {
-  // TODO: stub
+  await access.grant(argv.spec, argv.team, argv.permissions, parseOpts(argv))
 }
 
 async function accessRevoke (argv) {
-  // TODO: stub
+  await libnpm.access.revoke(argv.spec, argv.team, parseOpts(argv))
 }
 
 async function accessLsPackages (argv) {
-  const opts = parseOpts(argv)
   const getPackagesByCurrentUser = () => {
-    // TODO: grab current authenticated user
-    // TODO: seems to need whoami support
-    return null
+    // TODO: grab current authenticated user from pending whoami support
   }
 
   const entity = argv.entity
     ? argv.entity
     : getPackagesByCurrentUser()
 
-    const packages = await libnpm.access.lsPackages(entity)
-    render(opts, packages)
+  const opts = parseOpts(argv)
+  // TODO: error when opts is used as 2nd param in .lsPackages
+  const packages = await libnpm.access.lsPackages(entity)
+  render(opts, packages)
 }
 
 async function accessLsCollaborators (argv) {
-  const npa = require("npm-package-arg")
   const findPrefix = require('find-npm-prefix')
   const readJson = require('read-package-json')
   const opts = parseOpts(argv)
 
-  if (argv.package) {
-    try {
-      const packageName = npa(argv.package)
-      const collaborators =
-        await libnpm.access.lsCollaborators(packageName, argv.user, opts)
-      render(opts, collaborators)
-    } catch (err) {
-      console.error(err)
-    }
+  if (argv.spec) {
+    const collaborators =
+      await libnpm.access.lsCollaborators(argv.spec, argv.user, opts)
+    render(opts, collaborators)
   } else {
     findPrefix(process.cwd())
       .then(prefix => {
