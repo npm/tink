@@ -7,7 +7,8 @@ const CMDS = new Map([
   ['shell', require('../lib/commands/shell.js')],
   ['org', require('../lib/commands/org.jsx')],
   ['prepare', require('../lib/commands/prepare.js')],
-  ['ping', require('../lib/commands/ping.js')]
+  ['ping', require('../lib/commands/ping.js')],
+  ['deprecate', require('../lib/commands/deprecate.js')]
 ])
 
 if (require.main === module) {
