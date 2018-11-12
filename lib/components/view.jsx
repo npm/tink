@@ -1,8 +1,19 @@
 const semver = require('semver')
 const byteSize = require('byte-size')
 const relativeDate = require('tiny-relative-date')
+const columns = require('cli-columns')
 
-const { h, Fragment, Component, Color, Indent } = require('ink')
+const {
+  h,
+  renderToString,
+  Fragment,
+  Component,
+  Color,
+  Indent
+} = require('ink')
+
+const MAX_ITEMS = 6
+const ROW_WIDTH = 4
 
 class Joined extends Component {
   render () {
@@ -27,32 +38,47 @@ class Lines extends Component {
   }
 }
 
+class Columns extends Component {
+  render () {
+    return columns(this.props.children.map(renderToString), {
+      sort: false
+    })
+  }
+}
+
+const packageValueObjectItems = function ({ field, value, props, maxItems }) {
+  if (!maxItems) maxItems = MAX_ITEMS
+  let items = (props || Object.keys(value))
+
+  if (!items.length) {
+    return <Color grey>(empty)</Color>
+  }
+
+  items = items.map((prop) =>
+    <span>
+      {prop}: <PackageValue field={`${field}.${prop}`} value={value[prop]}/>
+    </span>
+  )
+
+  if (!props && items.length > maxItems) {
+    items = items.slice(0, --maxItems).concat(
+      <Color grey>
+        ({items.length - maxItems} more...)
+      </Color>
+    )
+  }
+
+  return items
+}
+
 class PackageValueObject extends Component {
   render () {
-    let { field, value, props, maxItems } = this.props
-    if (!maxItems) maxItems = 6
-    let items = (props || Object.keys(value)).map((prop) =>
-      <span>
-        {prop}: <PackageValue field={`${field}.${prop}`} value={value[prop]}/>
-      </span>
-    )
-
-    if (!items.length) {
-      return <Color grey>(empty)</Color>
-    }
-
-    if (!props && items.length > maxItems) {
-      items = items.slice(0, --maxItems).concat(
-        <Color grey>
-          ({items.length - maxItems} more...)
-        </Color>
-      )
-    }
-
     return <Fragment>
       <br />
       <Indent size={2}>
-        <Lines>{items}</Lines>
+        <Lines>
+          {packageValueObjectItems(this.props)}
+        </Lines>
       </Indent>
     </Fragment>
   }
@@ -133,6 +159,23 @@ class PackageValueLicense extends Component {
   }
 }
 
+class PackageValueDeps extends Component {
+  render () {
+    let items = packageValueObjectItems({
+      field: this.props.field,
+      value: this.props.value,
+      maxItems: (this.props.maxItems || MAX_ITEMS) * ROW_WIDTH
+    })
+
+    return <Fragment>
+      <br />
+      <Indent size={2}>
+        <Columns>{items}</Columns>
+      </Indent>
+    </Fragment>
+  }
+}
+
 class PackageValue extends Component {
   render () {
     let { field, value } = this.props
@@ -143,6 +186,10 @@ class PackageValue extends Component {
     // List
     } else if (Array.isArray(value)) {
       return <PackageValueList {...this.props} />
+
+    // Dependencies
+    } else if (/[Dd]ependencies$/.test(field)) {
+      return <PackageValueDeps {...this.props} />
 
     // Person
     } else if (field.startsWith('maintainers') || field === 'author' || field === '_npmUser') {

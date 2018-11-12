@@ -55,6 +55,8 @@
     "bluebird": "^3.5.2",
     "byte-size": "^4.0.4",
     "cacache": "^11.3.1",
+    "clear-module": "^3.0.0",
+    "cli-columns": "^3.1.2",
     "esm": "^3.0.84",
     "figgy-pudding": "^3.5.1",
     "find-npm-prefix": "^1.0.2",
