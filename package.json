@@ -6,7 +6,7 @@
     "email": "kzm@zkat.tech",
     "twitter": "maybekatz"
   },
-  "license": "ISC",
+  "license": "Artistic-2.0",
   "files": [
     "*.js",
     "lib",
