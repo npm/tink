@@ -51,7 +51,7 @@ const Access = module.exports = {
         async argv => accessLsCollaborators(argv)
       )
       .command(
-        'edit [<package>]',
+        'edit <package>',
         'Set the access privileges for a package at once using $EDITOR',
         Access.options,
         async argv => accessEdit(argv)
