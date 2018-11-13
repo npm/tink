@@ -135,22 +135,21 @@ async function accessLsCollaborators (argv) {
       await libnpm.access.lsCollaborators(argv.spec, argv.user, opts)
     render(opts, collaborators)
   } else {
-    findPrefix(process.cwd())
-      .then(prefix => {
-        readJson(
-          `${prefix}/package.json`,
-          console.error,
-          false,
-          async (er, data) => {
-            if (er) {
-              console.error('There was an error reading the file')
-            }
-            const collaborators =
-              await libnpm.access.lsCollaborators(data.name, argv.user, opts)
-            render(opts, collaborators)
+    findPrefix(process.cwd()).then(prefix => {
+      readJson(
+        `${prefix}/package.json`,
+        console.error,
+        false,
+        async (er, data) => {
+          if (er) {
+            console.error('There was an error reading the file')
           }
-        )
-      })
+          const collaborators =
+            await libnpm.access.lsCollaborators(data.name, argv.user, opts)
+          render(opts, collaborators)
+        }
+      )
+    })
   }
 }
 
