@@ -10,6 +10,7 @@ const CMDS = new Map([
   ['prepare', require('../lib/commands/prepare.js')],
   ['ping', require('../lib/commands/ping.js')],
   ['deprecate', require('../lib/commands/deprecate.js')],
+  ['view', require('../lib/commands/view.js')],
   ['team', require('../lib/commands/team.js')]
 ])
 
