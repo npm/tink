@@ -10,6 +10,12 @@ const Profile = module.exports = {
       .demandCommand(1, 'Profile subcommand is required')
       .recommendCommands()
       .command({
+        command: 'get [<property>]',
+        describe: 'Display all of the properties of your profile, or one or more specific properties.',
+        builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
+        handler: argv => get(argv)
+      })
+      .command({
         command: 'create-token',
         describe: 'Create a new authentication token, possibly with restrictions.',
         builder: y => y.help('help', 'h').options(Object.assign({}, ProfileSubcommandsOptions , {
@@ -94,6 +100,32 @@ const mapTokenToTable = (token, options = { trimToken: true }) => {
   token.token = options.trimToken ? token.token.substring(0, 6) + '...' : token.token
   token.readonly = token.readonly ? 'yes' : 'no'
   return token
+}
+
+async function get (argv) {
+  const opts = getOptions(argv)
+  try {
+    const profileInfo = await libnpm.profile.get(opts)
+
+    if (argv.property) {
+      console.log(profileInfo[argv.property] || '')
+    } else if (opts.json) {
+      console.log(JSON.stringify(profileInfo, null, 2))
+    } else if (opts.parseable) {
+      Object.keys(profileInfo).forEach(key => {
+        const value = key === 'tfa' ? profileInfo[key].mode : profileInfo[key]
+        if (value) {
+          console.log([key, value].join('\t'))
+        }
+      });
+    } else if (!opts.silent && opts.loglevel !== 'silent') {
+      profileInfo.tfa = profileInfo.tfa.mode
+      // TODO: Maybe we should use another type of table?
+      console.log(renderToString(<Table data={[profileInfo]}/>))
+    }
+  } catch (e) {
+    logError(e)
+  }
 }
 
 // TODO: OTP code
