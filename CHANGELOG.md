@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.15.1"></a>
+## [0.15.1](https://github.com/npm/tink/compare/v0.15.0...v0.15.1) (2018-11-13)
+
+
+### Bug Fixes
+
+* **config:** get config stuff in a better place ([16e29cb](https://github.com/npm/tink/commit/16e29cb))
+
+
+
 <a name="0.15.0"></a>
 # [0.15.0](https://github.com/npm/tink/compare/v0.14.0...v0.15.0) (2018-11-13)
 
