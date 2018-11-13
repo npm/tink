@@ -57,7 +57,7 @@ const figgyPudding = require('figgy-pudding')
 const { h, renderToString } = require('ink')
 const Table = require('ink-table').default
 const log = require('npmlog')
-const readPassword = require("../utils/read-password");
+const readPassword = require("../utils/read-password")
 const npmConfig = require('../config.js')
 
 const ProfileConfig = figgyPudding({
@@ -117,7 +117,7 @@ async function get (argv) {
         if (value) {
           console.log([key, value].join('\t'))
         }
-      });
+      })
     } else if (!opts.silent && opts.loglevel !== 'silent') {
       profileInfo.tfa = profileInfo.tfa.mode
       // TODO: Maybe we should use another type of table?
