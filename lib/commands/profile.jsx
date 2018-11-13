@@ -29,6 +29,13 @@ const Profile = module.exports = {
         handler: argv => createToken(argv)
       })
       .command({
+        command: 'remove-token <token|key>',
+        aliases: ['revoke-token', 'rm'],
+        describe: 'Remove a specific authentication token.',
+        builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
+        handler: argv => removeToken(argv)
+      })
+      .command({
         command: 'list-tokens',
         aliases: ['lt'],
         describe: 'Fetch a list of all of the authentication tokens the authenticated user has.',
@@ -113,6 +120,24 @@ async function createToken(argv) {
     } else if (!opts.silent && opts.loglevel !== 'silent') {
       const data = [mapTokenToTable(newToken, { trimToken: false })]
       console.log(renderToString(<Table data={data}/>))
+    }
+  } catch (e) {
+    logError(e)
+  }
+}
+
+async function removeToken (argv) {
+  const opts = getOptions(argv)
+  try {
+    await libnpm.profile.removeToken(argv.token, opts)
+
+    if (opts.json) {
+      console.log(JSON.stringify({ token: argv.token, deleted: true }, null, 2))
+    } else if (opts.parseable) {
+      console.log(['token', 'deleted'].join('\t'))
+      console.log([argv.token, true].join('\t'))
+    } else if (!opts.silent && opts.loglevel !== 'silent') {
+      console.log('Token succesfully removed.')
     }
   } catch (e) {
     logError(e)
