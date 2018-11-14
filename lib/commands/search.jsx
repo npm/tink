@@ -66,7 +66,7 @@ async function search (argv) {
     unmount()
     process.exit()
   }
-  console.log('argv', argv)
+
   const [cmd, terms] = argv._
 
   unmount = render(<Search

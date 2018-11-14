@@ -9,7 +9,6 @@ const {
   Text
 } = require('ink')
 const SelectInput = require('ink-select-input')
-const Spinner = require('ink-spinner')
 const TextInput = require('ink-text-input')
 const libnpm = require('libnpm')
 
@@ -124,7 +123,7 @@ const SearchInput = ({ onChange, onSubmit, terms }) => {
 
 const SearchResults = ({ isLoading, matches, onSelect, terms }) => {
   if (isLoading) {
-    return <div><Spinner /> <Color green>Searching...</Color></div>
+    return <div><Color green>Searching...</Color></div>
   }
 
   if (isLoading === false && terms && (!matches || !matches.length)) {
@@ -146,7 +145,7 @@ const PackageSelectIndicator = ({ isSelected }) => {
     return ' ';
   }
 
-  return <Color green>{`${figures.pointer} `}</Color>
+  return <Color green>{ '> ' }</Color>
 };
 
 const formatPackageScore = num => `${ Math.round(num * 100) }%`
@@ -191,7 +190,7 @@ const InstallingPackage = ({ isInstalling, pkg }) => {
     return null
   }
 
-  return <div><Spinner /> <Color green>Installing {pkg.package.name}...</Color></div>
+  return <div><Color green>Installing {pkg.package.name}...</Color></div>
 }
 
 module.exports = Search
