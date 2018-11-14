@@ -1,6 +1,6 @@
 'use strict'
 
-const { render } = require('ink')
+const { h, render } = require('ink')
 const { Search } = require('../components/search.jsx')
 
 const SearchCommand = module.exports = {
