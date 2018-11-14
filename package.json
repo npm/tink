@@ -18,6 +18,7 @@
     "tish": "./bin/tish.sh"
   },
   "scripts": {
+    "build": "echo hey man",
     "prerelease": "npm t",
     "release": "standard-version -s",
     "postrelease": "npm publish && git push --follow-tags",
