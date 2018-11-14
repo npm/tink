@@ -3,14 +3,14 @@
 require('../lib/node/index.js')
 
 const CMDS = new Map([
+  ['access', require('../lib/commands/access.jsx')],
   ['add', require('../lib/commands/add.js')],
+  ['deprecate', require('../lib/commands/deprecate.js')],
+  ['org', require('../lib/commands/org.jsx')],
+  ['ping', require('../lib/commands/ping.js')],
+  ['prepare', require('../lib/commands/prepare.js')],
   ['rm', require('../lib/commands/rm.js')],
   ['shell', require('../lib/commands/shell.js')],
-  ['org', require('../lib/commands/org.jsx')],
-  ['access', require('../lib/commands/access.jsx')],
-  ['prepare', require('../lib/commands/prepare.js')],
-  ['ping', require('../lib/commands/ping.js')],
-  ['deprecate', require('../lib/commands/deprecate.js')],
   ['view', require('../lib/commands/view.js')]
 ])
 
