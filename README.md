@@ -100,7 +100,7 @@ through tink.
 
 ##### <a name="tink-unwind"></a> `$ tink unwind [options] [package...]`
 
-* Aliases: `tink extract`, `tink x`, `tink unroll`
+* Aliases: `tink extract`, `tink frog`, `tink unroll`
 
 Unwinds the project's dependencies into physical files in `node_modules/`,
 instead of using the fs overrides to load them. This "unwound" mode can be used
@@ -124,7 +124,7 @@ or a specific reset on a file, remove the specific file or all of
 
 ##### <a name="tink-wind"></a> `$ tink wind [options] [package...]`
 
-* Aliases: `tink roll`, `tink rewind`
+* Aliases: `tink roll`, `tink rewind`, `tink knit`
 
 Removes physical files from `node_modules/` and configures a project to use
 "tink mode" for development -- a mode where dependency files are virtually

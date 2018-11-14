@@ -2,6 +2,159 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.15.1"></a>
+## [0.15.1](https://github.com/npm/tink/compare/v0.15.0...v0.15.1) (2018-11-13)
+
+
+### Bug Fixes
+
+* **config:** get config stuff in a better place ([16e29cb](https://github.com/npm/tink/commit/16e29cb))
+
+
+
+<a name="0.15.0"></a>
+# [0.15.0](https://github.com/npm/tink/compare/v0.14.0...v0.15.0) (2018-11-13)
+
+
+### Features
+
+* **view:** add 'view' command ([#27](https://github.com/npm/tink/issues/27)) ([500207c](https://github.com/npm/tink/commit/500207c))
+
+
+
+<a name="0.14.0"></a>
+# [0.14.0](https://github.com/npm/tink/compare/v0.13.0...v0.14.0) (2018-11-12)
+
+
+### Bug Fixes
+
+* **installer:** improvements to automatic lazy require workflow ([45faca8](https://github.com/npm/tink/commit/45faca8))
+* **pkglock:** fall back to regular ensure-pkg if installer fails-ish ([6c4f80d](https://github.com/npm/tink/commit/6c4f80d))
+* **pkglock:** look for TINK_NO_PKG_LOCK ([1a15eb1](https://github.com/npm/tink/commit/1a15eb1))
+* **worker:** remove debugging code ([ef6ef5b](https://github.com/npm/tink/commit/ef6ef5b))
+
+
+### Features
+
+* **add/rm:** run a `prepare` after an add and rm command ([ca7c0d5](https://github.com/npm/tink/commit/ca7c0d5))
+* **commands:** add 'deprecate' command ([#23](https://github.com/npm/tink/issues/23)) ([be8735c](https://github.com/npm/tink/commit/be8735c))
+* **rm:** add tink rm command ([5aefa20](https://github.com/npm/tink/commit/5aefa20))
+
+
+
+<a name="0.13.0"></a>
+# [0.13.0](https://github.com/npm/tink/compare/v0.12.0...v0.13.0) (2018-11-11)
+
+
+### Features
+
+* **add:** add tink add, to add new dependencies ([a2d36e6](https://github.com/npm/tink/commit/a2d36e6))
+
+
+
+<a name="0.12.0"></a>
+# [0.12.0](https://github.com/npm/tink/compare/v0.11.0...v0.12.0) (2018-11-11)
+
+
+### Bug Fixes
+
+* **fs:** found the bugs! ([d8bd8e7](https://github.com/npm/tink/commit/d8bd8e7))
+* **fs:** more fs tweaking ([76451b8](https://github.com/npm/tink/commit/76451b8))
+
+
+### Features
+
+* **fs:** make all fs operations optimistic ([#24](https://github.com/npm/tink/issues/24)) ([d4e6ec6](https://github.com/npm/tink/commit/d4e6ec6))
+
+
+
+<a name="0.11.0"></a>
+# [0.11.0](https://github.com/npm/tink/compare/v0.10.1...v0.11.0) (2018-11-09)
+
+
+### Bug Fixes
+
+* **fs:** make a few more things optimistic ([fd5542f](https://github.com/npm/tink/commit/fd5542f))
+* **fs:** make lstat optimistic ([6aa6cf4](https://github.com/npm/tink/commit/6aa6cf4))
+* **fs:** make readdir(Sync) merge local and virtual file listings ([811a441](https://github.com/npm/tink/commit/811a441))
+* **installer:** make tinkifyBins log out files to tinkify ([834ca0d](https://github.com/npm/tink/commit/834ca0d))
+* **installer:** move writeLockHash to the end ([a8f16ec](https://github.com/npm/tink/commit/a8f16ec))
+* **installer:** tweak tinkifyBins a bit ([129a429](https://github.com/npm/tink/commit/129a429))
+* **log:** nicer logging for restoring files ([86eb602](https://github.com/npm/tink/commit/86eb602))
+* **org:** org add command params had wrong names ([#14](https://github.com/npm/tink/issues/14)) ([ee6cb34](https://github.com/npm/tink/commit/ee6cb34))
+* **sh:** make sure patches are loaded before requiring module ([d06362b](https://github.com/npm/tink/commit/d06362b))
+* **sh:** pull in the node override on script exec + stop clearing modules ([94c59b0](https://github.com/npm/tink/commit/94c59b0))
+
+
+### Features
+
+* **pkglock:** smarter restorer and fixed sh/prepare ([b19ba9c](https://github.com/npm/tink/commit/b19ba9c))
+* **prepare:** allow prefetching of only specified deps ([e93fdbe](https://github.com/npm/tink/commit/e93fdbe))
+* **sh:** do exclusively lazy dep fetching ([009afda](https://github.com/npm/tink/commit/009afda))
+
+
+
+<a name="0.10.1"></a>
+## [0.10.1](https://github.com/npm/tink/compare/v0.10.0...v0.10.1) (2018-11-08)
+
+
+
+<a name="0.10.0"></a>
+# [0.10.0](https://github.com/npm/tink/compare/v0.9.6...v0.10.0) (2018-11-08)
+
+
+### Bug Fixes
+
+* **cmd:** fix duplicate subcmd problem ([c6d508d](https://github.com/npm/tink/commit/c6d508d))
+* **lint:** ignore linter on jsx for now because parsing issues ([d2ab0bf](https://github.com/npm/tink/commit/d2ab0bf))
+
+
+### Features
+
+* **org:** add `tink org` and subcommands ([038b9aa](https://github.com/npm/tink/commit/038b9aa))
+
+
+
+<a name="0.9.6"></a>
+## [0.9.6](https://github.com/npm/tink/compare/v0.9.5...v0.9.6) (2018-11-07)
+
+
+### Bug Fixes
+
+* **prepare:** move process.tink assignment into `prepare` ([2005fe0](https://github.com/npm/tink/commit/2005fe0))
+
+
+
+<a name="0.9.5"></a>
+## [0.9.5](https://github.com/npm/tink/compare/v0.9.4...v0.9.5) (2018-11-06)
+
+
+### Bug Fixes
+
+* **installer:** finish getting rid of pkgmaps ([c3f3ab7](https://github.com/npm/tink/commit/c3f3ab7))
+
+
+
+<a name="0.9.4"></a>
+## [0.9.4](https://github.com/npm/tink/compare/v0.9.3...v0.9.4) (2018-11-06)
+
+
+### Bug Fixes
+
+* **jsx:** pass transformed stuff to h() ([1eb2fbd](https://github.com/npm/tink/commit/1eb2fbd))
+
+
+
+<a name="0.9.3"></a>
+## [0.9.3](https://github.com/npm/tink/compare/v0.9.2...v0.9.3) (2018-11-06)
+
+
+### Bug Fixes
+
+* **cache:** fix --cache option to let it be provided in cli ([5ebf116](https://github.com/npm/tink/commit/5ebf116))
+
+
+
 <a name="0.9.2"></a>
 ## [0.9.2](https://github.com/npm/tink/compare/v0.9.1...v0.9.2) (2018-11-06)
 
