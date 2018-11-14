@@ -136,7 +136,7 @@ const SearchResults = ({ isLoading, matches, onSelect, terms }) => {
 
   if (isLoading === false && terms && matches && matches.length) {
     return <div>
-      <Color grey bold>Results:</Color><br />
+      <Color grey bold>Results (maintenance, popularity, quality):</Color><br />
       <PackageSelector matches={matches} onSelect={onSelect} />
     </div>
   }
@@ -152,7 +152,7 @@ const PackageSelectIndicator = ({ isSelected }) => {
   return <Color green>{`${figures.pointer} `}</Color>
 };
 
-const formatPackageScore = num => Math.round(num * 100)
+const formatPackageScore = num => `${ Math.round(num * 100) }%`
 
 const PackageItem = ({ isSelected, value }) => {
   const {
@@ -173,7 +173,7 @@ const PackageItem = ({ isSelected, value }) => {
   const p = formatPackageScore(popularity)
   const q = formatPackageScore(quality)
 
-  return <Color green={isSelected}>{name} @{username} p {p} q {q} m {m}</Color>
+  return <Color green={isSelected}>{name} @{username} ({m} / {p} / {q})</Color>
 }
 
 const PackageSelector = ({ matches, onSelect }) => {
