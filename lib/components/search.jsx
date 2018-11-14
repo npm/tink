@@ -13,10 +13,6 @@ const Spinner = require('ink-spinner')
 const TextInput = require('ink-text-input')
 const libnpm = require('libnpm')
 
-
-const MAX_RESULTS = 10
-
-
 class Search extends Component {
   constructor (props) {
     super(props)
@@ -67,6 +63,7 @@ class Search extends Component {
   }
 
   async search (terms) {
+    const { options } = this.props
     try {
       this.setState({
         isLoading: true,
@@ -74,7 +71,7 @@ class Search extends Component {
       })
       const matches = await libnpm.search(terms, {
         detailed: true,
-        limit: MAX_RESULTS
+        ...options
       })
       this.setState({
         isLoading: false,
