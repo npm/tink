@@ -197,6 +197,4 @@ const InstallingPackage = ({ isInstalling, pkg }) => {
   return <div><Spinner /> <Color green>Installing {pkg.package.name}...</Color></div>
 }
 
-module.exports = {
-  Search
-}
+module.exports = Search
