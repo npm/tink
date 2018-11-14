@@ -1,6 +1,6 @@
 'use strict'
 
-const { h, render } = require('ink')
+const { render } = require('ink')
 const { Search } = require('../components/search.jsx')
 
 const SearchCommand = module.exports = {
@@ -30,9 +30,5 @@ async function search (argv) {
 
   const [cmd, terms] = argv._
 
-  unmount = render(h(Search, {
-    onError,
-    onExit,
-    terms
-  }))
+  unmount = render(<Search onError={onError} onExit={onExit} terms={terms} />)
 }
