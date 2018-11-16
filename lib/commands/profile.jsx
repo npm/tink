@@ -34,6 +34,12 @@ const Profile = module.exports = {
         handler: argv => disable2fa(argv)
       })
       .command({
+        command: 'enable-2fa [<mode>]',
+        describe: 'Enable two-factor authentication. ',
+        builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
+        handler: argv => enable2fa(argv)
+      })
+      .command({
         command: 'create-token',
         describe: 'Create a new authentication token, possibly with restrictions.',
         builder: y => y.help('help', 'h').options(Object.assign({}, ProfileSubcommandsOptions , {
@@ -235,6 +241,92 @@ async function disable2fa (argv) {
     }
   } catch (e) {
     logError(e)
+  }
+}
+
+async function enable2fa (argv) {
+  const url = require('url')
+  const queryString = require('query-string')
+  const generateQRCode = require('../utils/generate-qrcode')
+  const readOTP = require('../utils/read-otp')
+
+  const opts = getOptions(argv)
+
+  if (opts.json || opts.parseable) {
+    console.error(`Enabling two-factor authentication is an interactive operation and ${
+      opts.json ? 'JSON' : 'parseable'
+    } output mode is not available`)
+    return
+  }
+
+  const validModes = ['auth-only', 'auth-and-writes']
+  // Default value
+  let tfaMode = argv.mode || 'auth-and-writes'
+
+  if (!validModes.includes(tfaMode)) {
+    const message = [
+      `Invalid two factor authentication mode "${tfaMode}".`,
+      'Valid modes are:',
+      '\tauth-only - Require two-factor authentication only when logging in',
+      '\tauth-and-writes - Require two-factor authentication when logging in AND when publishing'
+    ]
+    console.error(message.join('\n'))
+    return;
+  }
+
+  console.log(`Enabling two factor authentication for ${tfaMode}.`)
+
+  const password = await readPassword()
+  const profileInfo = await libnpm.profile.get(opts)
+
+  // First, disable tfa if it is pending
+  if (profileInfo.tfa && profileInfo.tfa.pending) {
+    await otplease(opts, opts => libnpm.profile.set({
+      tfa: {
+        password,
+        mode: 'disable'
+      }
+    }, opts))
+  }
+
+  // Set new 2fa mode
+  const { tfa } = await otplease(opts, opts => libnpm.profile.set({
+    tfa: {
+      password,
+      mode: tfaMode
+    }
+  }, opts))
+
+  if (tfa) {
+    // Now show the QR code
+    const otpauth = url.parse(tfa)
+    const otpQueryString = queryString.parse(otpauth.query)
+
+    const QRCode = await generateQRCode(tfa)
+    const QRMessage = [
+      `Scan into you authenticator app:`,
+      QRCode,
+      `Or enter code: ${otpQueryString.secret}`
+    ]
+    console.log(QRMessage.join('\n'))
+
+    // Tell the user to enter the OTP code
+    const otp = await readOTP('Add and OTP code from your authenticator:')
+
+    // And enable 2fa
+    // It returns the recovery codes inside the tfa key
+    const newProfileInfo = await libnpm.profile.set({ tfa: [otp] }, opts)
+
+    if (newProfileInfo.tfa) {
+      const succesfulMessage = [
+        '2FA successfully enabled. Below are your recovery codes, please print these out.',
+        'You will need these to recover access to your account if you lose your authentication device.'
+      ]
+      console.log(succesfulMessage.join('\n'))
+      newProfileInfo.tfa.forEach(code => console.log(`\t${code}`))
+    }
+  } else {
+    console.log(`Two factor authentication changed to: ${tfaMode}`)
   }
 }
 
