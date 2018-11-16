@@ -70,6 +70,7 @@ const { h, renderToString } = require('ink')
 const Table = require('ink-table').default
 const log = require('npmlog')
 const readPassword = require("../utils/read-password")
+const otplease = require('../utils/otplease.js')
 const npmConfig = require('../config.js')
 
 const ProfileConfig = figgyPudding({
@@ -200,33 +201,30 @@ async function setPassword (argv) {
   }
 }
 
-// TODO: OTP code
 async function createToken(argv) {
   const opts = getOptions(argv)
 
-  try {
-    const password = await readPassword()
-    const newToken = await libnpm.profile.createToken(
-      password,
-      argv['read-only'],
-      argv.cidr_whitelist,
-      opts
-    )
+  const password = await readPassword()
 
-    if (opts.json) {
-      console.log(JSON.stringify(newToken, null, 2))
-    } else if (opts.parseable) {
-      console.log(tableHeaders.join('\t'))
-      let values = tableHeaders
-        .map(header => newToken[header])
-        .reduce((previous, current) => `${previous}\t${current}`)
-      console.log(values)
-    } else if (!opts.silent && opts.loglevel !== 'silent') {
-      const data = [mapTokenToTable(newToken, { trimToken: false })]
-      console.log(renderToString(<Table data={data}/>))
-    }
-  } catch (e) {
-    logError(e)
+  // Check if OTP is required
+  const newToken = await otplease(opts, opts => libnpm.profile.createToken(
+    password,
+    argv['read-only'],
+    argv.cidr_whitelist,
+    opts
+  ))
+
+  if (opts.json) {
+    console.log(JSON.stringify(newToken, null, 2))
+  } else if (opts.parseable) {
+    console.log(tableHeaders.join('\t'))
+    let values = tableHeaders
+      .map(header => newToken[header])
+      .reduce((previous, current) => `${previous}\t${current}`)
+    console.log(values)
+  } else if (!opts.silent && opts.loglevel !== 'silent') {
+    const data = [mapTokenToTable(newToken, { trimToken: false })]
+    console.log(renderToString(<Table data={data}/>))
   }
 }
 
