@@ -28,6 +28,12 @@ const Profile = module.exports = {
         handler: argv => setPassword(argv)
       })
       .command({
+        command: 'disable-2fa',
+        describe: 'Disable two-factor authentication.',
+        builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
+        handler: argv => disable2fa(argv)
+      })
+      .command({
         command: 'create-token',
         describe: 'Create a new authentication token, possibly with restrictions.',
         builder: y => y.help('help', 'h').options(Object.assign({}, ProfileSubcommandsOptions , {
@@ -195,6 +201,37 @@ async function setPassword (argv) {
       console.log(['password', 'undefined'].join('\t'))
     } else if (!opts.silent && opts.loglevel !== 'silent') {
       console.log(`Set password`)
+    }
+  } catch (e) {
+    logError(e)
+  }
+}
+
+async function disable2fa (argv) {
+  const opts = getOptions(argv)
+
+  try {
+    // Check if tfa is enabled
+    const profileInfo = await libnpm.profile.get(opts)
+    if (!profileInfo.tfa) {
+      console.log('Two factor authentication is not enabled.')
+      return
+    }
+
+    const password = await readPassword()
+    const newProfileInfo = await otplease(opts, opts => libnpm.profile.set({
+      tfa: {
+        password,
+        mode: 'disable'
+      }
+    }, opts))
+
+    if (opts.json) {
+      console.log(JSON.stringify({ tfa: newProfileInfo.tfa }, null, 2))
+    } else if (opts.parseable) {
+      console.log(['tfa', newProfileInfo.tfa].join('\t'))
+    } else if (!opts.silent && opts.loglevel !== 'silent') {
+      console.log('Two factor authentication disabled.')
     }
   } catch (e) {
     logError(e)
