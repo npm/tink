@@ -167,7 +167,6 @@ async function set (argv) {
   }
 }
 
-// TODO: OTP code
 async function setPassword (argv) {
   const opts = getOptions(argv)
 
@@ -182,12 +181,13 @@ async function setPassword (argv) {
       return
     }
 
-    const newProfileInfo = await libnpm.profile.set({
+    // Check if OTP is required
+    await otplease(opts, opts => libnpm.profile.set({
       password : {
         old: currentPassword,
         new: newPassword
       }
-    }, opts)
+    }, opts))
 
     if (opts.json) {
       console.log({ }, null, 2)
