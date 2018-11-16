@@ -16,6 +16,18 @@ const Profile = module.exports = {
         handler: argv => get(argv)
       })
       .command({
+        command: 'set <property> <value>',
+        describe: 'Update profile information for the authenticated user.',
+        builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
+        handler: argv => set(argv)
+      })
+      .command({
+        command: 'set password',
+        describe: 'Update password',
+        builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
+        handler: argv => setPassword(argv)
+      })
+      .command({
         command: 'create-token',
         describe: 'Create a new authentication token, possibly with restrictions.',
         builder: y => y.help('help', 'h').options(Object.assign({}, ProfileSubcommandsOptions , {
@@ -122,6 +134,66 @@ async function get (argv) {
       profileInfo.tfa = profileInfo.tfa.mode
       // TODO: Maybe we should use another type of table?
       console.log(renderToString(<Table data={[profileInfo]}/>))
+    }
+  } catch (e) {
+    logError(e)
+  }
+}
+
+async function set (argv) {
+  const opts = getOptions(argv)
+
+  const validProperties = ['email', 'password', 'fullname', 'homepage', 'freenode', 'twitter', 'github']
+
+  // Check if the property exists
+  if (!validProperties.includes(argv.property)) {
+    console.error(`"${argv.property}" is not a property we can set. Valid properties are: ${validProperties.join(", ")}`)
+    return
+  }
+
+  try {
+    const newProfileInfo = await libnpm.profile.set({ [argv.property]: argv.value }, opts)
+
+    if (opts.json) {
+      console.log(JSON.stringify({ [argv.property]: newProfileInfo[argv.property] }, null, 2))
+    } else if (opts.parseable) {
+      console.log([argv.property, newProfileInfo[argv.property]].join('\t'))
+    } else if (!opts.silent && opts.loglevel !== 'silent') {
+      console.log(`Set ${argv.property} to ${newProfileInfo[argv.property]}`)
+    }
+  } catch (e) {
+    logError(e)
+  }
+}
+
+// TODO: OTP code
+async function setPassword (argv) {
+  const opts = getOptions(argv)
+
+  try {
+    const currentPassword = await readPassword('Current password: ')
+    const newPassword = await readPassword('New password: ')
+    const newPasswordConfirmation = await readPassword('New password again: ')
+
+    // REVIEW: Give to the user another try?
+    if (newPassword !== newPasswordConfirmation) {
+      console.error('\nPasswords do not match.')
+      return
+    }
+
+    const newProfileInfo = await libnpm.profile.set({
+      password : {
+        old: currentPassword,
+        new: newPassword
+      }
+    }, opts)
+
+    if (opts.json) {
+      console.log({ }, null, 2)
+    } else if (opts.parseable) {
+      console.log(['password', 'undefined'].join('\t'))
+    } else if (!opts.silent && opts.loglevel !== 'silent') {
+      console.log(`Set password`)
     }
   } catch (e) {
     logError(e)
