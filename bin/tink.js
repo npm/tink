@@ -11,7 +11,9 @@ const CMDS = new Map([
   ['prepare', require('../lib/commands/prepare.js')],
   ['rm', require('../lib/commands/rm.js')],
   ['shell', require('../lib/commands/shell.js')],
-  ['view', require('../lib/commands/view.js')]
+  ['team', require('../lib/commands/team.js')],
+  ['view', require('../lib/commands/view.js')],
+  ['whoami', require('../lib/commands/whoami.js')]
 ])
 
 if (require.main === module) {
