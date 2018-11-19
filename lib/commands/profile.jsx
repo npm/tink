@@ -129,6 +129,12 @@ const mapTokenToTable = (token, options = { trimToken: true }) => {
 
 async function get (argv) {
   const opts = getOptions(argv)
+
+  const parseTfaInfo = (tfa) => {
+    // When 'tfa' is disabled or pending, print 'disabled'
+    return !tfa || tfa.pending ? 'disabled' : tfa.mode
+  }
+
   try {
     const profileInfo = await libnpm.profile.get(opts)
 
@@ -138,13 +144,17 @@ async function get (argv) {
       console.log(JSON.stringify(profileInfo, null, 2))
     } else if (opts.parseable) {
       Object.keys(profileInfo).forEach(key => {
-        const value = key === 'tfa' ? profileInfo[key].mode : profileInfo[key]
+        const value = key === 'tfa'
+          ? parseTfaInfo(profileInfo[key])
+          : profileInfo[key]
+
         if (value) {
           console.log([key, value].join('\t'))
         }
       })
     } else if (!opts.silent && opts.loglevel !== 'silent') {
-      profileInfo.tfa = profileInfo.tfa.mode
+      profileInfo.tfa = parseTfaInfo(profileInfo.tfa)
+
       // TODO: Maybe we should use another type of table?
       console.log(renderToString(<Table data={[profileInfo]}/>))
     }
