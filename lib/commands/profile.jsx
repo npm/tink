@@ -212,7 +212,7 @@ async function setPassword (argv) {
     }, opts))
 
     if (opts.json) {
-      console.log({ }, null, 2)
+      console.log(JSON.stringify({}, null, 2))
     } else if (opts.parseable) {
       console.log(['password', 'undefined'].join('\t'))
     } else if (!opts.silent && opts.loglevel !== 'silent') {
