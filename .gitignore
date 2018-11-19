@@ -3,3 +3,4 @@ node_modules
 .package-map.json
 /test/cache
 yarn.lock
+/lib/commands/utils/.htaccess
