@@ -32,7 +32,7 @@ const Org = module.exports = {
 
 async function orgAdd (argv) {
   const figgyPudding = require('figgy-pudding')
-  const libnpm = require('libnpm')
+  const orgs = require('libnpm/org')
   const npmConfig = require('../config.js')
 
   const OrgConfig = figgyPudding({
@@ -45,7 +45,7 @@ async function orgAdd (argv) {
   const opts = OrgConfig(npmConfig().concat(argv).concat({
     log: require('npmlog')
   }))
-  const memDeets = await libnpm.org.set(argv.org, argv.user, argv.role, opts)
+  const memDeets = await orgs.set(argv.org, argv.user, argv.role, opts)
   if (opts.json) {
     console.log(JSON.stringify(memDeets, null, 2))
   } else if (opts.parseable) {
@@ -64,7 +64,7 @@ async function orgAdd (argv) {
 
 async function orgRm (argv) {
   const figgyPudding = require('figgy-pudding')
-  const libnpm = require('libnpm')
+  const orgs = require('libnpm/org')
   const npmConfig = require('../config.js')
 
   const OrgConfig = figgyPudding({
@@ -77,8 +77,8 @@ async function orgRm (argv) {
   const opts = OrgConfig(npmConfig().concat(argv).concat({
     log: require('npmlog')
   }))
-  await libnpm.org.rm(argv.org, argv.user, opts)
-  const roster = libnpm.org.ls(argv.org, opts)
+  await orgs.rm(argv.org, argv.user, opts)
+  const roster = orgs.ls(argv.org, opts)
   const user = argv.user.replace(/^[~@]?/, '')
   const org = argv.org.replace(/^[~@]?/, '')
   const userCount = Object.keys(roster).length
@@ -100,7 +100,7 @@ async function orgRm (argv) {
 async function orgLs (argv) {
   const figgyPudding = require('figgy-pudding')
   const { h, renderToString } = require('ink')
-  const libnpm = require('libnpm')
+  const orgs = require('libnpm/org')
   const npmConfig = require('../config.js')
   const Table = require('ink-table').default
 
@@ -114,7 +114,7 @@ async function orgLs (argv) {
   const opts = OrgConfig(npmConfig().concat(argv).concat({
     log: require('npmlog')
   }))
-  const roster = await libnpm.org.ls(argv.org, opts)
+  const roster = await orgs.ls(argv.org, opts)
   if (opts.json) {
     console.log(JSON.stringify(roster, null, 2))
   } else if (opts.parseable) {
