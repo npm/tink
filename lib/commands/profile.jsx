@@ -255,7 +255,7 @@ async function disable2fa (argv) {
 
 async function enable2fa (argv) {
   const url = require('url')
-  const queryString = require('query-string')
+  const queryString = require('querystring')
   const generateQRCode = require('../utils/generate-qrcode')
   const readOTP = require('../utils/read-otp')
 
