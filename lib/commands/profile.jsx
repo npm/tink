@@ -117,7 +117,6 @@ const tableHeaders = ['token', 'key', 'cidr_whitelist', 'readonly', 'created', '
 
 const getOptions = argv => ProfileConfig(npmConfig().concat(argv).concat({ log }))
 
-// TODO: Move to `../utils`?
 const logError = (err) => console.error(`Error code: ${err.code} => ${err.message}`)
 
 const mapTokenToTable = (token, options = { trimToken: true }) => {
