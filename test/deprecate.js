@@ -1,5 +1,6 @@
 'use strict'
 
+const figgyPudding = require('figgy-pudding')
 const { log } = require('libnpm')
 const { test } = require('tap')
 const tnock = require('./util/tnock.js')
@@ -28,16 +29,19 @@ const cache = {
 }
 
 log.level = process.env.LOGLEVEL || 'silent'
-const OPTS = {
+const OPTS = figgyPudding({
+  registry: {},
+  log: {},
+  loglevel: {}
+}, { other () { return true } })({
   registry: 'https://mock.reg',
   log,
   loglevel: log.level
-}
+})
 
 const deprecate = require('../lib/commands/deprecate.js')
 
 test('tink deprecate an unscoped package', async t => {
-  // Clone cache and modify it for this test
   const deprecated = JSON.parse(JSON.stringify(cache))
   deprecated.versions = {
     '0.0.0': {},
@@ -46,9 +50,10 @@ test('tink deprecate an unscoped package', async t => {
   }
 
   // Clone OPTS and modify it for this test
-  const opts = JSON.parse(JSON.stringify(OPTS))
-  opts['pkg@version'] = `${deprecated.name}@0.0.1`
-  opts.message = deprecated.versions['0.0.1'].deprecated
+  const opts = OPTS.concat({
+    'pkg@version': `${deprecated.name}@0.0.1`,
+    message: deprecated.versions['0.0.1'].deprecated
+  })
 
   // Setup mock registry server
   tnock(t, opts.registry).get('/cond?write=true').reply(200, cache)
@@ -74,9 +79,10 @@ test('tink deprecate a scoped package', async t => {
   }
 
   // Clone OPTS and modify it for this test
-  const opts = JSON.parse(JSON.stringify(OPTS))
-  opts['pkg@version'] = `${deprecated.name}@0.0.1`
-  opts.message = deprecated.versions['0.0.1'].deprecated
+  const opts = OPTS.concat({
+    'pkg@version': `${deprecated.name}@0.0.1`,
+    message: deprecated.versions['0.0.1'].deprecated
+  })
 
   // Setup mock registry server
   tnock(t, opts.registry).get('/@scope%2fcond?write=true').reply(200, cacheCopy)
@@ -99,9 +105,10 @@ test('tink deprecate semver range', async t => {
   }
 
   // Clone OPTS and modify it for this test
-  const opts = JSON.parse(JSON.stringify(OPTS))
-  opts['pkg@version'] = `${deprecated.name}@<0.0.2`
-  opts.message = deprecated.versions['0.0.1'].deprecated
+  const opts = OPTS.concat({
+    'pkg@version': `${deprecated.name}@<0.0.2`,
+    message: deprecated.versions['0.0.1'].deprecated
+  })
 
   // Setup mock registry server
   tnock(t, opts.registry).get('/cond?write=true').reply(200, cache)
@@ -116,9 +123,10 @@ test('tink deprecate semver range', async t => {
 
 test('tink deprecate bad semver range', async t => {
   // Clone OPTS and modify it for this test
-  const opts = JSON.parse(JSON.stringify(OPTS))
-  opts['pkg@version'] = `${cache.name}@-9001`
-  opts.message = 'make it dead'
+  const opts = OPTS.concat({
+    'pkg@version': `${cache.name}@-9001`,
+    message: 'make it dead'
+  })
 
   // Test that an exception is thrown
   t.rejects(deprecate.handler(opts), 'invalid version range: -9001')
@@ -134,9 +142,10 @@ test('tink deprecate a package with no semver range', async t => {
   }
 
   // Clone OPTS and modify it for this test
-  const opts = JSON.parse(JSON.stringify(OPTS))
-  opts['pkg@version'] = deprecated.name
-  opts.message = deprecated.versions['0.0.0'].deprecated
+  const opts = OPTS.concat({
+    'pkg@version': deprecated.name,
+    message: deprecated.versions['0.0.0'].deprecated
+  })
 
   // Setup mock registry server
   tnock(t, opts.registry).get('/cond?write=true').reply(200, cache)
