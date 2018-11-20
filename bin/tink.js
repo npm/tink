@@ -9,6 +9,7 @@ const CMDS = new Map([
   ['org', require('../lib/commands/org.jsx')],
   ['ping', require('../lib/commands/ping.js')],
   ['prepare', require('../lib/commands/prepare.js')],
+  ['profile', require('../lib/commands/profile.jsx')],
   ['rm', require('../lib/commands/rm.js')],
   ['shell', require('../lib/commands/shell.js')],
   ['team', require('../lib/commands/team.js')],
