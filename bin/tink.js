@@ -5,6 +5,7 @@ require('../lib/node/index.js')
 const CMDS = new Map([
   ['access', require('../lib/commands/access.jsx')],
   ['add', require('../lib/commands/add.js')],
+  ['build', require('../lib/commands/build.js')],
   ['deprecate', require('../lib/commands/deprecate.js')],
   ['org', require('../lib/commands/org.jsx')],
   ['ping', require('../lib/commands/ping.js')],
