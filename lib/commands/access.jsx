@@ -142,7 +142,8 @@ async function accessLsCollaborators (argv) {
         .catch(e => console.error(e))
     render(opts, collaborators)
   } else {
-    findPrefix(process.cwd()).then(prefix => {
+    const prefix = await findPrefix(process.cwd())
+    if (prefix) {
       readJson(
         `${prefix}/package.json`,
         console.error,
@@ -157,7 +158,7 @@ async function accessLsCollaborators (argv) {
           render(opts, collaborators)
         }
       )
-    })
+    }
   }
 }
 
