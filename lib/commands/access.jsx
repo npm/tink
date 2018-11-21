@@ -75,7 +75,7 @@ const parseOpts = argv => Config(npmConfig().concat(argv).concat({
   log: require('npmlog')
 }))
 
-const render = (opts, content) => {
+const render = (opts, content = {}) => {
   const { h, renderToString } = require('ink')
   const Table = require('ink-table').default
 
@@ -96,22 +96,18 @@ const render = (opts, content) => {
 
 async function accessPublic (argv) {
   await libnpm.access.public(argv.spec, parseOpts(argv))
-    .catch(e => console.error(e))
 }
 
 async function accessRestricted (argv) {
   await libnpm.access.restricted(argv.spec, parseOpts(argv))
-    .catch(e => console.error(e))
 }
 
 async function accessGrant (argv) {
   await access.grant(argv.spec, argv.team, argv.permissions, parseOpts(argv))
-    .catch(e => console.error(e))
 }
 
 async function accessRevoke (argv) {
   await libnpm.access.revoke(argv.spec, argv.team, parseOpts(argv))
-    .catch(e => console.error(e))
 }
 
 async function accessLsPackages (argv) {
@@ -127,24 +123,20 @@ async function accessLsPackages (argv) {
   // TODO: error when opts is used as 2nd param in .lsPackages
   const packages =
     await libnpm.access.lsPackages(entity)
-      .catch(e => console.error(e))
   render(opts, packages)
 }
 
 async function accessLsCollaborators (argv) {
-  const findPrefix = require('find-npm-prefix')
-  const readJson = require('read-package-json')
   const opts = parseOpts(argv)
 
   if (argv.spec) {
     const collaborators =
       await libnpm.access.lsCollaborators(argv.spec, argv.user, opts)
-        .catch(e => console.error(e))
     render(opts, collaborators)
   } else {
-    const prefix = await findPrefix(process.cwd())
+    const prefix = await libnpm.findPrefix(process.cwd())
     if (prefix) {
-      readJson(
+      libnpm.readJson(
         `${prefix}/package.json`,
         console.error,
         false,
@@ -154,7 +146,6 @@ async function accessLsCollaborators (argv) {
           }
           const collaborators =
             await libnpm.access.lsCollaborators(data.name, argv.user, opts)
-              .catch(e => console.error(e))
           render(opts, collaborators)
         }
       )
