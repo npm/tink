@@ -111,13 +111,14 @@ async function accessRevoke (argv) {
 }
 
 async function accessLsPackages (argv) {
-  const getPackagesByCurrentUser = () => {
-    // TODO: grab current authenticated user from pending whoami support
+  const getPackagesByCurrentUser = async () => {
+    const whoami = require('./whoami')
+    return await whoami.handler({ silent: true })
   }
 
   const entity = argv.entity
     ? argv.entity
-    : getPackagesByCurrentUser()
+    : await getPackagesByCurrentUser()
 
   const opts = parseOpts(argv)
   // TODO: error when opts is used as 2nd param in .lsPackages
