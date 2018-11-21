@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.16.0"></a>
+# [0.16.0](https://github.com/npm/tink/compare/v0.15.1...v0.16.0) (2018-11-21)
+
+
+### Bug Fixes
+
+* **fs:** return after calling cb in chmod ([#33](https://github.com/npm/tink/issues/33)) ([bd952d3](https://github.com/npm/tink/commit/bd952d3))
+* **otplease:** promisify `read` ([#30](https://github.com/npm/tink/issues/30)) ([f7e31f6](https://github.com/npm/tink/commit/f7e31f6))
+* **ping:** get ping tests passing again ([e0bdf2d](https://github.com/npm/tink/commit/e0bdf2d))
+* **style:** standard --fix ([13648ec](https://github.com/npm/tink/commit/13648ec))
+* **test:** get deprecate tests working again ([e5582ad](https://github.com/npm/tink/commit/e5582ad))
+* **test:** refactor fs tests and get them passing again ([b7f7fd7](https://github.com/npm/tink/commit/b7f7fd7))
+* **whoami:** get the command working a bit better ([b58387c](https://github.com/npm/tink/commit/b58387c))
+
+
+### Features
+
+* **access:** add `tink access` subcommands ([#12](https://github.com/npm/tink/issues/12)) ([efd6e18](https://github.com/npm/tink/commit/efd6e18))
+* **build:** implement build command ([#29](https://github.com/npm/tink/issues/29)) ([dcd192a](https://github.com/npm/tink/commit/dcd192a))
+* **commands:** add 'team' command ([#25](https://github.com/npm/tink/issues/25)) ([45baf37](https://github.com/npm/tink/commit/45baf37))
+* **profile:** add `profile` subcommands ([#28](https://github.com/npm/tink/issues/28)) ([a33cca1](https://github.com/npm/tink/commit/a33cca1))
+* **whoami:** Implement whoami command ([#31](https://github.com/npm/tink/issues/31)) ([c499d2a](https://github.com/npm/tink/commit/c499d2a))
+
+
+
 <a name="0.15.1"></a>
 ## [0.15.1](https://github.com/npm/tink/compare/v0.15.0...v0.15.1) (2018-11-13)
 
