@@ -21,7 +21,7 @@
     "prerelease": "npm t",
     "release": "standard-version -s",
     "postrelease": "npm publish && git push --follow-tags",
-    "pretest": "standard ./**/*.js",
+    "pretest": "standard",
     "test": "tap -J --nyc-arg=--all --coverage test/*.js test/node/*.js",
     "update-coc": "weallbehave -o . && git add CODE_OF_CONDUCT.md && git commit -m 'docs(coc): updated CODE_OF_CONDUCT.md'",
     "update-contrib": "weallcontribute -o . && git add CONTRIBUTING.md && git commit -m 'docs(contributing): updated CONTRIBUTING.md'"
@@ -29,7 +29,7 @@
   "devDependencies": {
     "mkdirp": "^0.5.1",
     "nock": "^10.0.2",
-    "standard": "^12.0.1",
+    "standard": "^11.0.1",
     "standard-version": "*",
     "tacks": "^1.2.7",
     "tap": "*",
