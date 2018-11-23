@@ -76,7 +76,7 @@ const parseOpts = argv => Config(npmConfig().concat(argv).concat({
 }))
 
 const render = (opts, content) => {
-  const { h, renderToString } = require('ink')
+  const { h, renderToString } = require('ink') // eslint-disable-line
   const Table = require('ink-table').default
 
   if (opts.json) {
@@ -90,7 +90,7 @@ const render = (opts, content) => {
     const data = Object.keys(content).map(collab => {
       return { collab, role: content[collab] }
     })
-    console.log(renderToString(<Table data={data}/>))
+    console.log(renderToString(<Table data={data} />))
   }
 }
 
@@ -105,7 +105,7 @@ async function accessRestricted (argv) {
 }
 
 async function accessGrant (argv) {
-  await access.grant(argv.spec, argv.team, argv.permissions, parseOpts(argv))
+  await libnpm.access.grant(argv.spec, argv.team, argv.permissions, parseOpts(argv))
     .catch(e => console.error(e))
 }
 

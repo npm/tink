@@ -4,7 +4,7 @@ const relativeDate = require('tiny-relative-date')
 const columns = require('cli-columns')
 
 const {
-  h,
+  h, // eslint-disable-line
   renderToString,
   Fragment,
   Component,
@@ -56,7 +56,7 @@ const packageValueObjectItems = function ({ field, value, props, maxItems }) {
 
   items = items.map((prop) =>
     <span>
-      {prop}: <PackageValue field={`${field}.${prop}`} value={value[prop]}/>
+      {prop}: <PackageValue field={`${field}.${prop}`} value={value[prop]} />
     </span>
   )
 
@@ -97,7 +97,7 @@ class PackageValueList extends Component {
     } else {
       let items = value.map((value, index) =>
         <span>
-          - <PackageValue field={`${field}[${index}]`} value={value}/>
+          - <PackageValue field={`${field}[${index}]`} value={value} />
         </span>
       )
 
@@ -268,7 +268,7 @@ class PackageFields extends Component {
       let lines = fields.map((field) =>
         <span>
           {prefix}
-          <PackageField field={field} value={pkg && pkg[field] || pkg} maxItems={Infinity} />
+          <PackageField field={field} value={(pkg && pkg[field]) || pkg} maxItems={Infinity} />
         </span>
       )
 
@@ -379,8 +379,6 @@ function getData (packument, spec, fields) {
         return object
       }, {}))
     }
-  } else {
-    data = data
   }
 
   return [data, versions]
