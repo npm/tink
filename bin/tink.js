@@ -43,11 +43,5 @@ function runCommandWithYargs (argv, log, npmConfig) {
     config = config.command(mod)
   }
   require('../lib/node/index.js')
-  const yargv = npmConfig(config.argv).concat({ log })
-  log.level = yargv.loglevel || 'notice'
-  if (!yargv.production) {
-    process.tink.config = yargv
-  } else {
-    process.tink.config = { production: true }
-  }
+  config = config.argv
 }
