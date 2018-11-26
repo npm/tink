@@ -99,7 +99,7 @@ async function orgRm (argv) {
 
 async function orgLs (argv) {
   const figgyPudding = require('figgy-pudding')
-  const { h, renderToString } = require('ink')
+  const { h, renderToString } = require('ink') // eslint-disable-line
   const orgs = require('libnpm/org')
   const npmConfig = require('../config.js')
   const Table = require('ink-table').default
@@ -126,6 +126,6 @@ async function orgLs (argv) {
     const data = Object.keys(roster).map(user => {
       return {user, role: roster[user]}
     })
-    console.log(renderToString(<Table data={data}/>))
+    console.log(renderToString(<Table data={data} />))
   }
 }

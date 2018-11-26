@@ -76,7 +76,7 @@ const parseOpts = argv => Config(npmConfig().concat(argv).concat({
 }))
 
 const render = (opts, content = {}) => {
-  const { h, renderToString } = require('ink')
+  const { h, renderToString } = require('ink') // eslint-disable-line
   const Table = require('ink-table').default
 
   if (opts.json) {
@@ -90,7 +90,7 @@ const render = (opts, content = {}) => {
     const data = Object.keys(content).map(collab => {
       return { collab, role: content[collab] }
     })
-    console.log(renderToString(<Table data={data}/>))
+    console.log(renderToString(<Table data={data} />))
   }
 }
 
@@ -103,7 +103,7 @@ async function accessRestricted (argv) {
 }
 
 async function accessGrant (argv) {
-  await access.grant(argv.spec, argv.team, argv.permissions, parseOpts(argv))
+  await access.grant(argv.spec, argv.team, argv.permissions, parseOpts(argv)) // eslint-disable-line
 }
 
 async function accessRevoke (argv) {
@@ -113,7 +113,7 @@ async function accessRevoke (argv) {
 async function accessLsPackages (argv) {
   const getPackagesByCurrentUser = async () => {
     const whoami = require('./whoami')
-    return await whoami.handler({ silent: true })
+    return whoami.handler({ silent: true })
   }
 
   const entity = argv.entity

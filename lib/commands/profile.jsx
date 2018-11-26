@@ -42,7 +42,7 @@ const Profile = module.exports = {
       .command({
         command: 'create-token',
         describe: 'Create a new authentication token, possibly with restrictions.',
-        builder: y => y.help('help', 'h').options(Object.assign({}, ProfileSubcommandsOptions , {
+        builder: y => y.help('help', 'h').options(Object.assign({}, ProfileSubcommandsOptions, {
           'read-only': {
             alias: 'ro',
             describe: 'Readonly',
@@ -78,10 +78,10 @@ const Profile = module.exports = {
 
 const libnpm = require('libnpm')
 const figgyPudding = require('figgy-pudding')
-const { h, renderToString } = require('ink')
+const { h, renderToString } = require('ink') // eslint-disable-line
 const Table = require('ink-table').default
 const log = require('npmlog')
-const readPassword = require("../utils/read-password")
+const readPassword = require('../utils/read-password')
 const otplease = require('../utils/otplease.js')
 const npmConfig = require('../config.js')
 
@@ -155,7 +155,7 @@ async function get (argv) {
       profileInfo.tfa = parseTfaInfo(profileInfo.tfa)
 
       // TODO: Maybe we should use another type of table?
-      console.log(renderToString(<Table data={[profileInfo]}/>))
+      console.log(renderToString(<Table data={[profileInfo]} />))
     }
   } catch (e) {
     logError(e)
@@ -169,7 +169,7 @@ async function set (argv) {
 
   // Check if the property exists
   if (!validProperties.includes(argv.property)) {
-    console.error(`"${argv.property}" is not a property we can set. Valid properties are: ${validProperties.join(", ")}`)
+    console.error(`"${argv.property}" is not a property we can set. Valid properties are: ${validProperties.join(', ')}`)
     return
   }
 
@@ -204,7 +204,7 @@ async function setPassword (argv) {
 
     // Check if OTP is required
     await otplease(opts, opts => libnpm.profile.set({
-      password : {
+      password: {
         old: currentPassword,
         new: newPassword
       }
@@ -280,7 +280,7 @@ async function enable2fa (argv) {
       '\tauth-and-writes - Require two-factor authentication when logging in AND when publishing'
     ]
     console.error(message.join('\n'))
-    return;
+    return
   }
 
   console.log(`Enabling two factor authentication for ${tfaMode}.`)
@@ -339,7 +339,7 @@ async function enable2fa (argv) {
   }
 }
 
-async function createToken(argv) {
+async function createToken (argv) {
   const opts = getOptions(argv)
 
   const password = await readPassword()
@@ -362,7 +362,7 @@ async function createToken(argv) {
     console.log(values)
   } else if (!opts.silent && opts.loglevel !== 'silent') {
     const data = [mapTokenToTable(newToken, { trimToken: false })]
-    console.log(renderToString(<Table data={data}/>))
+    console.log(renderToString(<Table data={data} />))
   }
 }
 
@@ -400,7 +400,7 @@ async function listTokens (opts) {
       })
     } else if (!opts.silent && opts.loglevel !== 'silent') {
       const data = tokens.map(token => mapTokenToTable(token))
-      console.log(renderToString(<Table data={data}/>))
+      console.log(renderToString(<Table data={data} />))
     }
   } catch (e) {
     logError(e)
