@@ -3,7 +3,8 @@
 const {
   h,
   Color,
-  Component
+  Component,
+  Fragment
 } = require('ink')
 const SelectInput = require('ink-select-input')
 const TextInput = require('ink-text-input')
@@ -55,17 +56,19 @@ class Search extends Component {
     } = this.state
 
     return <div>
-      <SearchInput
-        isFocused={focusedOn === FOCUS_SEARCH}
-        terms={terms}
-        onChange={this.onChangeTerms}
-        onSubmit={this.onSubmit} />
-      { !isInstalling && <SearchResults
-        isFocused={focusedOn === FOCUS_RESULTS}
-        isLoading={isLoading}
-        terms={terms}
-        matches={matches}
-        onSelect={this.onSelectPackage} /> }
+      { !isInstalling && <Fragment>
+        <SearchInput
+          isFocused={focusedOn === FOCUS_SEARCH}
+          terms={terms}
+          onChange={this.onChangeTerms}
+          onSubmit={this.onSubmit} />
+        <SearchResults
+          isFocused={focusedOn === FOCUS_RESULTS}
+          isLoading={isLoading}
+          terms={terms}
+          matches={matches}
+          onSelect={this.onSelectPackage} />
+      </Fragment> }
       { isInstalling && selectedPackage
         ? <InstallingPackage isInstalling={isInstalling} pkg={selectedPackage} />
         : null
