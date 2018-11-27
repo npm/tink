@@ -1,16 +1,16 @@
 'use strict'
 
-const figures = require('figures')
 const {
   h,
   Color,
-  Component,
-  Fragment,
-  Text
+  Component
 } = require('ink')
 const SelectInput = require('ink-select-input')
 const TextInput = require('ink-text-input')
 const libnpm = require('libnpm')
+
+const FOCUS_SEARCH = 'FOCUS_SEARCH'
+const FOCUS_RESULTS = 'FOCUS_RESULTS'
 
 class Search extends Component {
   constructor (props) {
@@ -19,24 +19,34 @@ class Search extends Component {
     this.state = {
       isInstalling: false,
       isLoading: null,
+      focusedOn: FOCUS_SEARCH,
       matches: [],
       selectedPackage: null,
       terms: terms || ''
     }
+
     this.onChangeTerms = this.onChangeTerms.bind(this)
+    this.onKeyPress = this.onKeyPress.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.onSelectPackage = this.onSelectPackage.bind(this)
   }
 
   componentDidMount () {
     const { terms } = this.props
+    process.stdin.on('keypress', this.onKeyPress)
+
     if (terms) {
       this.search(terms)
     }
   }
 
+  componentWillUnmount () {
+    process.stdin.removeListener('keypress', this.onKeyPress)
+  }
+
   render () {
     const {
+      focusedOn,
       isInstalling,
       isLoading,
       matches,
@@ -46,14 +56,16 @@ class Search extends Component {
 
     return <div>
       <SearchInput
+        isFocused={focusedOn === FOCUS_SEARCH}
         terms={terms}
         onChange={this.onChangeTerms}
         onSubmit={this.onSubmit} />
-      <SearchResults
+      { !isInstalling && <SearchResults
+        isFocused={focusedOn === FOCUS_RESULTS}
         isLoading={isLoading}
         terms={terms}
         matches={matches}
-        onSelect={this.onSelectPackage} />
+        onSelect={this.onSelectPackage} /> }
       { isInstalling && selectedPackage
         ? <InstallingPackage isInstalling={isInstalling} pkg={selectedPackage} />
         : null
@@ -65,6 +77,7 @@ class Search extends Component {
     const { options } = this.props
     try {
       this.setState({
+        focusedOn: FOCUS_SEARCH,
         isLoading: true,
         matches: []
       })
@@ -73,6 +86,7 @@ class Search extends Component {
         ...options
       })
       this.setState({
+        focusedOn: matches && matches.length ? FOCUS_RESULTS : FOCUS_SEARCH,
         isLoading: false,
         matches
       })
@@ -105,6 +119,27 @@ class Search extends Component {
     this.setState({ terms })
   }
 
+  onKeyPress (chunk, key) {
+    const {
+      focusedOn,
+      matches,
+      selectedPackage
+    } = this.state
+
+    // Handle up/down arrow press
+
+    if (['up', 'down'].includes(key.name) && focusedOn === FOCUS_SEARCH && matches && matches.length) {
+      this.setState({ focusedOn: FOCUS_RESULTS })
+      return
+    }
+
+    // Handle enter press
+
+    if (key.name === 'enter' && focusedOn === FOCUS_RESULTS && selectedPackage) {
+      this.install(selectedPackage)
+    }
+  }
+
   onSubmit (terms) {
     this.search(terms)
   }
@@ -114,14 +149,14 @@ class Search extends Component {
   }
 }
 
-const SearchInput = ({ onChange, onSubmit, terms }) => {
+const SearchInput = ({ isFocused, onChange, onSubmit, terms }) => {
   return <div>
     <Color grey bold>Find a package: </Color>
-    <TextInput value={terms} onChange={onChange} onSubmit={onSubmit} />
+    <TextInput focused={isFocused} value={terms} onChange={onChange} onSubmit={onSubmit} />
   </div>
 }
 
-const SearchResults = ({ isLoading, matches, onSelect, terms }) => {
+const SearchResults = ({ isFocused, isLoading, matches, onSelect, terms }) => {
   if (isLoading) {
     return <div><Color green>Searching...</Color></div>
   }
@@ -133,7 +168,7 @@ const SearchResults = ({ isLoading, matches, onSelect, terms }) => {
   if (isLoading === false && terms && matches && matches.length) {
     return <div>
       <Color grey bold>Results (maintenance, popularity, quality):</Color><br />
-      <PackageSelector matches={matches} onSelect={onSelect} />
+      <PackageSelector isFocused={isFocused} matches={matches} onSelect={onSelect} />
     </div>
   }
 
@@ -142,13 +177,13 @@ const SearchResults = ({ isLoading, matches, onSelect, terms }) => {
 
 const PackageSelectIndicator = ({ isSelected }) => {
   if (!isSelected) {
-    return ' ';
+    return ' '
   }
 
   return <Color green>{ '> ' }</Color>
-};
+}
 
-const formatPackageScore = num => `${ Math.round(num * 100) }%`
+const formatPackageScore = num => `${Math.round(num * 100)}%`
 
 const PackageItem = ({ isSelected, value }) => {
   const {
@@ -172,17 +207,21 @@ const PackageItem = ({ isSelected, value }) => {
   return <Color green={isSelected}>{name} @{username} ({m} / {p} / {q})</Color>
 }
 
-const PackageSelector = ({ matches, onSelect }) => {
+const PackageSelector = ({ isFocused, matches, onSelect }) => {
   const items = matches.map(match => ({
     value: match,
     label: match
   }))
 
-  return <SelectInput
-    indicatorComponent={PackageSelectIndicator}
-    items={items}
-    itemComponent={PackageItem}
-    onSelect={({ value }) => onSelect(value)} />
+  if (isFocused) {
+    return <SelectInput
+      indicatorComponent={PackageSelectIndicator}
+      items={items}
+      itemComponent={PackageItem}
+      onSelect={({ value }) => onSelect(value)} />
+  } else if (items && items.length) {
+    return items.map(({ value }) => <div><PackageItem value={value} /></div>)
+  }
 }
 
 const InstallingPackage = ({ isInstalling, pkg }) => {
