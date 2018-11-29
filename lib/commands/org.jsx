@@ -1,49 +1,24 @@
 'use strict'
 
-const Org = module.exports = {
-  command: 'org',
-  describe: 'org-related subcommands',
-  builder (y) {
-    return y.help().alias('help', 'h')
-      .options(Org.options)
-      .demandCommand(1, 'Org subcommand is required')
-      .recommendCommands()
-      .command(
-        ['add <org> <user> [role]', 'set'],
-        'Add someone to an org',
-        Org.options,
-        async argv => orgAdd(argv)
-      )
-      .command(
-        'rm <org> <user>',
-        'Remove someone from an org',
-        Org.options,
-        async argv => orgRm(argv)
-      )
-      .command(
-        'ls <org>',
-        'List org members',
-        Org.options,
-        async argv => orgLs(argv)
-      )
-  },
-  options: Object.assign(require('../common-opts.js', {}))
-}
+const figgyPudding = require('figgy-pudding')
+const { h, renderToString } = require('ink') // eslint-disable-line
+const orgs = require('libnpm/org')
+const Table = require('ink-table').default
 
-async function orgAdd (argv) {
-  const figgyPudding = require('figgy-pudding')
-  const orgs = require('libnpm/org')
-  const npmConfig = require('../config.js')
+const OrgConfig = figgyPudding({
+  json: {},
+  loglevel: {},
+  org: {},
+  parseable: {},
+  role: {},
+  silent: {},
+  user: {}
+})
 
-  const OrgConfig = figgyPudding({
-    json: {},
-    loglevel: {},
-    parseable: {},
-    silent: {}
-  })
-
-  const opts = OrgConfig(npmConfig(argv))
-  const memDeets = await orgs.set(argv.org, argv.user, argv.role, opts)
+module.exports.add = orgAdd
+async function orgAdd (argv, opts) {
+  opts = OrgConfig(opts)
+  const memDeets = await orgs.set(opts.org, opts.user, opts.role, opts)
   if (opts.json) {
     console.log(JSON.stringify(memDeets, null, 2))
   } else if (opts.parseable) {
@@ -60,23 +35,14 @@ async function orgAdd (argv) {
   return memDeets
 }
 
-async function orgRm (argv) {
-  const figgyPudding = require('figgy-pudding')
-  const orgs = require('libnpm/org')
-  const npmConfig = require('../config.js')
+module.exports.rm = orgRm
+async function orgRm (argv, opts) {
+  opts = OrgConfig(opts)
 
-  const OrgConfig = figgyPudding({
-    json: {},
-    loglevel: {},
-    parseable: {},
-    silent: {}
-  })
-
-  const opts = OrgConfig(npmConfig(argv))
-  await orgs.rm(argv.org, argv.user, opts)
-  const roster = orgs.ls(argv.org, opts)
-  const user = argv.user.replace(/^[~@]?/, '')
-  const org = argv.org.replace(/^[~@]?/, '')
+  await orgs.rm(opts.org, opts.user, opts)
+  const roster = orgs.ls(opts.org, opts)
+  const user = opts.user.replace(/^[~@]?/, '')
+  const org = opts.org.replace(/^[~@]?/, '')
   const userCount = Object.keys(roster).length
   if (opts.json) {
     console.log(JSON.stringify({
@@ -93,22 +59,10 @@ async function orgRm (argv) {
   }
 }
 
-async function orgLs (argv) {
-  const figgyPudding = require('figgy-pudding')
-  const { h, renderToString } = require('ink') // eslint-disable-line
-  const orgs = require('libnpm/org')
-  const npmConfig = require('../config.js')
-  const Table = require('ink-table').default
-
-  const OrgConfig = figgyPudding({
-    json: {},
-    loglevel: {},
-    parseable: {},
-    silent: {}
-  })
-
-  const opts = OrgConfig(npmConfig(argv))
-  const roster = await orgs.ls(argv.org, opts)
+module.exports.ls = orgLs
+async function orgLs (argv, opts) {
+  opts = OrgConfig(opts)
+  const roster = await orgs.ls(opts.org, opts)
   if (opts.json) {
     console.log(JSON.stringify(roster, null, 2))
   } else if (opts.parseable) {

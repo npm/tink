@@ -1,77 +1,19 @@
 'use strict'
 
-const Access = module.exports = {
-  command: 'access',
-  describe: 'access-related subcommands',
-  builder (y) {
-    return y.help().alias('help', 'h')
-      .options(Access.options)
-      .demandCommand(1, 'Access subcommand is required')
-      .recommendCommands()
-      .command(
-        'public <spec>',
-        'Set a package to be publicly accessible',
-        Access.options,
-        async argv => accessPublic(argv)
-      )
-      .command(
-        'restricted <spec>',
-        'Set a package to be restricted',
-        Access.options,
-        async argv => accessRestricted(argv)
-      )
-      .command(
-        'grant <permissions> <team> <spec>',
-        'Add the ability of users and teams to have read-only or ' +
-          'read-write access to a package',
-        Access.options,
-        async argv => accessGrant(argv)
-      )
-      .command(
-        'revoke <team> <spec>',
-        'Remove the ability of users and teams to have read-only or ' +
-          'read-write access to a package',
-        Access.options,
-        async argv => accessRevoke(argv)
-      )
-      .command(
-        'ls-packages [<entity>]',
-        'Show all of the packages a user or a team is able to access, along ' +
-          'with the access level, except for read-only public packages',
-        Access.options,
-        async argv => accessLsPackages(argv)
-      )
-      .command(
-        'ls-collaborators [<spec> [<user>]]',
-        'Show all of the access privileges for a package. Will only show ' +
-          'permissions for packages to which you have at least read access. ' +
-          'If <user> is passed in, the list is filtered only to teams that ' +
-          'user happens to belong to',
-        Access.options,
-        async argv => accessLsCollaborators(argv)
-      )
-      .command(
-        'edit <package>',
-        'Set the access privileges for a package at once using $EDITOR',
-        Access.options,
-        async argv => accessEdit(argv)
-      )
-  },
-  options: Object.assign(require('../common-opts.js', {}))
-}
-
 const figgyPudding = require('figgy-pudding')
-const npmConfig = require('../config.js')
 const libnpm = require('libnpm')
 
-const Config = figgyPudding({
+const ConfigOpts = figgyPudding({
+  entity: {},
   json: {},
   loglevel: {},
   parseable: {},
-  silent: {}
+  permissions: {},
+  silent: {},
+  spec: {},
+  team: {},
+  user: {}
 })
-
-const parseOpts = argv => Config(npmConfig(argv))
 
 const render = (opts, content = {}) => {
   const { h, renderToString } = require('ink') // eslint-disable-line
@@ -92,45 +34,54 @@ const render = (opts, content = {}) => {
   }
 }
 
-async function accessPublic (argv) {
-  await libnpm.access.public(argv.spec, parseOpts(argv))
+module.exports.public = accessPublic
+async function accessPublic (argv, opts) {
+  opts = ConfigOpts(opts)
+  await libnpm.access.public(opts.spec, opts)
 }
 
-async function accessRestricted (argv) {
-  await libnpm.access.restricted(argv.spec, parseOpts(argv))
+module.exports.restricted = accessRestricted
+async function accessRestricted (argv, opts) {
+  opts = ConfigOpts(opts)
+  await libnpm.access.restricted(opts.spec, opts)
 }
 
-async function accessGrant (argv) {
-  await access.grant(argv.spec, argv.team, argv.permissions, parseOpts(argv)) // eslint-disable-line
+module.exports.grant = accessGrant
+async function accessGrant (argv, opts) {
+  opts = ConfigOpts(opts)
+  await access.grant(opts.spec, opts.team, opts.permissions, opts) // eslint-disable-line
 }
 
-async function accessRevoke (argv) {
-  await libnpm.access.revoke(argv.spec, argv.team, parseOpts(argv))
+module.exports.revoke = accessRevoke
+async function accessRevoke (argv, opts) {
+  opts = ConfigOpts(opts)
+  await libnpm.access.revoke(opts.spec, opts.team, opts)
 }
 
-async function accessLsPackages (argv) {
+module.exports.lsPackages = accessLsPackages
+async function accessLsPackages (argv, opts) {
+  opts = ConfigOpts(opts)
   const getPackagesByCurrentUser = async () => {
-    const whoami = require('./whoami')
-    return whoami.handler(parseOpts(argv).concat({ silent: true }))
+    const whoami = require('./whoami.js')
+    return whoami([], opts.concat({ silent: true }))
   }
 
-  const entity = argv.entity
-    ? argv.entity
+  const entity = opts.entity
+    ? opts.entity
     : await getPackagesByCurrentUser()
 
-  const opts = parseOpts(argv)
-  // TODO: error when opts is used as 2nd param in .lsPackages
   const packages =
-    await libnpm.access.lsPackages(entity)
+    await libnpm.access.lsPackages(entity, opts)
   render(opts, packages)
 }
 
-async function accessLsCollaborators (argv) {
-  const opts = parseOpts(argv)
+module.exports.lsCollaborators = accessLsCollaborators
+async function accessLsCollaborators (argv, opts) {
+  opts = ConfigOpts(opts)
 
-  if (argv.spec) {
+  if (opts.spec) {
     const collaborators =
-      await libnpm.access.lsCollaborators(argv.spec, argv.user, opts)
+      await libnpm.access.lsCollaborators(opts.spec, opts.user, opts)
     render(opts, collaborators)
   } else {
     const prefix = await libnpm.getPrefix(process.cwd())
@@ -143,13 +94,14 @@ async function accessLsCollaborators (argv) {
 
       if (data) {
         const collaborators =
-          await libnpm.access.lsCollaborators(data.name, argv.user, opts)
+          await libnpm.access.lsCollaborators(data.name, opts.user, opts)
         render(opts, collaborators)
       }
     }
   }
 }
 
-async function accessEdit (argv) {
+module.exports.edit = accessEdit
+async function accessEdit (argv, opts) {
   // TODO: stub
 }

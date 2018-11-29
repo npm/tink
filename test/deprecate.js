@@ -60,7 +60,7 @@ test('tink deprecate an unscoped package', async t => {
   tnock(t, opts.registry).put('/cond', deprecated).reply(201, { deprecated: true })
 
   // Run the function
-  const res = await deprecate.handler(opts)
+  const res = await deprecate([], opts)
 
   // Verify the result
   t.equal(res.status, 201)
@@ -89,7 +89,7 @@ test('tink deprecate a scoped package', async t => {
   tnock(t, opts.registry).put('/@scope%2fcond', deprecated).reply(201, { deprecated: true })
 
   // Run the function
-  const res = await deprecate.handler(opts)
+  const res = await deprecate([], opts)
 
   // Verify the result
   t.equal(res.status, 201)
@@ -115,7 +115,7 @@ test('tink deprecate semver range', async t => {
   tnock(t, opts.registry).put('/cond', deprecated).reply(201, { deprecated: true })
 
   // Run the function
-  const res = await deprecate.handler(opts)
+  const res = await deprecate([], opts)
 
   // Verify the result
   t.equal(res.status, 201)
@@ -129,7 +129,7 @@ test('tink deprecate bad semver range', async t => {
   })
 
   // Test that an exception is thrown
-  t.rejects(deprecate.handler(opts), 'invalid version range: -9001')
+  t.rejects(deprecate([], opts), 'invalid version range: -9001')
 })
 
 test('tink deprecate a package with no semver range', async t => {
@@ -152,7 +152,7 @@ test('tink deprecate a package with no semver range', async t => {
   tnock(t, opts.registry).put('/cond', deprecated).reply(201, { deprecated: true })
 
   // Run the function
-  const res = await deprecate.handler(opts)
+  const res = await deprecate([], opts)
 
   // Verify the result
   t.equal(res.status, 201)

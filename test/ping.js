@@ -15,6 +15,6 @@ const ping = require('../lib/commands/ping.js')
 
 test('pings the server', async t => {
   tnock(t, OPTS.registry).get('/-/ping?write=true').reply(200, { ok: true })
-  const res = await ping.handler(OPTS)
+  const res = await ping([], OPTS)
   t.deepEqual(res, { ok: true }, 'got pong')
 })
