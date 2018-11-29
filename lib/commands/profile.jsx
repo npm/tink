@@ -2,7 +2,7 @@
 
 const Profile = module.exports = {
   command: 'profile',
-  describe: 'Provides functions for fetching and updating an npmjs.com profile.',
+  describe: 'Provides functions for fetching and updating an npmjs.com profile',
   aliases: ['p'],
   builder (y) {
     return y.help().alias('help', 'h')
@@ -11,13 +11,13 @@ const Profile = module.exports = {
       .recommendCommands()
       .command({
         command: 'get [<property>]',
-        describe: 'Display all of the properties of your profile, or one or more specific properties.',
+        describe: 'Display all of the properties of your profile, or one or more specific properties',
         builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
         handler: argv => get(argv)
       })
       .command({
         command: 'set <property> <value>',
-        describe: 'Update profile information for the authenticated user.',
+        describe: 'Update profile information for the authenticated user',
         builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
         handler: argv => set(argv)
       })
@@ -29,19 +29,19 @@ const Profile = module.exports = {
       })
       .command({
         command: 'disable-2fa',
-        describe: 'Disable two-factor authentication.',
+        describe: 'Disable two-factor authentication',
         builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
         handler: argv => disable2fa(argv)
       })
       .command({
         command: 'enable-2fa [<mode>]',
-        describe: 'Enable two-factor authentication. ',
+        describe: 'Enable two-factor authentication',
         builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
         handler: argv => enable2fa(argv)
       })
       .command({
         command: 'create-token',
-        describe: 'Create a new authentication token, possibly with restrictions.',
+        describe: 'Create a new authentication token, possibly with restrictions',
         builder: y => y.help('help', 'h').options(Object.assign({}, ProfileSubcommandsOptions, {
           'read-only': {
             alias: 'ro',
@@ -51,7 +51,7 @@ const Profile = module.exports = {
           },
           cidr_whitelist: {
             alias: 'cidr',
-            describe: 'CIDR ranges to limit use of this token to.',
+            describe: 'CIDR ranges to limit use of this token to',
             type: 'array',
             default: []
           }
@@ -61,14 +61,14 @@ const Profile = module.exports = {
       .command({
         command: 'remove-token <token|key>',
         aliases: ['revoke-token', 'rm'],
-        describe: 'Remove a specific authentication token.',
+        describe: 'Remove a specific authentication token',
         builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
         handler: argv => removeToken(argv)
       })
       .command({
         command: 'list-tokens',
         aliases: ['lt'],
-        describe: 'Fetch a list of all of the authentication tokens the authenticated user has.',
+        describe: 'Fetch a list of all of the authentication tokens the authenticated user has',
         builder: y => y.help('help', 'h').options(ProfileSubcommandsOptions),
         handler: argv => listTokens(getOptions(argv))
       })
