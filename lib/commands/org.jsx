@@ -42,9 +42,7 @@ async function orgAdd (argv) {
     silent: {}
   })
 
-  const opts = OrgConfig(npmConfig().concat(argv).concat({
-    log: require('npmlog')
-  }))
+  const opts = OrgConfig(npmConfig(argv))
   const memDeets = await orgs.set(argv.org, argv.user, argv.role, opts)
   if (opts.json) {
     console.log(JSON.stringify(memDeets, null, 2))
@@ -74,9 +72,7 @@ async function orgRm (argv) {
     silent: {}
   })
 
-  const opts = OrgConfig(npmConfig().concat(argv).concat({
-    log: require('npmlog')
-  }))
+  const opts = OrgConfig(npmConfig(argv))
   await orgs.rm(argv.org, argv.user, opts)
   const roster = orgs.ls(argv.org, opts)
   const user = argv.user.replace(/^[~@]?/, '')
@@ -111,9 +107,7 @@ async function orgLs (argv) {
     silent: {}
   })
 
-  const opts = OrgConfig(npmConfig().concat(argv).concat({
-    log: require('npmlog')
-  }))
+  const opts = OrgConfig(npmConfig(argv))
   const roster = await orgs.ls(argv.org, opts)
   if (opts.json) {
     console.log(JSON.stringify(roster, null, 2))
