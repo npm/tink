@@ -115,7 +115,7 @@ const ProfileSubcommandsOptions = {
 
 const tableHeaders = ['token', 'key', 'cidr_whitelist', 'readonly', 'created', 'updated']
 
-const getOptions = argv => ProfileConfig(npmConfig().concat(argv).concat({ log }))
+const getOptions = argv => ProfileConfig(npmConfig(argv))
 
 const logError = (err) => console.error(`Error code: ${err.code} => ${err.message}`)
 
