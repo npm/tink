@@ -302,3 +302,19 @@ browser window.
 
 Use this command to remove any auth tokens for the current registry from your
 configuration.
+
+##### <a name="tink-profile"></a> `$ tink profile`
+
+Use this command to fetching and updating your npm profile.
+
+* Aliases: `tink p`
+
+###### Subcommands:
+* `tink profile get [<property>] [options]`: display one or more properties of the authenticated user profile.
+* `tink profile set <property> <value> [options]`: update profile information for the authenticated user.
+* `tink profile set password [options]`: update the password of the authenticated user.
+* `tink profile disable-2fa [options]`: disable two-factor authentication for the authenticated user.
+* `tink profile enable-2fa [options]`: enable two-factor authentication for the authenticated user.
+* `tink profile create-token [options]`: create a new authentication token, possibly with restrictions.
+* `tink profile remove-token <token|key> [options]`: remove a specific authentication token. Aliases: `revoke-token`, `rm`.
+* `tink profile list-tokens [options]`: fetch a list of all the authentication tokens the authenticated user has. Alias: `lt`.
