@@ -71,9 +71,7 @@ const Config = figgyPudding({
   silent: {}
 })
 
-const parseOpts = argv => Config(npmConfig().concat(argv).concat({
-  log: require('npmlog')
-}))
+const parseOpts = argv => Config(npmConfig(argv))
 
 const render = (opts, content = {}) => {
   const { h, renderToString } = require('ink') // eslint-disable-line
@@ -113,7 +111,7 @@ async function accessRevoke (argv) {
 async function accessLsPackages (argv) {
   const getPackagesByCurrentUser = async () => {
     const whoami = require('./whoami')
-    return whoami.handler({ silent: true })
+    return whoami.handler(parseOpts(argv).concat({ silent: true }))
   }
 
   const entity = argv.entity
