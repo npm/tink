@@ -1,21 +1,26 @@
 #!/usr/bin/env node
 
-require('../lib/node/index.js')
+require('../lib/node/extensions.js').overrideNode()
 
-const CMDS = new Map([
-  ['access', require('../lib/commands/access.jsx')],
-  ['add', require('../lib/commands/add.js')],
-  ['build', require('../lib/commands/build.js')],
-  ['deprecate', require('../lib/commands/deprecate.js')],
-  ['org', require('../lib/commands/org.jsx')],
-  ['ping', require('../lib/commands/ping.js')],
-  ['prepare', require('../lib/commands/prepare.js')],
-  ['profile', require('../lib/commands/profile.jsx')],
-  ['rm', require('../lib/commands/rm.js')],
-  ['shell', require('../lib/commands/shell.js')],
-  ['team', require('../lib/commands/team.js')],
-  ['view', require('../lib/commands/view.js')],
-  ['whoami', require('../lib/commands/whoami.js')]
+const CMDS = new Set([
+  'access',
+  'add',
+  'build',
+  'deprecate',
+  'org',
+  'ping',
+  'prepare',
+  'profile',
+  'rm',
+  'shell',
+  'team',
+  'view',
+  'whoami'
+])
+
+const ALIASES = new Map([
+  ['prep', 'prepare'],
+  ['sh', 'shell']
 ])
 
 if (require.main === module) {
@@ -26,12 +31,10 @@ module.exports = main
 function main (argv) {
   const log = require('npmlog')
   log.heading = 'tink'
-  const npmConfig = require('../lib/config.js')
-  return runCommandWithYargs(argv, log, npmConfig)
+  return runCommandWithYargs(argv, log)
 }
 
-function runCommandWithYargs (argv, log, npmConfig) {
-  // This code path costs ~200ms on startup.
+function runCommandWithYargs (argv, log) {
   let config = require('yargs')
     .demandCommand(1, 'Subcommand is required')
     .recommendCommands()
@@ -39,9 +42,14 @@ function runCommandWithYargs (argv, log, npmConfig) {
     .alias('help', 'h')
     .alias('version', 'v')
     .completion()
-  for (const mod of CMDS.values()) {
-    config = config.command(mod)
+  if (ALIASES.has(argv[2])) {
+    config = config.command(require(`../lib/yargs-modules/${ALIASES.get(argv[2])}.js`))
+  } else if (CMDS.has(argv[2])) {
+    config = config.command(require(`../lib/yargs-modules/${argv[2]}.js`))
+  } else {
+    for (const mod of CMDS.values()) {
+      config = config.command(require(`../lib/yargs-modules/${mod}.js`))
+    }
   }
-  require('../lib/node/index.js')
   config = config.argv
 }
