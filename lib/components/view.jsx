@@ -11,6 +11,7 @@ const {
   Color,
   Indent
 } = require('ink')
+const Box = require('ink-box')
 
 const MAX_ITEMS = 6
 const ROW_WIDTH = 4
@@ -281,6 +282,45 @@ class PackageFields extends Component {
   }
 }
 module.exports.PackageFields = PackageFields
+
+class PackageSummary extends Component {
+  render () {
+    let { packument, spec, json } = this.props
+    let [data] = getData(packument, spec)
+    let views = data.map((pkg) => {
+      const getProps = (field) => ({
+        field,
+        value: resolveField(pkg, field)
+      })
+
+      return <Box>
+        <div>
+          <PackageValue {...getProps('_id')} />
+          <span> | </span>
+          <PackageValue {...getProps('license')} />
+          <span> | </span>
+          <PackageField field='_deps' value={Object.keys(pkg.dependencies || {}).length} />
+          <span> | </span>
+          <span>
+            <span>published </span>
+            <PackageValue field='_time' value={packument.time[pkg.version]} />
+            <span> by </span>
+            <PackageValue {...getProps('_npmUser')} />
+          </span>
+        </div>
+
+        <div>{pkg.description}</div>
+        <span><PackageValue {...getProps('homepage')} /> - <PackageValue {...getProps('keywords')} /></span>
+      </Box>
+    })
+
+    return <Joined
+      delimiter={[<br />, <br />]}>
+      {views}
+    </Joined>
+  }
+}
+module.exports.PackageSummary = PackageSummary
 
 class PackageView extends Component {
   render () {
