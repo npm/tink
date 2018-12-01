@@ -326,8 +326,141 @@ test('chmod', t => {
 
 // open
 
+function testOpenPkgJsonFd (t, fd, stat) {
+  const data = Buffer.alloc(stat.size)
+  fs.readSync(fd, data, 0, stat.size, 0)
+  try {
+    JSON.parse(data)
+  } catch (err) {
+    t.fail(`unable to parse own package.json read from fs.open fd`)
+  }
+}
+
+test('open', t => {
+  const pkgFile = path.resolve(__dirname, '../../package.json')
+  const pkgStat = fs.statSync(pkgFile)
+  fs.open(pkgFile, 'r', (err, fd) => {
+    t.notOk(err, `open ${pkgFile} failed ${err}`)
+    testOpenPkgJsonFd(t, fd, pkgStat)
+    t.end()
+  })
+})
+
+test('open', t => {
+  const badFile = path.resolve(__dirname, `non_exist_file_${Date.now()}`)
+  fs.open(badFile, 'r', (err) => {
+    t.ok(err, `expect open ${badFile} to fail`)
+    t.end()
+  })
+})
+
 // openSync
+
+test('openSync', t => {
+  const pkgFile = path.resolve(__dirname, '../../package.json')
+  const pkgStat = fs.statSync(pkgFile)
+  try {
+    const fd = fs.openSync(pkgFile, 'r')
+    testOpenPkgJsonFd(t, fd, pkgStat)
+    t.end()
+  } catch (err) {
+    t.fail(`open ${pkgFile} caught ${err}`)
+  }
+})
+
+test('openSync', t => {
+  const badFile = path.resolve(__dirname, `non_exist_file_${Date.now()}`)
+  try {
+    fs.openSync(badFile, 'r')
+    t.fail(`expect open ${badFile} to fail`)
+  } catch (err) {
+    t.end()
+  }
+})
 
 // createReadStream
 
+test('createReadStream', t => {
+  const pkgFile = path.resolve(__dirname, '../../package.json')
+  try {
+    let data
+    const pkgJsonStream = fs.createReadStream(pkgFile)
+    pkgJsonStream.on('data', chunk => {
+      data = data ? Buffer.concat([data, chunk]) : chunk
+    })
+    pkgJsonStream.on('end', () => {
+      try {
+        JSON.parse(data)
+        t.end()
+      } catch (err) {
+        t.fail(`unable to parse data read from own package.json`)
+      }
+    })
+  } catch (err) {
+    t.fail(`createReadStream caught ${err}`)
+  }
+})
+
+test('createReadStream', t => {
+  const badFile = path.resolve(__dirname, `non_exist_file_${Date.now()}`)
+
+  try {
+    const stream = fs.createReadStream(badFile)
+    stream.on('error', err => {
+      t.ok(err, `expect error event with err from non exist file read stream`)
+      t.end()
+    })
+  } catch (err) {
+    t.fail(`caught ${err}`)
+  }
+})
+
 // createWriteStream
+
+test('createWriteStream', t => {
+  const pkgFile = path.resolve(__dirname, '../../package.json')
+
+  let readStream
+  try {
+    readStream = fs.createReadStream(pkgFile)
+  } catch (err) {
+    t.fail(`createReadStream as source caught ${err}`)
+  }
+
+  const tmpFile = path.resolve(__dirname, `tmp_${Date.now()}_package.json`)
+
+  let writeStream
+
+  const clean = () => {
+    try {
+      if (readStream) readStream.destroy()
+      if (writeStream) writeStream.destroy()
+      fs.unlinkSync(tmpFile)
+    } catch (err) {
+    }
+  }
+
+  t.tearDown(clean)
+
+  try {
+    writeStream = fs.createWriteStream(tmpFile)
+    readStream.pipe(writeStream)
+  } catch (err) {
+    t.fail(`pipe to createWriteStream caught ${err}`)
+  }
+
+  writeStream.on('finish', () => {
+    try {
+      const originalData = fs.readFileSync(pkgFile)
+      const tmpData = fs.readFileSync(tmpFile)
+      t.equal(originalData.compare(tmpData), 0, `data copied not binary equal to data from ${pkgFile}`)
+      t.end()
+    } catch (err) {
+      t.fail(`caught ${err}`)
+    }
+  })
+
+  writeStream.on('error', err => {
+    t.fail(`writeStream error event ${err}`)
+  })
+})
