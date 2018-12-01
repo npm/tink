@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.17.2"></a>
+## [0.17.2](https://github.com/npm/tink/compare/v0.17.1...v0.17.2) (2018-12-01)
+
+
+### Bug Fixes
+
+* **access:** fix config/log stuff ([109a5fe](https://github.com/npm/tink/commit/109a5fe))
+* **add:** fix up config stuff ([10ad858](https://github.com/npm/tink/commit/10ad858))
+* **build:** fix up config stuff ([11dec66](https://github.com/npm/tink/commit/11dec66))
+* **config:** already giving it a log object. ([52fb92c](https://github.com/npm/tink/commit/52fb92c))
+* **deprecate:** fix up config stuff ([fcfd40d](https://github.com/npm/tink/commit/fcfd40d))
+* **org:** fix up config stuff ([c56d336](https://github.com/npm/tink/commit/c56d336))
+* **ping:** improve the overall command a bit ([9b18a86](https://github.com/npm/tink/commit/9b18a86))
+* **profile:** fix up config stuff ([43f8356](https://github.com/npm/tink/commit/43f8356))
+* **rm:** fix up config stuff ([69312aa](https://github.com/npm/tink/commit/69312aa))
+* **team:** fix up config stuff ([9917fe5](https://github.com/npm/tink/commit/9917fe5))
+* **whoami:** fix up config stuff ([adb31e4](https://github.com/npm/tink/commit/adb31e4))
+
+
+
 <a name="0.17.1"></a>
 ## [0.17.1](https://github.com/npm/tink/compare/v0.17.0...v0.17.1) (2018-11-26)
 
