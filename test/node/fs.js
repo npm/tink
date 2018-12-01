@@ -415,6 +415,16 @@ test('createReadStream', t => {
   }
 })
 
+test('createReadStream', t => {
+  try {
+    fs.createReadStream()
+    t.fail(`expect ERR_INVALID_ARG_TYPE error`)
+  } catch (err) {
+    t.equal(err.code, 'ERR_INVALID_ARG_TYPE', `expect ERR_INVALID_ARG_TYPE err`)
+    t.end()
+  }
+})
+
 // createWriteStream
 
 test('createWriteStream', t => {
@@ -463,4 +473,14 @@ test('createWriteStream', t => {
   writeStream.on('error', err => {
     t.fail(`writeStream error event ${err}`)
   })
+})
+
+test('createWriteStream', t => {
+  try {
+    fs.createWriteStream()
+    t.fail(`expect ERR_INVALID_ARG_TYPE error`)
+  } catch (err) {
+    t.equal(err.code, 'ERR_INVALID_ARG_TYPE', `expect ERR_INVALID_ARG_TYPE err`)
+    t.end()
+  }
 })
