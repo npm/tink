@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.17.3"></a>
+## [0.17.3](https://github.com/npm/tink/compare/v0.17.2...v0.17.3) (2018-12-03)
+
+
+### Bug Fixes
+
+* **add:** ugh ([1cc5ad0](https://github.com/npm/tink/commit/1cc5ad0))
+* **fs:** make open override do a two-step copy for now ([2e3780f](https://github.com/npm/tink/commit/2e3780f))
+* **installer:** load node patches earlier ([6f28969](https://github.com/npm/tink/commit/6f28969))
+* **pkglock:** fix arguments to prepare in lock worker ([65b657c](https://github.com/npm/tink/commit/65b657c))
+* **shell:** use argv._ now ([68e301d](https://github.com/npm/tink/commit/68e301d))
+
+
+
 <a name="0.17.2"></a>
 ## [0.17.2](https://github.com/npm/tink/compare/v0.17.1...v0.17.2) (2018-12-01)
 
