@@ -177,7 +177,7 @@ const SearchResults = ({ isFocused, isLoading, matches, onSelect, terms }) => {
     return <Color grey>No matches found</Color>
   }
 
-  if (isLoading === false && terms && matches && matches.length) {
+  if (isLoading === false && matches && matches.length) {
     return <div>
       <Color grey bold>Results (maintenance, popularity, quality):</Color><br />
       <PackageSelector isFocused={isFocused} matches={matches} onSelect={onSelect} />
