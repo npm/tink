@@ -1,6 +1,6 @@
 'use strict'
 
-const { h, render } = require('ink')
+const { h, render } = require('ink') // eslint-disable-line no-unused-vars
 const Search = require('../components/search.jsx')
 
 const DEFAULT_LIMIT = 10
@@ -67,7 +67,7 @@ async function search (argv) {
     process.exit()
   }
 
-  const [cmd, terms] = argv._
+  const terms = argv._[1]
 
   unmount = render(<Search
     onError={onError}

@@ -1,7 +1,7 @@
 'use strict'
 
 const {
-  h,
+  h, // eslint-disable-line no-unused-vars
   Color,
   Component,
   Fragment
@@ -13,7 +13,6 @@ const libnpm = require('libnpm')
 const FOCUS_SEARCH = 'FOCUS_SEARCH'
 const FOCUS_RESULTS = 'FOCUS_RESULTS'
 
-// @todo Re-typing search after matches have been found installs whatever is highlighted
 // @todo Make sure non-focused matches list looks identical, pretty sure it doesn't currently
 
 class Search extends Component {
