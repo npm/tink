@@ -13,6 +13,9 @@ const libnpm = require('libnpm')
 const FOCUS_SEARCH = 'FOCUS_SEARCH'
 const FOCUS_RESULTS = 'FOCUS_RESULTS'
 
+// @todo Re-typing search after matches have been found installs whatever is highlighted
+// @todo Make sure non-focused matches list looks identical, pretty sure it doesn't currently
+
 class Search extends Component {
   constructor (props) {
     super(props)
@@ -129,17 +132,26 @@ class Search extends Component {
       selectedPackage
     } = this.state
 
-    // Handle up/down arrow press
+    // If up/down arrows are pressed, make sure we're focused on search results
 
-    if (['up', 'down'].includes(key.name) && focusedOn === FOCUS_SEARCH && matches && matches.length) {
-      this.setState({ focusedOn: FOCUS_RESULTS })
+    if (['up', 'down'].includes(key.name)) {
+      if (focusedOn !== FOCUS_RESULTS && matches && matches.length) {
+        return this.setState({ focusedOn: FOCUS_RESULTS })
+      }
       return
     }
 
-    // Handle enter press
+    // If enter is pressed and we're focused on search results, install
 
     if (key.name === 'enter' && focusedOn === FOCUS_RESULTS && selectedPackage) {
-      this.install(selectedPackage)
+      return this.install(selectedPackage)
+    }
+
+    // If non up/down/enter keys were pressed and we're not focused on search
+    // input, focus on search input
+
+    if (focusedOn !== FOCUS_SEARCH) {
+      return this.setState({ focusedOn: FOCUS_SEARCH })
     }
   }
 
@@ -223,7 +235,7 @@ const PackageSelector = ({ isFocused, matches, onSelect }) => {
       itemComponent={PackageItem}
       onSelect={({ value }) => onSelect(value)} />
   } else if (items && items.length) {
-    return items.map(({ value }) => <div><PackageItem value={value} /></div>)
+    return items.map(({ value }) => <div>{ ' ' }<PackageItem value={value} /></div>)
   }
 }
 
