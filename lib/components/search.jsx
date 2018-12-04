@@ -13,8 +13,6 @@ const libnpm = require('libnpm')
 const FOCUS_SEARCH = 'FOCUS_SEARCH'
 const FOCUS_RESULTS = 'FOCUS_RESULTS'
 
-// @todo Make sure non-focused matches list looks identical, pretty sure it doesn't currently
-
 class Search extends Component {
   constructor (props) {
     super(props)
