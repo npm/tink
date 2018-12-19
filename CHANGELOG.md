@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.18.0"></a>
+# [0.18.0](https://github.com/npm/tink/compare/v0.17.3...v0.18.0) (2018-12-19)
+
+
+### Bug Fixes
+
+* **sh:** make sure to load fs patches too ([0117dbe](https://github.com/npm/tink/commit/0117dbe))
+
+
+### Features
+
+* **prepare:** support install scripts and native builds ([11fc0d6](https://github.com/npm/tink/commit/11fc0d6))
+
+
+
 <a name="0.17.3"></a>
 ## [0.17.3](https://github.com/npm/tink/compare/v0.17.2...v0.17.3) (2018-12-03)
 
