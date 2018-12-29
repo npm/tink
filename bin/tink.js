@@ -1,6 +1,17 @@
 #!/usr/bin/env node
 
+require('esm')
 require('../lib/node/extensions.js').overrideNode()
+const reqmain = require.main
+require = require('esm')(module, { //eslint-disable-line
+  force: true,
+  cjs: {
+    interop: true,
+    namedExports: true,
+    extensions: true,
+    vars: true
+  }
+})
 
 const CMDS = new Set([
   'access',
@@ -23,7 +34,7 @@ const ALIASES = new Map([
   ['sh', 'shell']
 ])
 
-if (require.main === module) {
+if (reqmain === module) {
   main(process.argv)
 }
 
