@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.19.0"></a>
+# [0.19.0](https://github.com/npm/tink/compare/v0.18.0...v0.19.0) (2019-01-01)
+
+
+### Features
+
+* **esm:** adding baseline ESM load support ([d58d636](https://github.com/npm/tink/commit/d58d636))
+
+
+
 <a name="0.18.0"></a>
 # [0.18.0](https://github.com/npm/tink/compare/v0.17.3...v0.18.0) (2018-12-19)
 
