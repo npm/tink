@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.19.2"></a>
+## [0.19.2](https://github.com/npm/tink/compare/v0.19.1...v0.19.2) (2019-01-02)
+
+
+### Bug Fixes
+
+* **babel:** switch to esm from repo and fix babel usage ([a6daeb1](https://github.com/npm/tink/commit/a6daeb1))
+* **jsx,ts:** use babel for transforming ([16d03a8](https://github.com/npm/tink/commit/16d03a8))
+* **shell:** stop throwing away errors ([1b507e8](https://github.com/npm/tink/commit/1b507e8))
+
+
+
 <a name="0.19.1"></a>
 ## [0.19.1](https://github.com/npm/tink/compare/v0.19.0...v0.19.1) (2019-01-02)
 
