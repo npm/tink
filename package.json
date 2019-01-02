@@ -1,6 +1,7 @@
 {
   "name": "tink",
   "version": "0.19.1",
+  "description": "a next-generation runtime and package manager",
   "author": {
     "name": "Kat Marchán",
     "email": "kzm@zkat.tech",
