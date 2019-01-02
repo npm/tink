@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.19.3"></a>
+## [0.19.3](https://github.com/npm/tink/compare/v0.19.2...v0.19.3) (2019-01-02)
+
+
+
 <a name="0.19.2"></a>
 ## [0.19.2](https://github.com/npm/tink/compare/v0.19.1...v0.19.2) (2019-01-02)
 
