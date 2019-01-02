@@ -51,6 +51,9 @@
     "knitting puns"
   ],
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-typescript": "^7.0.0-alpha.19",
     "bin-links": "^1.1.2",
     "bluebird": "^3.5.2",
     "byte-size": "^4.0.4",
