@@ -52,7 +52,7 @@
     "knitting puns"
   ],
   "dependencies": {
-    "babel-core": "^6.26.3",
+    "babel-core": "^7.0.0-beta.3",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-plugin-transform-typescript": "^7.0.0-alpha.19",
     "bin-links": "^1.1.2",
@@ -61,7 +61,7 @@
     "cacache": "^11.3.1",
     "clear-module": "^3.0.0",
     "cli-columns": "^3.1.2",
-    "esm": "^3.0.84",
+    "esm": "github:standard-things/esm",
     "figgy-pudding": "^3.5.1",
     "find-npm-prefix": "^1.0.2",
     "get-stream": "^4.1.0",
