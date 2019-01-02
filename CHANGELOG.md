@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.19.1"></a>
+## [0.19.1](https://github.com/npm/tink/compare/v0.19.0...v0.19.1) (2019-01-02)
+
+
+### Performance Improvements
+
+* **sh:** load main module in-process when possible ([5e9e352](https://github.com/npm/tink/commit/5e9e352))
+
+
+
 <a name="0.19.0"></a>
 # [0.19.0](https://github.com/npm/tink/compare/v0.18.0...v0.19.0) (2019-01-01)
 
