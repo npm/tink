@@ -60,7 +60,6 @@
     "byte-size",
     "cacache",
     "cli-columns",
-    "esm",
     "figgy-pudding",
     "find-npm-prefix",
     "get-stream",
