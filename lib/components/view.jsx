@@ -133,7 +133,7 @@ class PackageValueUrl extends Component {
 
 class PackageValuePerson extends Component {
   render () {
-    let { name, url, email } = this.props
+    let { name, username, url, email } = this.props
     let parts = []
 
     if (email) {
@@ -144,7 +144,7 @@ class PackageValuePerson extends Component {
     }
 
     return <span>
-      <Color yellow>{name}</Color>
+      <Color yellow>{name || username}</Color>
       {parts}
     </span>
   }
@@ -285,7 +285,7 @@ module.exports.PackageFields = PackageFields
 
 class PackageSummary extends Component {
   render () {
-    let { packument, spec, json } = this.props
+    let { packument, spec } = this.props
     let [data] = getData(packument, spec)
     let views = data.map((pkg) => {
       const getProps = (field) => ({
@@ -321,6 +321,28 @@ class PackageSummary extends Component {
   }
 }
 module.exports.PackageSummary = PackageSummary
+
+class PackageSearchResult extends Component {
+  render () {
+    const { result: { package: pkg } } = this.props
+    return <Box>
+      <div>
+        <PackageValue field='_id' value={pkg.name + '@' + pkg.version} />
+        <span> | </span>
+        <span>
+          <span>published </span>
+          <PackageValue field='_time' value={pkg.date.toString()} />
+          <span> by </span>
+          <PackageValue field='_npmUser' value={pkg.publisher} />
+        </span>
+      </div>
+
+      <div>{pkg.description}</div>
+      <span><PackageValue field='homepage' value={pkg.links.homepage} /> - <PackageValue field='keywords' value={pkg.keywords} /></span>
+    </Box>
+  }
+}
+module.exports.PackageSearchResult = PackageSearchResult
 
 class PackageView extends Component {
   render () {
