@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
+require('../lib/node/extensions.js').overrideNode()
 const reqmain = require.main
-require('../lib/node/index.js').overrideNode()
 require = require('esm')(module, { //eslint-disable-line
   force: true,
   cjs: {
