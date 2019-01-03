@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.19.4"></a>
+## [0.19.4](https://github.com/npm/tink/compare/v0.19.3...v0.19.4) (2019-01-03)
+
+
+### Bug Fixes
+
+* **deps:** remove unused or redundant deps and update babel deps ([aeee9a3](https://github.com/npm/tink/commit/aeee9a3))
+
+
+
 <a name="0.19.3"></a>
 ## [0.19.3](https://github.com/npm/tink/compare/v0.19.2...v0.19.3) (2019-01-02)
 
