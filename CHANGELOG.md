@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.19.6"></a>
+## [0.19.6](https://github.com/npm/tink/compare/v0.19.5...v0.19.6) (2019-01-03)
+
+
+### Bug Fixes
+
+* **fs:** try to hunt down cachePath issue ([d5745b8](https://github.com/npm/tink/commit/d5745b8))
+
+
+
 <a name="0.19.5"></a>
 ## [0.19.5](https://github.com/npm/tink/compare/v0.19.4...v0.19.5) (2019-01-03)
 
