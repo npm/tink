@@ -2,6 +2,7 @@ const semver = require('semver')
 const byteSize = require('byte-size')
 const relativeDate = require('tiny-relative-date')
 const columns = require('cli-columns')
+const sliceAnsi = require('slice-ansi')
 
 const {
   h, // eslint-disable-line
@@ -45,6 +46,11 @@ class Columns extends Component {
       sort: false
     })
   }
+
+const Line = ({ width, children }) => {
+  const string = children.map(renderToString).join('')
+  const sliced = sliceAnsi(string, 0, width)
+  return string === sliced ? string : sliceAnsi(string, 0, width - 3) + '...'
 }
 
 const packageValueObjectItems = function ({ field, value, props, maxItems }) {
@@ -285,6 +291,7 @@ module.exports.PackageFields = PackageFields
 
 class PackageSummary extends Component {
   render () {
+    const width = process.env.COLUMNS - 2
     let { packument, spec } = this.props
     let [data] = getData(packument, spec)
     let views = data.map((pkg) => {
@@ -309,8 +316,12 @@ class PackageSummary extends Component {
           </span>
         </div>
 
-        <div>{pkg.description}</div>
-        <span><PackageValue {...getProps('homepage')} /> - <PackageValue {...getProps('keywords')} /></span>
+        <div><Line width={width}>{pkg.description}</Line></div>
+        <span>
+          <Line width={width}>
+            <PackageValue {...getProps('homepage')} /> - <PackageValue {...getProps('keywords')} />
+          </Line>
+        </span>
       </Box>
     })
 
@@ -324,6 +335,7 @@ module.exports.PackageSummary = PackageSummary
 
 class PackageSearchResult extends Component {
   render () {
+    const width = process.env.COLUMNS - 2
     const { result: { package: pkg } } = this.props
     return <Box>
       <div>
@@ -337,8 +349,12 @@ class PackageSearchResult extends Component {
         </span>
       </div>
 
-      <div>{pkg.description}</div>
-      <span><PackageValue field='homepage' value={pkg.links.homepage} /> - <PackageValue field='keywords' value={pkg.keywords} /></span>
+      <div><Line width={width}>{pkg.description}</Line></div>
+      <span>
+        <Line width={width}>
+          <PackageValue field='homepage' value={pkg.links.homepage} /> - <PackageValue field='keywords' value={pkg.keywords} />
+        </Line>
+      </span>
     </Box>
   }
 }
