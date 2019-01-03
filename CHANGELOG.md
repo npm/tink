@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.19.8"></a>
+## [0.19.8](https://github.com/npm/tink/compare/v0.19.7...v0.19.8) (2019-01-03)
+
+
+### Bug Fixes
+
+* **esm:** downgrade esm for now ([ad26a10](https://github.com/npm/tink/commit/ad26a10))
+
+
+
 <a name="0.19.7"></a>
 ## [0.19.7](https://github.com/npm/tink/compare/v0.19.6...v0.19.7) (2019-01-03)
 
