@@ -93,7 +93,7 @@
     "byte-size": "^4.0.4",
     "cacache": "^11.3.1",
     "cli-columns": "^3.1.2",
-    "esm": "^3.0.84",
+    "esm": "github:zkat/esm#patch-1",
     "figgy-pudding": "^3.5.1",
     "get-stream": "^4.1.0",
     "glob": "^7.1.3",
