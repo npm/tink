@@ -1,6 +1,6 @@
 {
   "name": "tink",
-  "version": "0.19.9",
+  "version": "0.20.0",
   "description": "a next-generation runtime and package manager",
   "author": {
     "name": "Kat Marchán",

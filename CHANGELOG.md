@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.20.0"></a>
+# [0.20.0](https://github.com/npm/tink/compare/v0.19.9...v0.20.0) (2019-01-04)
+
+
+### Bug Fixes
+
+* **esm:** bring back patched esm ([10e5959](https://github.com/npm/tink/commit/10e5959))
+* **pkglock:** Remove unused variables ([#41](https://github.com/npm/tink/issues/41)) ([df87f84](https://github.com/npm/tink/commit/df87f84))
+* **pkglock:** use newResolved properly ([fad9621](https://github.com/npm/tink/commit/fad9621))
+
+
+### Features
+
+* **sh:** run prepare before sh automatically ([245c245](https://github.com/npm/tink/commit/245c245))
+
+
+
 <a name="0.19.9"></a>
 ## [0.19.9](https://github.com/npm/tink/compare/v0.19.8...v0.19.9) (2019-01-03)
 
