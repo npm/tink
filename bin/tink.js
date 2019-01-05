@@ -23,6 +23,7 @@ const CMDS = new Set([
   'prepare',
   'profile',
   'rm',
+  'search',
   'shell',
   'team',
   'view',
@@ -30,7 +31,10 @@ const CMDS = new Set([
 ])
 
 const ALIASES = new Map([
+  ['find', 'search'],
   ['prep', 'prepare'],
+  ['s', 'search'],
+  ['se', 'search'],
   ['sh', 'shell']
 ])
 
