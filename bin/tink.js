@@ -4,6 +4,7 @@ require('../lib/node/index.js')
 const reqmain = require.main
 require = require('esm')(module, { //eslint-disable-line
   force: true,
+  wasm: true,
   cjs: {
     interop: true,
     namedExports: true,
