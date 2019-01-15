@@ -2,16 +2,16 @@
 
 require('../lib/node/index.js')
 const reqmain = require.main
-// require = require('esm')(module, { //eslint-disable-line
-//   force: true,
-//   wasm: true,
-//   cjs: {
-//     interop: true,
-//     namedExports: true,
-//     extensions: true,
-//     vars: true
-//   }
-// })
+require = require('esm')(module, { //eslint-disable-line
+  force: true,
+  wasm: true,
+  cjs: {
+    interop: true,
+    namedExports: true,
+    extensions: true,
+    vars: true
+  }
+})
 
 const CMDS = new Set([
   'access',
