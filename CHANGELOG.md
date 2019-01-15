@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.21.0"></a>
+# [0.21.0](https://github.com/npm/tink/compare/v0.20.0...v0.21.0) (2019-01-15)
+
+
+### Bug Fixes
+
+* **esm:** go back to regular esm from git ([12b74e7](https://github.com/npm/tink/commit/12b74e7))
+* **esm:** remove ESM support for now ([1cf887f](https://github.com/npm/tink/commit/1cf887f))
+* **esm:** try re-enabling esm ([7ee5857](https://github.com/npm/tink/commit/7ee5857))
+* **pkglock:** eliminate false positives for node_modules ([92f0ca5](https://github.com/npm/tink/commit/92f0ca5))
+
+
+### Features
+
+* **wasm:** enable wasm support ([3b9320a](https://github.com/npm/tink/commit/3b9320a))
+
+
+
 <a name="0.20.0"></a>
 # [0.20.0](https://github.com/npm/tink/compare/v0.19.9...v0.20.0) (2019-01-04)
 
