@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.21.3"></a>
+## [0.21.3](https://github.com/npm/tink/compare/v0.21.2...v0.21.3) (2019-01-15)
+
+
+### Bug Fixes
+
+* **esm:** update esm version for cachePath error fix ([a490880](https://github.com/npm/tink/commit/a490880))
+
+
+
 <a name="0.21.2"></a>
 ## [0.21.2](https://github.com/npm/tink/compare/v0.21.1...v0.21.2) (2019-01-15)
 
