@@ -93,7 +93,7 @@
     "byte-size": "^5.0.1",
     "cacache": "^11.3.2",
     "cli-columns": "^3.1.2",
-    "esm": "github:standard-things/esm",
+    "esm": "^3.1.1",
     "figgy-pudding": "^3.5.1",
     "get-stream": "^4.1.0",
     "glob": "^7.1.3",
