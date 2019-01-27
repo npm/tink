@@ -4,3 +4,5 @@ node_modules
 /test/cache
 yarn.lock
 /lib/commands/utils/.htaccess
+test/.cache
+.vscode

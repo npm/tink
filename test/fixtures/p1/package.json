@@ -1,0 +1,15 @@
+{
+  "name": "p1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "require-from-path": "^1.0.0"
+  }
+}
