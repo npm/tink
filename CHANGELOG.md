@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.21.5"></a>
+## [0.21.5](https://github.com/npm/tink/compare/v0.21.4...v0.21.5) (2019-03-06)
+
+
+### Bug Fixes
+
+* **pkglock:** switch to default fs when resolving ([fa05062](https://github.com/npm/tink/commit/fa05062))
+* **sh:** fix node->tish rewrites ([#46](https://github.com/npm/tink/issues/46)) ([83e7070](https://github.com/npm/tink/commit/83e7070))
+
+
+
 <a name="0.21.4"></a>
 ## [0.21.4](https://github.com/npm/tink/compare/v0.21.3...v0.21.4) (2019-01-22)
 
