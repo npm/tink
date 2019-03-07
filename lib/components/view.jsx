@@ -2,6 +2,7 @@ const semver = require('semver')
 const byteSize = require('byte-size')
 const relativeDate = require('tiny-relative-date')
 const columns = require('cli-columns')
+const sliceAnsi = require('slice-ansi')
 
 const {
   h, // eslint-disable-line
@@ -11,6 +12,7 @@ const {
   Color,
   Indent
 } = require('ink')
+const Box = require('ink-box')
 
 const MAX_ITEMS = 6
 const ROW_WIDTH = 4
@@ -44,6 +46,11 @@ class Columns extends Component {
       sort: false
     })
   }
+
+const Line = ({ width, children }) => {
+  const string = children.map(renderToString).join('')
+  const sliced = sliceAnsi(string, 0, width)
+  return string === sliced ? string : sliceAnsi(string, 0, width - 3) + '...'
 }
 
 const packageValueObjectItems = function ({ field, value, props, maxItems }) {
@@ -132,7 +139,7 @@ class PackageValueUrl extends Component {
 
 class PackageValuePerson extends Component {
   render () {
-    let { name, url, email } = this.props
+    let { name, username, url, email } = this.props
     let parts = []
 
     if (email) {
@@ -143,7 +150,7 @@ class PackageValuePerson extends Component {
     }
 
     return <span>
-      <Color yellow>{name}</Color>
+      <Color yellow>{name || username}</Color>
       {parts}
     </span>
   }
@@ -281,6 +288,77 @@ class PackageFields extends Component {
   }
 }
 module.exports.PackageFields = PackageFields
+
+class PackageSummary extends Component {
+  render () {
+    const width = process.env.COLUMNS - 2
+    let { packument, spec } = this.props
+    let [data] = getData(packument, spec)
+    let views = data.map((pkg) => {
+      const getProps = (field) => ({
+        field,
+        value: resolveField(pkg, field)
+      })
+
+      return <Box>
+        <div>
+          <PackageValue {...getProps('_id')} />
+          <span> | </span>
+          <PackageValue {...getProps('license')} />
+          <span> | </span>
+          <PackageField field='_deps' value={Object.keys(pkg.dependencies || {}).length} />
+          <span> | </span>
+          <span>
+            <span>published </span>
+            <PackageValue field='_time' value={packument.time[pkg.version]} />
+            <span> by </span>
+            <PackageValue {...getProps('_npmUser')} />
+          </span>
+        </div>
+
+        <div><Line width={width}>{pkg.description}</Line></div>
+        <span>
+          <Line width={width}>
+            <PackageValue {...getProps('homepage')} /> - <PackageValue {...getProps('keywords')} />
+          </Line>
+        </span>
+      </Box>
+    })
+
+    return <Joined
+      delimiter={[<br />, <br />]}>
+      {views}
+    </Joined>
+  }
+}
+module.exports.PackageSummary = PackageSummary
+
+class PackageSearchResult extends Component {
+  render () {
+    const width = process.env.COLUMNS - 2
+    const { result: { package: pkg } } = this.props
+    return <Box>
+      <div>
+        <PackageValue field='_id' value={pkg.name + '@' + pkg.version} />
+        <span> | </span>
+        <span>
+          <span>published </span>
+          <PackageValue field='_time' value={pkg.date.toString()} />
+          <span> by </span>
+          <PackageValue field='_npmUser' value={pkg.publisher} />
+        </span>
+      </div>
+
+      <div><Line width={width}>{pkg.description}</Line></div>
+      <span>
+        <Line width={width}>
+          <PackageValue field='homepage' value={pkg.links.homepage} /> - <PackageValue field='keywords' value={pkg.keywords} />
+        </Line>
+      </span>
+    </Box>
+  }
+}
+module.exports.PackageSearchResult = PackageSearchResult
 
 class PackageView extends Component {
   render () {
