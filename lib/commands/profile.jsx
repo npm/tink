@@ -292,7 +292,7 @@ async function removeToken (argv, opts) {
       console.log(['token', 'deleted'].join('\t'))
       console.log([argv.token, true].join('\t'))
     } else if (!opts.silent && opts.loglevel !== 'silent') {
-      console.log('Token succesfully removed.')
+      console.log('Token successfully removed.')
     }
   } catch (e) {
     logError(e)
